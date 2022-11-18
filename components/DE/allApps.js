@@ -62,6 +62,19 @@ const ALL_APPS = [
         `
     },
     {
+        id: 'gallery',
+        title: 'Gallery',
+        category: "Other",
+        icon: './assets/DE-icons/rangoli.png',
+        iconBgCSS: 'linear-gradient(180deg, #D60270 10%, #9B4F96 30%, 60%, #0038A8 90%)',
+        content: `<div style="height:85vh;width:500px">
+        <img width=500 src="assets/gallery/breee.png"/>
+        <img width=500 src="assets/gallery/suwun.png"/>
+        <img width=500 src="assets/gallery/bg.png"/>
+        </div>
+        `
+    },
+    {
         id: 'doc-viewer',
         title: 'Document Viewer',
         category: "Other",
