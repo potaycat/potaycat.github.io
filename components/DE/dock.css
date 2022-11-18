@@ -1,0 +1,102 @@
+.dock {
+    position: absolute;
+    display: flex;
+    bottom: 6px;
+    left: 0;
+    right: 0;
+    width: fit-content;
+    margin: auto;
+    user-select: none;
+    -webkit-user-select: none;
+    border-radius: 15px;
+    background: rgba(181, 181, 181, 0.2);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 3px -1px #fff;
+    padding: 0 5px;
+}
+
+.dock span {
+    display: flex;
+}
+
+.dock__sep {
+    width: 1px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.3);
+    margin: 10px 10px 0 10px;
+}
+
+.docked-item {
+    transition: 0.1s;
+    margin: 8px 7px;
+    position: relative;
+    /* height: 55px; */
+}
+
+.docked-item__tooltip {
+    position: absolute;
+    top: -25px;
+    left: 0px;
+    opacity: 0;
+    transition: 0.1s;
+    white-space: nowrap;
+    text-shadow: 0 0 5px #222;
+    pointer-events: none;
+}
+
+.docked-item:hover {
+    transform: scale(1.1) rotate(-2deg);
+}
+
+.docked-item:hover .docked-item__tooltip {
+    opacity: 1;
+}
+
+.docked-item:active .docked-icon {
+    filter: brightness(0.5);
+}
+
+.docked-icon {
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.docked-app .docked-icon,
+.dock-window-manage .docked-icon {
+    background: rgba(255, 255, 255, 0.5);
+    /* border: 1px solid rgba(0, 0, 0, 0.1); */
+    box-shadow: inset 0 2px 1px -2px #fff, inset 0 -2px 1px -2px #000;
+    overflow: hidden;
+}
+
+.docked-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+.dock-clock__content {
+    width: fit-content;
+    padding: 0 10px;
+}
+
+.docked-widget .docked-icon {
+    background: rgba(0, 0, 0, 0.15);
+    border: none;
+}
+
+.dock__files img {
+    width: 50px;
+    height: 50px;
+}
+
+.running-indicator {
+    margin: -3px 0 -12px 20px;
+    color: #333;
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ReeeonOS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style class="win-content-style"></style>
+</head>
+
+<body>
+    <div class="monitor-screen">
+        <div class="background"></div>
+        <div class="windows-container">
+            <div class="window" id="about-os-win" style="top: 500px;">
+                <div class="window__header">
+                    About "OS"
+                </div>
+                <div class="window__content">
+                    <iframe src="./components/apps/aboutOS.html"></iframe>
+                </div>
+            </div>
+            <div class="last-elem"></div>
+        </div>
+        <div class="dock">
+            <span class="dock__apps">
+                <div class="docked-item dock-window-manage" id="about-os">
+                    <div class="docked-item__tooltip">About OS</div>
+                    <div class="docked-icon">
+                        <img style="height:50px; width:50px" src="assets/DE-icons/unknown_16.png">
+                    </div>
+                    <div class="running-indicator">•</div>
+                </div>
+                <div class="docked-item dock-window-manage" id="all-apps">
+                    <div class="docked-item__tooltip">All apps</div>
+                    <div class="docked-icon">
+                        <img src="assets/DE-icons/apps.png">
+                    </div>
+                </div>
+                <div class="docked-item dock-window-manage" id="task-view">
+                    <div class="docked-item__tooltip">Window view</div>
+                    <div class="docked-icon">
+                        <img src="assets/DE-icons/window.png">
+                    </div>
+                </div>
+            </span>
+            <span class="dock__sep"></span>
+            <span class="dock__widgets">
+                <div class="docked-item docked-widget dock-weather" id="weather">
+                    <div class="docked-item__tooltip">Weather</div>
+                    <div class="docked-icon">
+                        <img src="assets/DE-icons/rainy-day.png">
+                    </div>
+                </div>
+                <div class="docked-item docked-widget dock-clock" id="datetime">
+                    <div class="docked-item__tooltip">Datetime</div>
+                    <div class="docked-icon dock-clock__content"></div>
+                </div>
+            </span>
+            <span class="dock__sep"></span>
+            <span class="dock__files">
+                <div class="docked-item docked-file" id="funfact.txt">
+                    <div class="docked-item__tooltip">funfact.txt</div>
+                    <div class="docked-icon">
+                        <img src="assets/DE-icons/paper.png">
+                    </div>
+                </div>
+                <div class="docked-item docked-file" id="trash">
+                    <div class="docked-item__tooltip">Trash</div>
+                    <div class="docked-icon">
+                        <img src="assets/DE-icons/Recycle Bin Full.png">
+                    </div>
+                </div>
+            </span>
+        </div>
+    </div>
+</body>
+
+<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./components/DE/windows.css">
+<link rel="stylesheet" href="./components/DE/dock.css">
+<link rel="stylesheet" href="./components/DE/allApplets.css">
+<script type="module" src="script.js"></script>
+
+</html>

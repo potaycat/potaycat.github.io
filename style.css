@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    color: white;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.monitor-screen {
+    /* position: absolute; */
+    width: 100vw;
+    height: 100vh;
+    /* border: 10px solid gainsboro; */
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.background {
+    background: url(./assets/DE-icons/bg.jpg);
+    filter: contrast(0.7);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 100vw;
+    height: 100vh;
+    animation: shake 10s infinite;
+}
+
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translate3d(-6px, -6px, 0) scale(1.1);
+    }
+
+    50% {
+        transform: translate3d(6px, 9px, 0) scale(1.1);
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.twitter-timeline {
+    width: 600px;
+    height: 85vh;
+}
