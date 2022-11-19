@@ -68,3 +68,7 @@
 .window__header__btn .maximize {
     background: rgb(109, 226, 94);
 }
+
+.windows-container.--is-dragging .window__content {
+    pointer-events: none;
+}

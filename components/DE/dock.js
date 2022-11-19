@@ -9,7 +9,7 @@ setInterval(() => {
     const now = new Date()
     let build = ""
     build += now.getHours() + ":" + now.getMinutes() + '<br>'
-    build += now.getDate() + "/" + now.getMonth()
+    build += now.getDate() + "/" + (now.getMonth() + 1)
     clockEl.innerHTML = build
 }, 1000)
 

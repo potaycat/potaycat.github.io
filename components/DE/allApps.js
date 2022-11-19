@@ -18,7 +18,7 @@ const ALL_APPS = [
         category: "Other",
         icon: 'https://pbs.twimg.com/profile_images/1297300105532301313/ljmAgTFm_400x400.jpg',
         iconBgCSS: 'fill',
-        content: `<iframe height=250 width=550 src="./components/apps/aboutme.html"></iframe>`
+        content: `<iframe height=300 width=550 src="./components/apps/aboutme.html"></iframe>`
     },
     {
         id: 'discord-widget',
@@ -76,16 +76,11 @@ const ALL_APPS = [
     },
     {
         id: 'doc-viewer',
-        title: 'Document Viewer',
+        title: 'Notepadpad',
         category: "Other",
         icon: './assets/DE-icons/paper.png',
         iconBgCSS: 'linear-gradient(0deg, rgba(237,142,59,1) 0%, rgba(249,165,91,1) 100%)',
-        content: `<div style="background:#fff;color:#000;padding:30px 10px;user-select:text"><h4>funfact.txt</h4><p style="width:500px">
-            "Umbreon isn’t just a pokemon, it’s a cultural reset, it’s the oxygen you breathe, it’s a lifestyle,
-            a reason to live, an escape from this cruel world filled with thieves. it’s art, a hug from a loved
-            one, everything you’ve ever wanted."
-        </p></div>
-        `
+        content: `<iframe height=450 width=500 src="./components/apps/textEdit.html"></iframe>`
     },
     {
         id: 'tumblr',
