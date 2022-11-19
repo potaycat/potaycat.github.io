@@ -2,13 +2,16 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    padding: 10px 30px;
+    padding: 15px 40px;
+    overflow-x: hidden;
+    width: 500px;
+    max-height: 600px;
 }
 
 .app-drawer .app-drawer__app {
     transform: scale(1.8);
     height: 130px;
-    width: 150px;
+    width: 140px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,7 +24,7 @@
 }
 
 .app-drawer .category {
-    width: 450px;
+    width: 400px;
     height: 10px;
     font-size: x-large;
 }
