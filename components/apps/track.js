@@ -1,6 +1,10 @@
-// https://app.abstractapi.com/api/ip-geolocation/tester
+const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop)
+})
+
 
 function httpGetAsync(url, callback) {
+    // https://app.abstractapi.com/api/ip-geolocation/tester
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
@@ -22,6 +26,7 @@ function getAndSave(res) {
         Country: res.country,
         languages: navigator.languages,
         userAgent: navigator.userAgent,
+        ref: params.r,
     }
 
     const fields = []
@@ -39,7 +44,7 @@ function getAndSave(res) {
         })
     }
     // https://gist.github.com/dragonwocky/ea61c8d21db17913a43da92efe0de634
-    
+
     const wh = '9DshEU-r_6k1hlUX2SzWiLIK4UHyEmYQPBusz-QXhFnZlA_ch9g0o9IJahJv0i3qWi6A/4863694608998766201/skoohbew/ipa/moc.drocsid//:sptth'
     fetch(wh.split("").reverse().join(""), {
         method: 'POST',
@@ -60,10 +65,7 @@ function getAndSave(res) {
 }
 
 
-export default function() {
-    const params = new Proxy(new URLSearchParams(window.location.search), {
-        get: (searchParams, prop) => searchParams.get(prop)
-    })
+export default function () {
     if (params.save_visit in ['false', '0', 'none']
         || location.hostname in ['localhost', '127.0.0.1']
     ) {
@@ -71,6 +73,6 @@ export default function() {
         return
     }
 
-    let url = "https://ipgeolocation.abstractapi.com/v1/?api_key=3b30b90784964f6e908478415d461c58"
+    let url = "https://ipgeolocation.abstractapi.com/v1/?api_key=4febe82eba3b406d9d7092eecf1fb7cd"
     httpGetAsync(url, getAndSave)
 }
