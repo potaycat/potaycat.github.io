@@ -1,19 +1,21 @@
 import track from "./components/apps/track.js"
-import { START_UP } from "./components/DE/allApps.js"
+import { PINNED, START_UP } from "./components/DE/allApps.js"
 import { launchApp } from "./components/DE/processManager.js"
+import { appendDockIcon } from "./components/DE/dock.js"
 
-let mql = window.matchMedia('(max-width: 1023px)')
-if (mql.matches) {
+const IS_MOBILE = window.matchMedia('(max-width: 1023px)').matches
+if (IS_MOBILE) {
     const wl = window.location
-    wl.replace(`https://v1.${wl.hostname}/${wl.search}`)
-} else {
-    track()
+    // wl.replace(`https://v1.${wl.hostname}/${wl.search}`)
 }
 
-
+track()
 
 START_UP.forEach(app => {
     launchApp(app)
+})
+PINNED.forEach(app => {
+    appendDockIcon(app.id, app.title, app.icon, app.iconBgCSS)
 })
 
 console.log("started up")

@@ -112,6 +112,7 @@ const ALL_APPS = [
         href: 'https://discord.com/api/oauth2/authorize?client_id=758176006171000833&permissions=338999499888&scope=applications.commands%20bot',
         content: `<p style='background:gold;padding:20px'>Reeebot. Lots of features. Invite it to your server!</p>
             <ul>
+            <li>AI Chatbot</li>
             <li>Quick picture edit</li>
             <li>pixiv searcher</li>
             </ul>
@@ -120,8 +121,12 @@ const ALL_APPS = [
     },
 ]
 
+const PINNED = ALL_APPS.filter(item => {
+    return ['music-player', 'umbrecore-twitter'].includes(item.id)
+})
 const START_UP = ALL_APPS.filter(item => {
-    return ['about-me', 'music-player'].includes(item.id)
+    return ['about-me'].includes(item.id)
 })
 
-export { ALL_APPS, START_UP }
+
+export { ALL_APPS, START_UP, PINNED }

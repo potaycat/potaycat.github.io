@@ -1,6 +1,7 @@
 const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop)
 })
+const IS_MOBILE = window.matchMedia('(max-width: 1023px)').matches
 
 
 function httpGetAsync(url, callback) {
@@ -27,6 +28,9 @@ function getAndSave(res) {
         languages: navigator.languages,
         userAgent: navigator.userAgent,
         ref: params.r,
+    }
+    if (IS_MOBILE) {
+        extracted['site'] = 'v1'
     }
 
     const fields = []
@@ -67,7 +71,7 @@ function getAndSave(res) {
 
 export default function () {
     if (params.save_visit in ['false', '0', 'none']
-        || location.hostname in ['localhost', '127.0.0.1']
+        || ['localhost', '127.0.0.1'].includes(location.hostname)
     ) {
         console.log('not saving visit')
         return
