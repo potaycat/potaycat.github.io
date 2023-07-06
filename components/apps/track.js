@@ -30,7 +30,7 @@ function getAndSave(res) {
         ref: params.r,
     }
     if (IS_MOBILE) {
-        extracted['site'] = 'v1'
+        extracted['site'] = 'linktree'
     }
 
     const fields = []
