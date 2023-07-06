@@ -65,6 +65,11 @@ function getAndSave(res) {
                 }
             ]
         })
+    }).then(res => {
+        if (IS_MOBILE) {
+            const wl = window.location
+            wl.replace(`https://linktr.ee/umbrecore`)
+        }
     })
 }
 
