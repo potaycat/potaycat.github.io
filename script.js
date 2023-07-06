@@ -6,7 +6,7 @@ import { appendDockIcon } from "./components/DE/dock.js"
 const IS_MOBILE = window.matchMedia('(max-width: 1023px)').matches
 if (IS_MOBILE) {
     const wl = window.location
-    // wl.replace(`https://v1.${wl.hostname}/${wl.search}`)
+    wl.replace(`https://linktr.ee/umbrecore`)
 }
 
 track()
