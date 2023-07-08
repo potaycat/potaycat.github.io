@@ -109,14 +109,14 @@ const ALL_APPS = [
         title: 'Discord bot',
         category: "My projects",
         icon: './assets/DE-icons/discord.png',
-        href: 'https://discord.com/api/oauth2/authorize?client_id=758176006171000833&permissions=338999499888&scope=applications.commands%20bot',
+        href: 'https://discord.com/api/oauth2/authorize?client_id=758176006171000833&permissions=2684472320&scope=bot%20applications.commands',
         content: `<p style='background:gold;padding:20px'>Reeebot. Lots of features. Invite it to your server!</p>
             <ul>
             <li>AI Chatbot</li>
             <li>Quick picture edit</li>
             <li>pixiv searcher</li>
             </ul>
-            <a href='https://discord.com/api/oauth2/authorize?client_id=758176006171000833&permissions=338999499888&scope=applications.commands%20bot'
+            <a href='https://discord.com/api/oauth2/authorize?client_id=758176006171000833&permissions=2684472320&scope=bot%20applications.commands'
             target='_blank'><button style="padding:20px">Invite!</button></a>        `
     },
 ]

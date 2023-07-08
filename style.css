@@ -3,6 +3,7 @@ body {
     color: white;
     font-family: 'Trebuchet MS', sans-serif;
     overflow: hidden;
+    overscroll-behavior: none;
 }
 
 .monitor-screen {
