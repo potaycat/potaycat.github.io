@@ -57,7 +57,7 @@ const ALL_APPS = [
         category: "Other",
         icon: './assets/DE-icons/music.png',
         iconBgCSS: 'linear-gradient(0deg, rgb(238,55,63) 0%, rgb(249,138,143) 100%)',
-        content: `<audio class="bg-music" controls loop>
+        content: `Hotlantis - Splatoon 3<br><audio class="bg-music" controls loop>
             <source src="./assets/1-38 - Hotlantis.mp3" type="audio/mpeg"></audio>
         `
     },
