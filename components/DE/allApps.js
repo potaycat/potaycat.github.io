@@ -48,7 +48,7 @@ const ALL_APPS = [
         title: 'Commission Info',
         category: "Other",
         icon: './assets/DE-icons/art-and-design.png',
-        content: `<p>Might be coming soon...</p>
+        content: `<p>[EMPTY]</p>
         `
     },
     {
