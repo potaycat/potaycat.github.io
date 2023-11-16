@@ -1,7 +1,7 @@
-import { launchApp, closeApp, preventDuplicate } from "./processManager.js"
+import { launchApp } from "./processManager.js"
 import { ALL_APPS } from "./allApps.js"
 import { ALL_APPLETS } from "./allApplets.js"
-import { toggleApplet, closeAllApplets } from './windows.js'
+import { toggleApplet, closeAllApplets, focusWindow } from './windows.js'
 
 
 const clockEl = document.querySelector('.dock-clock__content')
@@ -30,6 +30,7 @@ dockAll.addEventListener('click', e => {
             const win = document.querySelector('#file-iframe')
             if (win) {
                 win.contentWindow.toTrash()
+                focusWindow(win.parentElement.parentElement)
             } else {
                 const app = ALL_APPS.find(a => a.id == "files")
                 launchApp({ ...app, content: app.content.replace('home', 'trash') })
