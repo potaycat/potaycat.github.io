@@ -1,0 +1,92 @@
+<html>
+<div class="ctnr">
+    <div class="side-bar">
+        <h5>Places</h5>
+        <div class="quick public"
+            onclick='changeView(this, "https://drive.google.com/embeddedfolderview?id=19vyRawa94VKmwU_aPxcoFVqWPLUGLDzzE5lNvg40iYFfH_HizJuDkshczQzKH05cmFn5yAaQ#list")'>
+            Public folder</div>
+        <div class="quick">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeT9LEuZDynABrgQ0MPlaL5p3YV4pa1N60L1eDy654ptH3V8A/viewform?usp=sf_link"
+                target="_blank">Upload to Public folder ↗️</a>
+        </div>
+        <div class="quick"
+            onclick='changeView(this, "https://drive.google.com/embeddedfolderview?id=1bpCXQvZvzgW5bHPAitF5G47ud4c_FbSi#list")'>
+            Gallery</div>
+        <div class="quick trash"
+            onclick='changeView(this, "https://drive.google.com/embeddedfolderview?id=1ooQJwSn3CldDX3hZ34EX5mIijI60ScLt#list")'>
+            Trash</div>
+    </div>
+    <div class="viewer">
+        <iframe class="drive" src="" style="width: 680px; height: 500px; border: 0;"></iframe>
+    </div>
+</div>
+
+</html>
+
+<style>
+    body {
+        margin: 0;
+    }
+
+    .ctnr {
+        font-family: Arial;
+        padding: 10px 30px 10px 10px;
+        display: flex;
+        padding: 0 5px;
+        user-select: none;
+    }
+
+    .side-bar {
+        flex: 1;
+    }
+
+    .side-bar>h5 {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .quick {
+        padding: 5px 10px;
+        border-radius: 10px;
+        margin: 0 20px 5px 5px;
+        font-size: 14px;
+    }
+
+    .quick>a {
+        color: black;
+        text-decoration: none;
+    }
+
+    .quick.active {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .quick:active {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .drive {
+        background: #fff;
+        border-radius: 10px;
+    }
+</style>
+
+<script>
+    function changeView(elem, url) {
+        drive = document.querySelector(".drive")
+        drive.src = url
+        drive.parentElement.appendChild(drive)
+        document.querySelectorAll(".quick").forEach(el => {
+            el.classList.remove('active')
+        })
+        elem.classList.add('active')
+    }
+    function toTrash() {
+        document.querySelector('.trash').click()
+    }
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.get('launchLoc') == 'home') {
+        document.querySelector('.public').click()
+    } else if (urlParams.get('launchLoc') == 'trash') {
+        toTrash()
+    }
+</script>

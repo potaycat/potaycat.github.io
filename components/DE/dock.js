@@ -19,24 +19,27 @@ const dockAll = document.querySelector('.dock')
 
 dockAll.addEventListener('click', e => {
     const icon = document.elementFromPoint(e.clientX, e.clientY)
-    console.log(icon);
-    if (preventDuplicate(icon.id)) {
-        closeAllApplets()
-        return
-    }
+    // console.log(icon);
     if (icon.classList.contains('dock-window-manage')) {
         const app = ALL_APPLETS.find(a => a.id == icon.id);
         toggleApplet(app)
-        return
-    }
-    if (icon.classList.contains('docked-file')) {
+    } else if (icon.classList.contains('docked-file')) {
         if (icon.id == "funfact.txt") {
             launchApp(ALL_APPS.find(a => a.id == "doc-viewer"))
+        } else if (icon.id == "trash") {
+            const win = document.querySelector('#file-iframe')
+            if (win) {
+                win.contentWindow.toTrash()
+            } else {
+                const app = ALL_APPS.find(a => a.id == "files")
+                launchApp({ ...app, content: app.content.replace('home', 'trash') })
+            }
         }
+    } else {
+        closeAllApplets()
+        const app = ALL_APPS.find(a => a.id == icon.id)
+        launchApp(app)
     }
-    closeAllApplets()
-    const app = ALL_APPS.find(a => a.id == icon.id)
-    launchApp(app)
 })
 
 

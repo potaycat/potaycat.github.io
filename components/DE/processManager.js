@@ -1,5 +1,5 @@
 import { dock, appendDockIcon, toggleDockIconIndicator } from "./dock.js"
-import { windows, openWindow } from "./windows.js"
+import { windows, openWindow, focusWindow } from "./windows.js"
 
 function launchApp(app) {
     if (preventDuplicate(app.id)) {
@@ -25,7 +25,8 @@ function closeApp(id) {
 function preventDuplicate(id) {
     const found = windows.querySelector(`#${id}-win`)
     if (found) {
-        windows.appendChild(found)
+        console.log(found.style['z-index']);
+        focusWindow(found)
         return true
     }
     return false

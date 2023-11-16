@@ -18,19 +18,19 @@ function handleOnMouseDown(e) {
     const [x, y] = getMousePos(e)
     const header = document.elementFromPoint(x, y)
     if (header.classList.contains('window__header')) {
-        if (windows.classList.contains('windowlet-opened')) {
+        if (this.classList.contains('windowlet-opened')) {
             closeAllApplets()
         }
         dragging = header.parentElement
-        dragging.parentElement.appendChild(dragging)
-        windows.classList.add('--is-dragging')
+        focusWindow(dragging)
+        this.classList.add('--is-dragging')
         pos3 = x
         pos4 = y
     }
 }
 function handleOnMouseUp(e) {
     dragging = null
-    windows.classList.remove('--is-dragging')
+    this.classList.remove('--is-dragging')
 }
 function handleOnMouseMove(e) {
     if (!dragging) {
@@ -55,6 +55,16 @@ function handleOnMouseClick(e) {
     }
 }
 
+function focusWindow(found) {
+    const wins = windows.querySelectorAll('.stack')
+    wins.forEach(win => {
+        if (win.style['z-index'] > found.style['z-index']) {
+            win.style['z-index'] -= 1
+        }
+    })
+    found.style['z-index'] = wins.length - 1
+}
+
 function openWindow(id, title, content, href) {
     const maximizeBtn = href ? `<button class="maximize" for="${id}" href="${href}"><span>⤡</span></button>` : ''
     const winToInsert = `
@@ -70,9 +80,11 @@ function openWindow(id, title, content, href) {
         </div>
     `
     const node = document.createElement('div')
-    node.className = 'window'
+    node.className = 'window stack'
     node.id = `${id}-win`
     node.innerHTML += winToInsert
+    const winlen = windows.querySelectorAll('.stack').length
+    node.style['z-index'] = winlen
     windows.appendChild(node)
 }
 
@@ -87,7 +99,7 @@ function toggleApplet(app) {
     const [t, r, b, l] = app.position
     const winToInsert = `
         <div class="window windowlet" id="${app.id}-winlet"
-            style="top:${t};right:${r};bottom:${b};left:${l}">
+            style="top:${t};right:${r};bottom:${b};left:${l};z-index:999">
             <div class="window__content">
                 ${app.content}
             </div>
@@ -106,4 +118,4 @@ function closeAllApplets() {
 }
 
 
-export { windows, openWindow, toggleApplet, closeAllApplets }
+export { windows, openWindow, toggleApplet, closeAllApplets, focusWindow }
