@@ -30,7 +30,7 @@
     color: rgba(255, 255, 255, 0.5)
 }
 
-.window:last-child .window__header {
+.window.front .window__header {
     color: #fff;
     text-shadow: 1px 1px 5px #222;
 }

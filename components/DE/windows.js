@@ -56,13 +56,15 @@ function handleOnMouseClick(e) {
 }
 
 function focusWindow(found) {
-    const wins = windows.querySelectorAll('.stack')
+    const wins = windows.querySelectorAll('.window')
     wins.forEach(win => {
         if (win.style['z-index'] > found.style['z-index']) {
             win.style['z-index'] -= 1
         }
+        win.classList.remove('front')
     })
     found.style['z-index'] = wins.length - 1
+    found.classList.add('front')
 }
 
 function openWindow(id, title, content, href) {
@@ -80,10 +82,10 @@ function openWindow(id, title, content, href) {
         </div>
     `
     const node = document.createElement('div')
-    node.className = 'window stack'
+    node.className = 'window front'
     node.id = `${id}-win`
     node.innerHTML += winToInsert
-    const winlen = windows.querySelectorAll('.stack').length
+    const winlen = windows.querySelectorAll('.window').length
     node.style['z-index'] = winlen
     windows.appendChild(node)
 }
