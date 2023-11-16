@@ -25,7 +25,6 @@ function closeApp(id) {
 function preventDuplicate(id) {
     const found = windows.querySelector(`#${id}-win`)
     if (found) {
-        console.log(found.style['z-index']);
         focusWindow(found)
         return true
     }

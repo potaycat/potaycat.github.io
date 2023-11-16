@@ -16,8 +16,10 @@ windows.addEventListener('touchmove', handleOnMouseMove)
 
 function handleOnMouseDown(e) {
     const [x, y] = getMousePos(e)
-    const header = document.elementFromPoint(x, y)
-    if (header.classList.contains('window__header')) {
+    const atMouse = document.elementsFromPoint(x, y)
+    const header = atMouse.find(elem => elem.classList.contains('window__header'))
+    // console.log(atMouse);
+    if (header) {
         if (this.classList.contains('windowlet-opened')) {
             closeAllApplets()
         }
@@ -26,6 +28,11 @@ function handleOnMouseDown(e) {
         this.classList.add('--is-dragging')
         pos3 = x
         pos4 = y
+    } else {
+        const swapTo = atMouse.find(elem => elem.classList.contains('window__content'))
+        if (swapTo) {
+            focusWindow(swapTo.parentElement)
+        }
     }
 }
 function handleOnMouseUp(e) {

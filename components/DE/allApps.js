@@ -1,6 +1,14 @@
 
 const ALL_APPS = [
     {
+        id: 'about-os',
+        title: 'About "OS"',
+        category: null,
+        icon: null,
+        iconBgCSS: null,
+        content: null
+    },
+    {
         id: 'about-me',
         title: 'About Me',
         category: "My stuff",
@@ -131,7 +139,7 @@ const PINNED = ALL_APPS.filter(item => {
     return ['music-player', 'umbrecore-twitter'].includes(item.id)
 })
 const START_UP = ALL_APPS.filter(item => {
-    return ['about-me'].includes(item.id)
+    return ['about-me', 'about-os'].includes(item.id)
 })
 
 

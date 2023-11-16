@@ -7,10 +7,12 @@ import { getMousePos } from "../DE/utils.js"
 export default function () {
     const sortedApps = {}
     ALL_APPS.forEach(app => {
-        if (sortedApps[app.category]) {
-            sortedApps[app.category].push(app)
-        } else {
-            sortedApps[app.category] = [app]
+        if (app.category) {
+            if (sortedApps[app.category]) {
+                sortedApps[app.category].push(app)
+            } else {
+                sortedApps[app.category] = [app]
+            }
         }
     })
 
