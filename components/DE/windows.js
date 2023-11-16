@@ -16,10 +16,9 @@ windows.addEventListener('touchmove', handleOnMouseMove)
 
 function handleOnMouseDown(e) {
     const [x, y] = getMousePos(e)
-    const atMouse = document.elementsFromPoint(x, y)
-    const header = atMouse.find(elem => elem.classList.contains('window__header'))
+    const header = document.elementFromPoint(x, y)
     // console.log(atMouse);
-    if (header) {
+    if (header.classList.contains('window__header')) {
         if (this.classList.contains('windowlet-opened')) {
             closeAllApplets()
         }
@@ -29,10 +28,10 @@ function handleOnMouseDown(e) {
         pos3 = x
         pos4 = y
     } else {
-        const swapTo = atMouse.find(elem => elem.classList.contains('window__content'))
-        if (swapTo) {
-            focusWindow(swapTo.parentElement)
-        }
+        // const swapTo = atMouse.find(elem => elem.classList.contains('window__content'))
+        // if (swapTo) {
+        //     focusWindow(swapTo.parentElement)
+        // }
     }
 }
 function handleOnMouseUp(e) {
