@@ -107,7 +107,7 @@ function toggleApplet(app) {
     const [t, r, b, l] = app.position
     const winToInsert = `
         <div class="window windowlet" id="${app.id}-winlet"
-            style="top:${t};right:${r};bottom:${b};left:${l};z-index:999">
+            style="top:${t};right:${r};bottom:${b};left:${l};">
             <div class="window__content">
                 ${app.content}
             </div>
