@@ -1,5 +1,5 @@
 import { launchApp } from "./processManager.js"
-import { ALL_APPS } from "./allApps.js"
+import { ALL_APPS } from "../apps/allApps.js"
 import { ALL_APPLETS } from "./allApplets.js"
 import { toggleApplet, closeAllApplets, focusWindow } from './windows.js'
 

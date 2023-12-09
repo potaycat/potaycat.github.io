@@ -1,5 +1,5 @@
 import track from "./components/apps/track.js"
-import { PINNED, START_UP } from "./components/DE/allApps.js"
+import { PINNED, START_UP } from "./components/apps/allApps.js"
 import { launchApp } from "./components/DE/processManager.js"
 import { appendDockIcon } from "./components/DE/dock.js"
 

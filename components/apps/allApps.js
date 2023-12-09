@@ -42,15 +42,12 @@ const ALL_APPS = [
     },
     {
         id: 'tumblr',
-        title: 'Tumblr',
+        title: 'Itaku',
         category: "My stuff",
         icon: './assets/DE-icons/tumblr.png',
-        iconBgCSS: 'rgb(26,45,71)',
-        scriptSrc: 'https://assets.tumblr.com/post.js',
-        href: 'https://umbrecore.tumblr.com',
-        content: `<div class="tumblr-post" data-href="https://embed.tumblr.com/embed/post/x7mqTm64zm2kN08r_aoe7g/701068043616501760"
-            data-did="8faa5d0ac6bcbf1e61981370f8ef2084960ea1e8"><a href="https://tumblr.umbrecore.com/post/701068043616501760"
-            >https://tumblr.umbrecore.com/post/701068043616501760</a></div>`
+        iconBgCSS: 'fill',
+        href: 'https://itaku.ee/profile/daiyamon_o',
+        content: `<iframe id='itakuframe' src='https://itaku.ee/profile/daiyamon_o' height='750' width='600'></iframe>`
     },
     {
         id: 'kofi',

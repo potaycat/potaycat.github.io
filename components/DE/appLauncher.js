@@ -1,4 +1,4 @@
-import { ALL_APPS } from "../DE/allApps.js"
+import { ALL_APPS } from "../apps/allApps.js"
 import { windows, closeAllApplets } from "../DE/windows.js"
 import { launchApp } from "../DE/processManager.js"
 import { getMousePos } from "../DE/utils.js"

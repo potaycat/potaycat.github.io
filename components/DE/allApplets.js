@@ -1,4 +1,4 @@
-import appLauncher from '../apps/appLauncher.js'
+import appLauncher from '../DE/appLauncher.js'
 
 
 export const ALL_APPLETS = [
