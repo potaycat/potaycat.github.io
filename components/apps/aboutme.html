@@ -1,19 +1,25 @@
 <html>
 <div class="ctnr">
-    <img src="https://pbs.twimg.com/profile_images/1297300105532301313/ljmAgTFm_400x400.jpg" alt="pfp">
+    <div>
+        <a class="avatar" href="https://steamcommunity.com/profiles/76561198833479971" target="_blank">
+            <img src="https://pbs.twimg.com/profile_images/1297300105532301313/ljmAgTFm_400x400.jpg" alt="pfp">
+        </a>
+        <iframe src="https://gamer2810.github.io/steam-miniprofile/?accountId=76561198833479971"
+            class="steam-miniprofile" height="250px" width="350px"></iframe>
+    </div>
     <div>
         <h3>
             Me? The name's Reeeon.
         </h3>
         <p>
-            I'm most known as the eevee artist on X/Twitter. Other than that I also game and
+            I'm most known as the eevee artist on 𝕏 / Twitter. Other than that I also game and
             program stuff.
             <br><br>
             Favorite music artist: Snail's House.<br>
             Switch friend code: SW-4329-3705-0798<br>
         </p>
         <div class="pronoun">
-            <button onclick="((e) => e.remove())(this)">Reveal pronoun...</button>
+            <button onclick="((e) => e.remove())(this)">Reveal pronouns...</button>
             <sub>he/they/it</sub>
         </div>
     </div>
@@ -29,13 +35,28 @@
         align-items: center;
     }
 
-    img {
+    .steam-miniprofile {
+        border: none;
+        position: absolute;
+        top: 20px;
+        left: 190px;
+        opacity: 0;
+        transition: .2s;
+        z-index: 99;
+        pointer-events: none;
+    }
+
+    .avatar img {
         width: 150px;
         height: 150px;
         border-radius: 100px;
         border: 5px solid #eee;
         box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.5);
         margin: 20px 40px 0 0;
+    }
+
+    .avatar:hover+.steam-miniprofile {
+        opacity: 1;
     }
 
     .pronoun button {
