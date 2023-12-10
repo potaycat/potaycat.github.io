@@ -92,7 +92,7 @@ function openWindow(id, title, content, href) {
     node.id = `${id}-win`
     node.innerHTML += winToInsert
     const winlen = windows.querySelectorAll('.window').length
-    node.style['z-index'] = winlen
+    node.style['z-index'] = winlen - 1
     windows.appendChild(node)
 }
 

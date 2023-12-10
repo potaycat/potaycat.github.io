@@ -41,13 +41,13 @@ const ALL_APPS = [
         href: 'https://twitter.com/umbrecore'
     },
     {
-        id: 'tumblr',
+        id: 'itaku',
         title: 'Itaku',
         category: "My stuff",
         icon: './assets/DE-icons/tumblr.png',
         iconBgCSS: 'fill',
         href: 'https://itaku.ee/profile/daiyamon_o',
-        content: `<iframe id='itakuframe' src='https://itaku.ee/profile/daiyamon_o' height='750' width='600'></iframe>`
+        content: `<iframe id='itakuframe' src='https://itaku.ee/profile/daiyamon_o' height='720' width='600'></iframe>`
     },
     {
         id: 'kofi',
