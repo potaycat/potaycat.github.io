@@ -68,7 +68,7 @@ function getAndSave(res) {
     if (IS_MOBILE) {
         action += ' on mobile'
     }
-
+    FINGERPRINT['ip_address'] = res.ip_address
     const extracted = {
         fingerprint: FINGERPRINT,
         City: res.city,
