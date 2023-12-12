@@ -1,5 +1,6 @@
 import { closeApp } from "./processManager.js"
 import { getMousePos } from "./utils.js"
+import { save_action } from "../apps/track.js"
 
 const windows = document.querySelector('.windows-container')
 let dragging = null
@@ -54,10 +55,14 @@ function handleOnMouseMove(e) {
 function handleOnMouseClick(e) {
     const btn = document.elementFromPoint(e.clientX, e.clientY)
     if (btn.classList.contains('close-btn')) {
-        closeApp(btn.getAttribute('for'))
+        const id = btn.getAttribute('for')
+        closeApp(id)
+        save_action(`CLOSE ${id}`)
     } else if (btn.classList.contains('maximize')) {
         window.open(btn.getAttribute('href'), '_blank').focus()
-        closeApp(btn.getAttribute('for'))
+        const id = btn.getAttribute('for')
+        closeApp(id)
+        save_action(`MAXIMIZE ${id}`)
     }
 }
 
@@ -94,6 +99,8 @@ function openWindow(id, title, content, href) {
     const winlen = windows.querySelectorAll('.window').length
     node.style['z-index'] = winlen - 1
     windows.appendChild(node)
+
+    save_action(`OPEN ${id}`)
 }
 
 
