@@ -2,7 +2,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop)
 })
 const IS_MOBILE = window.matchMedia('(max-width: 1023px)').matches
-const DO_NOT_TRACK = params.track in ['false', '0', 'none'] //|| ['localhost', '127.0.0.1'].includes(location.hostname)
+const DO_NOT_TRACK = params.track in ['false', '0', 'none'] || ['localhost', '127.0.0.1'].includes(location.hostname)
 let FINGERPRINT = null
 const KNOWN_REF = {
     t: "X/Twitter profile",
@@ -137,6 +137,7 @@ function save_visit() {
 }
 
 function save_action(action) {
+    if (DO_NOT_TRACK) return
     log_to_discord({
         fingerprint: FINGERPRINT,
         action: action,
