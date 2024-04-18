@@ -14,7 +14,7 @@ const ALL_APPS = [
         category: "My stuff",
         icon: 'https://pbs.twimg.com/profile_images/1297300105532301313/ljmAgTFm_400x400.jpg',
         iconBgCSS: 'fill',
-        content: `<iframe height=300 width=550 src="./components/apps/aboutme.html"></iframe>`
+        content: `<iframe height=400 width=550 src="./components/apps/aboutme.html"></iframe>`
     },
     {
         id: 'discord-widget',
@@ -40,15 +40,15 @@ const ALL_APPS = [
         `,
         href: 'https://twitter.com/umbrecore'
     },
-    {
-        id: 'itaku',
-        title: 'Itaku',
-        category: "My stuff",
-        icon: './assets/DE-icons/tumblr.png',
-        iconBgCSS: 'fill',
-        href: 'https://itaku.ee/profile/daiyamon_o',
-        content: `<iframe id='itakuframe' src='https://itaku.ee/profile/daiyamon_o' height='720' width='600'></iframe>`
-    },
+    // {
+    //     id: 'itaku',
+    //     title: 'Itaku',
+    //     category: "My stuff",
+    //     icon: './assets/DE-icons/tumblr.png',
+    //     iconBgCSS: 'fill',
+    //     href: 'https://itaku.ee/profile/daiyamon_o',
+    //     content: `<iframe id='itakuframe' src='https://itaku.ee/profile/daiyamon_o' height='720' width='600'></iframe>`
+    // },
     {
         id: 'kofi',
         title: 'Ko-fi',
@@ -69,12 +69,16 @@ const ALL_APPS = [
         `
     },
     {
-        id: 'files',
-        title: 'Files',
+        id: 'jupyterlab',
+        title: 'Jupyter',
         category: "Other",
-        icon: './assets/DE-icons/icons8-file-explorer-96.png',
-        iconBgCSS: 'radial-gradient(circle, rgba(28,126,244,1) 30%, rgba(0,212,255,1) 100%)',
-        content: `<iframe id="file-iframe" height=500 width=900 frameBorder="0" src="./components/apps/files.html?launchLoc=home"></iframe>`
+        // icon: './assets/DE-icons/tumblr.png',
+        iconBgCSS: 'fill',
+        content: `<p>Did you have the password?</p>
+        <button>
+            <a href="https://pykernel.umbrecore.com" target="_blank">Launch JupyterLab</a>
+        </button>
+        `
     },
     {
         id: 'music-player',
@@ -96,6 +100,14 @@ const ALL_APPS = [
             <iframe src="https://drive.google.com/embeddedfolderview?id=1bpCXQvZvzgW5bHPAitF5G47ud4c_FbSi#grid"
                 style="width: 900px; height: 600px; border: 0;"></iframe>
         `
+    },
+    {
+        id: 'files',
+        title: 'Files',
+        category: "My stuff",
+        icon: './assets/DE-icons/icons8-file-explorer-96.png',
+        iconBgCSS: 'radial-gradient(circle, rgba(28,126,244,1) 30%, rgba(0,212,255,1) 100%)',
+        content: `<iframe id="file-iframe" height=500 width=900 frameBorder="0" src="./components/apps/files.html?launchLoc=home"></iframe>`
     },
     {
         id: 'doc-viewer',

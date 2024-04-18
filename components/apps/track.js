@@ -9,6 +9,7 @@ const KNOWN_REF = {
     d: "Discord profile",
     mz: "Zym's Mastodon profile",
     i: "Itaku profile",
+    x: "nsfw x/twitter profile",
 }
 
 function calc_canvas_hash() {
@@ -63,7 +64,7 @@ function getAndSave(res) {
     if (params.r in KNOWN_REF) {
         action = `VISIT from ${KNOWN_REF[params.r]}`
     } else {
-        action = `VISIT`
+        action = params.r ? `VISIT from ${params.r}` : "VISIT"
     }
     if (IS_MOBILE) {
         action += ' on mobile'
