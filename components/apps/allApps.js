@@ -14,7 +14,7 @@ const ALL_APPS = [
         category: "My stuff",
         icon: 'https://pbs.twimg.com/profile_images/1297300105532301313/ljmAgTFm_400x400.jpg',
         iconBgCSS: 'fill',
-        content: `<iframe height=400 width=550 src="./components/apps/aboutme.html"></iframe>`
+        content: `<iframe height=350 width=600 src="./components/apps/aboutme.html"></iframe>`
     },
     {
         id: 'discord-widget',
