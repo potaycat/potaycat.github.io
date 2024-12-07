@@ -1,20 +1,26 @@
-.app-drawer {
+.app-drawer,
+.app-drawer .app-drawer__app,
+.app-drawer__footer,
+.app-drawer__footer a {
     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.app-drawer {
     flex-wrap: wrap;
     justify-content: space-evenly;
-    padding: 15px 40px;
+    padding: 40px 20px;
     overflow-x: hidden;
     width: 500px;
-    max-height: 600px;
+    max-height: 560px;
 }
 
 .app-drawer .app-drawer__app {
     transform: scale(1.8);
     height: 130px;
     width: 140px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
 }
 
@@ -27,4 +33,23 @@
     width: 400px;
     height: 10px;
     font-size: x-large;
+}
+
+.app-drawer__footer {
+    height: 66px;
+    background: #0000001a;
+    justify-content: space-between;
+    padding: 0 66px;
+}
+
+.app-drawer__footer a {
+    height: 44px;
+    width: 44px;
+    border: none;
+    border-radius: 100px;
+    background: #00000023;
+}
+
+.app-drawer__footer a:hover {
+    background: #0000000e;
 }

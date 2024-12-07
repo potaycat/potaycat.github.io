@@ -79,13 +79,13 @@ function focusWindow(found) {
 }
 
 function openWindow(id, title, content, href) {
-    const maximizeBtn = href ? `<button class="maximize" for="${id}" href="${href}"><span>⤡</span></button>` : ''
+    const maximizeBtn = href ? `<button class="maximize" for="${id}" href="${href}">⤡</button>` : ''
     const winToInsert = `
         <div class="window__header">
             ${title}
             <div class="window__header__btn">
                 ${maximizeBtn}
-                <button class="close-btn" for="${id}"><span>⨉</span></button>
+                <button class="close-btn" for="${id}">⨉</button>
             </div>
         </div>
         <div class="window__content">

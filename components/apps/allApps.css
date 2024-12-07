@@ -1,0 +1,10 @@
+.twitter-timeline {
+    width: 600px;
+    height: 85vh;
+}
+
+.window__content:has(bsky-embed) {
+    background: #00000077;
+    width: 600px;
+    max-height: 85vh;
+}
