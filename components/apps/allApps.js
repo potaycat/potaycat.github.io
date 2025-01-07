@@ -24,7 +24,7 @@ const ALL_APPS = [
         id: 'about-me',
         title: 'About Me',
         category: "My stuff",
-        icon: 'https://pbs.twimg.com/profile_images/1297300105532301313/ljmAgTFm_400x400.jpg',
+        icon: 'https://pbs.twimg.com/profile_images/1876477247655428096/ann5aGoQ_400x400.jpg',
         iconBgCSS: 'fill',
         content: `<iframe height=350 width=600 src="./components/apps/aboutme.html"></iframe>`
     },
@@ -35,10 +35,10 @@ const ALL_APPS = [
         icon: 'components/apps/assets/twitter.png',
         iconBgCSS: 'rgb(75,160,235)',
         scriptSrc: 'https://platform.twitter.com/widgets.js',
-        content: `<a class="twitter-timeline" href="https://twitter.com/umbreboyfailure?ref_src=twsrc%5Etfw" 
-            target="_blank">Loading tweets by umbreboyfailure...</a>
+        content: `<a class="twitter-timeline" href="https://twitter.com/umbrecore?ref_src=twsrc%5Etfw" 
+            target="_blank">Loading tweets by umbrecore...</a>
         `,
-        href: 'https://twitter.com/umbreboyfailure'
+        href: 'https://twitter.com/umbrecore'
     },
     {
         id: 'oniribsky',
