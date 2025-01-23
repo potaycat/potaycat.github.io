@@ -8,3 +8,8 @@
     width: 600px;
     max-height: 85vh;
 }
+
+.music-player {
+    height: 120px;
+    padding: 10px 30px;
+}

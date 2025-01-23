@@ -48,12 +48,12 @@ const ALL_APPS = [
         iconBgCSS: 'linear-gradient(180deg, rgba(10,122,255,1) 0%, rgba(90,185,255,1) 100%)',
         scriptSrc: 'https://cdn.jsdelivr.net/npm/bsky-embed/dist/bsky-embed.es.js',
         content: `<bsky-embed class='bsky-embed'
-            username="onirimayo.io.vn"
+            username="umbrecore.io.vn"
             mode="dark"
-            limit="10"
+            load-more="true"
         ></bsky-embed>
         `,
-        href: 'https://bsky.app/profile/onirimayo.io.vn'
+        href: 'https://bsky.app/profile/umbrecore.io.vn'
     },
     // {
     //     id: 'itaku',
@@ -101,8 +101,15 @@ const ALL_APPS = [
         category: "Other",
         icon: 'components/apps/assets/music.png',
         iconBgCSS: 'linear-gradient(0deg, rgb(238,55,63) 0%, rgb(249,138,143) 100%)',
-        content: `Hotlantis - Splatoon 3<br><audio class="bg-music" controls loop>
-            <source src="components/apps/assets/1-38 - Hotlantis.mp3" type="audio/mpeg"></audio>
+        content: `<div class='music-player'>
+            <h4>Hotlantis - Splatoon 3</h4>
+            <audio class="bg-music" controls loop>
+                <source src="components/apps/assets/music-player/1-38 - Hotlantis.mp3" type="audio/mpeg">
+            </audio>
+            <h4>Hotlantis - Splatoon 3</h4>
+            <audio class="bg-music" controls loop>
+                <source src="components/apps/assets/music-player/1-38 - Hotlantis.mp3" type="audio/mpeg">
+            </audio></div>
         `
     },
     {
@@ -136,10 +143,10 @@ const ALL_APPS = [
         id: 'vaporeon',
         title: 'Vaporeon',
         category: "Other",
-        icon: 'https://vap.onirimayo.io.vn/icons/icon-192.png',
+        icon: 'https://vap.umbrecore.io.vn/icons/icon-192.png',
         iconBgCSS: 'fill',
-        href: 'https://vap.onirimayo.io.vn/',
-        content: `<iframe src="https://vap.onirimayo.io.vn/" height=600 width=900></iframe>
+        href: 'https://vap.umbrecore.io.vn/',
+        content: `<iframe src="https://vap.umbrecore.io.vn/" height=600 width=900></iframe>
         `
     },
     {

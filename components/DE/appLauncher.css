@@ -19,9 +19,8 @@
 
 .app-drawer .app-drawer__app {
     transform: scale(1.8);
-    height: 130px;
-    width: 140px;
     flex-direction: column;
+    margin: 45px 45px;
 }
 
 .app-drawer .app-title {
