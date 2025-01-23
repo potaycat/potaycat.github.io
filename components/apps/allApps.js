@@ -48,12 +48,12 @@ const ALL_APPS = [
         iconBgCSS: 'linear-gradient(180deg, rgba(10,122,255,1) 0%, rgba(90,185,255,1) 100%)',
         scriptSrc: 'https://cdn.jsdelivr.net/npm/bsky-embed/dist/bsky-embed.es.js',
         content: `<bsky-embed class='bsky-embed'
-            username="umbrecore.io.vn"
+            username="did:plc:emcdqhtntrh5f2iv6eedpvvx"
             mode="dark"
             load-more="true"
         ></bsky-embed>
         `,
-        href: 'https://bsky.app/profile/umbrecore.io.vn'
+        href: 'https://bsky.app/profile/did:plc:emcdqhtntrh5f2iv6eedpvvx'
     },
     // {
     //     id: 'itaku',
