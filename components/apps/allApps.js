@@ -24,16 +24,16 @@ const ALL_APPS = [
         id: 'about-me',
         title: 'About Me',
         category: "My stuff",
-        icon: 'https://pbs.twimg.com/profile_images/1876477247655428096/ann5aGoQ_400x400.jpg',
+        icon: '/components/apps/about-me/avatar.png',
         iconBgCSS: 'fill',
-        content: `<iframe height=350 width=600 src="./components/apps/aboutme.html"></iframe>`
+        content: `<iframe height=350 width=600 src="./components/apps/about-me/aboutme.html"></iframe>`
     },
     {
         id: 'umbrecore-twitter',
         title: 'Twitter',
         category: "Social",
         icon: 'components/apps/assets/twitter.png',
-        iconBgCSS: 'rgb(75,160,235)',
+        iconBgCSS: '#181b20',
         scriptSrc: 'https://platform.twitter.com/widgets.js',
         content: `<a class="twitter-timeline" href="https://twitter.com/umbrecore?ref_src=twsrc%5Etfw" 
             target="_blank">Loading tweets by umbrecore...</a>
