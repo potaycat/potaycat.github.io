@@ -36,7 +36,7 @@ const ALL_APPS = [
         iconBgCSS: '#181b20',
         scriptSrc: 'https://platform.twitter.com/widgets.js',
         content: `<a class="twitter-timeline" href="https://twitter.com/umbrecore?ref_src=twsrc%5Etfw" 
-            target="_blank">Loading tweets by umbrecore...</a>
+            target="_blank">Click here if cannot see tweets...</a>
         `,
         href: 'https://twitter.com/umbrecore'
     },

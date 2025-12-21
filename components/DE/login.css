@@ -209,7 +209,7 @@ main .users .crystal .user {
     color: #fff;
     font-family: "Source Sans Pro", sans-serif;
     font-size: 25px;
-    margin-top: -10px;
+    /* margin-top: -10px; */
 }
 
 main .users .lucas .user p {
@@ -304,7 +304,7 @@ main .users .crystal {
 }
 
 main .users .crystal .iconB {
-    background: url("https://pbs.twimg.com/profile_images/1876477247655428096/ann5aGoQ_400x400.jpg") no-repeat center center;
+    background: url("/components/apps/about-me/avatar.png") no-repeat center center;
     background-size: cover;
     border-color: #fff;
 }

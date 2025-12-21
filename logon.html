@@ -31,8 +31,8 @@
                     <h3>LongNH</h3>
                     <p>Type your password</p>
                     <div class="input">
-                        <input type="password">
-                        <button class="green"> <img src="components/DE/assets/Vector (1).png" alt=""> </button>
+                        <input id="passwordInput" type="password">
+                        <button class="green" onclick="go()"> <img src="components/DE/assets/Vector (1).png" alt=""> </button>
                         <!-- <button class="blue"> <img src="/assets/_.png" alt=""> </button> -->
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                 <section class="crystal">
                     <div class="iconB"></div>
                     <div class="user">
-                        <p>Rii0n</p>
+                        <p>Reeeon</p>
                     </div>
                 </section>
             </a>
@@ -53,9 +53,18 @@
             <p>Turn off your </p>
         </div>
         <div class="informations">
-            <p>github.com/lucasgmelo/xp</p>
+            <p></p>
         </div>
     </footer>
 </body>
+
+<script>
+    function go() {
+        const password = document.querySelector('#passwordInput').value;
+        if (password === '06112000') {
+            alert('You are cute :)')
+        }
+    }
+</script>
 
 </html>

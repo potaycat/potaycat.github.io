@@ -45,6 +45,10 @@
     overflow: auto;
 }
 
+.window__content iframe {
+    border: rgba(255, 255, 255, 0.2) 1px solid;
+}
+
 .window__header__btn {
     display: flex;
 }
