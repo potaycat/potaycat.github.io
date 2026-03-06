@@ -1,0 +1,45 @@
+<html style="background:#fff">
+<div class="ctnr">
+    <input type="text" id="file-name" value="">
+    <textarea name="" id="file-content" cols="30"
+        rows="10"></textarea>
+</div>
+
+</html>
+
+<style>
+    .ctnr {
+        padding: 10px 20px;
+    }
+    textarea, input {
+        width: 100%;
+        font-size: 22px;
+        border: none;
+        font-family: 'Times New Roman', Times, serif;
+    }
+    input {
+        margin: 10px 0;
+        border-bottom: 2px solid #ddd;
+    }
+    textarea {
+        height: 100%;
+    }
+</style>
+
+<script>
+    function openFile() {
+        document.getElementById('file-name').value = 'password.txt'
+        const fileContent = `password: 06112000
+
+
+---
+"Umbreon isn’t just a pokemon, it’s a lifestyle, a reason to live, an escape from this cruel world filled with thieves. it’s art, a hug from a loved one, everything you’ve ever wanted."
+`
+        document.getElementById('file-content').value = fileContent
+    }
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.get('launchLoc') == 'home') {
+    } else if (urlParams.get('launchLoc') == 'openFile') {
+        openFile()
+    }
+</script>

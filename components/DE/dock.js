@@ -25,7 +25,14 @@ dockAll.addEventListener('click', e => {
         toggleApplet(app)
     } else if (icon.classList.contains('docked-file')) {
         if (icon.id == "funfact.txt") {
-            launchApp(ALL_APPS.find(a => a.id == "doc-viewer"))
+            const win = document.querySelector('#doc-viewer-iframe')
+            if (win) {
+                win.contentWindow.openFile()
+                focusWindow(win.parentElement.parentElement)
+            } else {
+                const app = ALL_APPS.find(a => a.id == "doc-viewer")
+                launchApp({ ...app, content: app.content.replace('home', 'openFile') })
+            }
         } else if (icon.id == "trash") {
             const win = document.querySelector('#file-iframe')
             if (win) {

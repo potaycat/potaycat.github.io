@@ -40,6 +40,17 @@ const ALL_APPS = [
         `,
         href: 'https://twitter.com/umbrecore'
     },
+    // {
+    //     id: 'umbrecore-barq',
+    //     title: 'Barq',
+    //     category: "Social",
+    //     icon: 'components/apps/assets/twitter.png',
+    //     iconBgCSS: '#181b20',
+    //     content: `<iframe id='kofiframe' src='https://web.barq.app/profiles/08dd19bb-e0e8-4898-918f-24687b3a201d'
+    //         height='700' width='350'></iframe>
+    //     `,
+    //     href: 'https://web.barq.app/profiles/08dd19bb-e0e8-4898-918f-24687b3a201d'
+    // },
     {
         id: 'oniribsky',
         title: 'Bluesky',
@@ -137,7 +148,7 @@ const ALL_APPS = [
         category: "Other",
         icon: 'components/DE/assets/paper.png',
         iconBgCSS: 'linear-gradient(0deg, rgba(237,142,59,1) 0%, rgba(249,165,91,1) 100%)',
-        content: `<iframe height=450 width=500 src="./components/apps/textEdit.html"></iframe>`
+        content: `<iframe id="doc-viewer-iframe" height=450 width=500 src="./components/apps/doc-viewer/textEdit.html?launchLoc=home"></iframe>`
     },
     {
         id: 'vaporeon',
