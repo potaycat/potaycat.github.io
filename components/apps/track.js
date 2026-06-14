@@ -11,6 +11,7 @@ const KNOWN_REF = {
     i: "Itaku profile",
     x: "nsfw x/twitter profile",
 }
+const ASK_FOR_REDIRECT_PATH = "/components/DE/assets/askforredirect.html"
 
 function calc_canvas_hash() {
     // https://jsfiddle.net/piotrbartnik/dppqhtg3/1/
@@ -124,6 +125,13 @@ function log_to_discord(obj, callback) {
 
 
 function save_visit() {
+    // const rere = document.createElement('div')
+    // // parse the ask for redirect page and append to rere
+    // fetch(ASK_FOR_REDIRECT_PATH).then(res => res.text()).then(html => {
+    //     rere.innerHTML = html
+    //     document.body.appendChild(rere)
+    // })
+        
     if (DO_NOT_TRACK) {
         console.log('not tracking')
         return

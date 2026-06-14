@@ -51,21 +51,21 @@ const ALL_APPS = [
     //     `,
     //     href: 'https://web.barq.app/profiles/08dd19bb-e0e8-4898-918f-24687b3a201d'
     // },
-    {
-        id: 'oniribsky',
-        title: 'Bluesky',
-        category: "Social",
-        icon: 'components/apps/assets/Bluesky_Logo.svg.png',
-        iconBgCSS: 'linear-gradient(180deg, rgba(10,122,255,1) 0%, rgba(90,185,255,1) 100%)',
-        scriptSrc: 'https://cdn.jsdelivr.net/npm/bsky-embed/dist/bsky-embed.es.js',
-        content: `<bsky-embed class='bsky-embed'
-            username="did:plc:emcdqhtntrh5f2iv6eedpvvx"
-            mode="dark"
-            load-more="true"
-        ></bsky-embed>
-        `,
-        href: 'https://bsky.app/profile/did:plc:emcdqhtntrh5f2iv6eedpvvx'
-    },
+    // {
+    //     id: 'oniribsky',
+    //     title: 'Bluesky',
+    //     category: "Social",
+    //     icon: 'components/apps/assets/Bluesky_Logo.svg.png',
+    //     iconBgCSS: 'linear-gradient(180deg, rgba(10,122,255,1) 0%, rgba(90,185,255,1) 100%)',
+    //     scriptSrc: 'https://cdn.jsdelivr.net/npm/bsky-embed/dist/bsky-embed.es.js',
+    //     content: `<bsky-embed class='bsky-embed'
+    //         username="did:plc:emcdqhtntrh5f2iv6eedpvvx"
+    //         mode="dark"
+    //         load-more="true"
+    //     ></bsky-embed>
+    //     `,
+    //     href: 'https://bsky.app/profile/did:plc:emcdqhtntrh5f2iv6eedpvvx'
+    // },
     // {
     //     id: 'itaku',
     //     title: 'Itaku',

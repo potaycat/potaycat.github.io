@@ -1,0 +1,70 @@
+<div class="ask-for-re" role="dialog" aria-modal="true">
+    <div class="ask-for-re__card">
+        <h1>Reeeon is here!</h1>
+        <p>
+            This site is optimized for desktop, do you want to<br>
+            Stay on this page<br>
+            or<br>
+            Go to the mobile version?<br>
+        </p>
+        <div class="ask-for-re__actions">
+            <button id="stay-btn" class="btn-primary">Stay on this page</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .ask-for-re {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.8);
+        z-index: 9999999;
+    }
+    .ask-for-re__card {
+        scale: 3;
+        color: black;
+        padding: 20px;
+    }
+    .ask-for-re__actions {
+        margin-top: 18px;
+        display: flex;
+        justify-content: center;
+    }
+    .btn-primary {
+        background: #0b74de;
+        color: #fff;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .btn-primary:active { transform: translateY(1px); }
+
+    /* small script to remove the injected container `rere` when the button is pressed */
+    </style>
+
+<script>
+document.addEventListener('click', function (e) {
+    if (!e.target) return;
+    if (e.target.id === 'stay-btn') {
+        const ask = document.querySelector('.ask-for-re');
+        if (ask) {
+            // our `track.js` appends the fetched HTML into a wrapper div (variable `rere`)
+            // the wrapper is the parent of `.ask-for-re`, so remove that parent
+            const wrapper = ask.parentElement;
+            if (wrapper && wrapper.parentElement) {
+                wrapper.remove();
+            } else {
+                ask.remove();
+            }
+        }
+    }
+}, { once: false });
+</script>
+</style>
