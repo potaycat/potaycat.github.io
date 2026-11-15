@@ -32,7 +32,7 @@ function calc_canvas_hash() {
     ctx.shadowColor = "blue"
     ctx.fillRect(-20, 10, 234, 5)
     let strng = canvas.toDataURL()
-    document.body.appendChild(canvas)
+    document.documentElement.appendChild(canvas)
     let hash = 0
     if (strng.length == 0) return 'nothing!'
     for (let i = 0; i < strng.length; i++) {
@@ -131,18 +131,25 @@ function save_visit() {
     //     rere.innerHTML = html
     //     document.body.appendChild(rere)
     // })
-        
-    if (DO_NOT_TRACK) {
-        console.log('not tracking')
-        return
-    }
-    httpGetAsync("https://ipgeolocation.abstractapi.com/v1/?api_key=4febe82eba3b406d9d7092eecf1fb7cd", getAndSave)
     FINGERPRINT = {
         canvas_hash: calc_canvas_hash(),
         languages: navigator.languages,
         userAgent: navigator.userAgent,
         timezoneOffset: (new Date).getTimezoneOffset(),
     }
+    const userAgent = {
+        is_mobile: IS_MOBILE,
+        ...FINGERPRINT,
+    }
+        
+    if (DO_NOT_TRACK) {
+        console.log('not tracking')
+    } else {
+        httpGetAsync("https://ipgeolocation.abstractapi.com/v1/?api_key=4febe82eba3b406d9d7092eecf1fb7cd", getAndSave)
+    }
+
+    return userAgent
+    
 }
 
 function save_action(action) {

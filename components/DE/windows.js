@@ -2,17 +2,33 @@ import { closeApp } from "./processManager.js"
 import { getMousePos } from "./utils.js"
 import { save_action } from "../apps/track.js"
 
-const windows = document.querySelector('.windows-container')
+let windows
 let dragging = null
 let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0
 
-windows.addEventListener('mousedown', handleOnMouseDown)
-windows.addEventListener('mouseup', handleOnMouseUp)
-windows.addEventListener('mousemove', handleOnMouseMove)
-windows.addEventListener('click', handleOnMouseClick)
-windows.addEventListener('touchstart', handleOnMouseDown)
-windows.addEventListener('touchend', handleOnMouseUp)
-windows.addEventListener('touchmove', handleOnMouseMove)
+async function desktopBoot() {
+    const response = await fetch(new URL("./desktop.html", import.meta.url))
+    if (!response.ok) {
+        throw new Error(`Failed to load desktop: ${response.status} ${response.statusText}`)
+    }
+
+    const template = document.createElement('template')
+    template.innerHTML = await response.text()
+    document.body.append(template.content)
+
+    windows = document.querySelector('.windows-container')
+    if (!windows) {
+        throw new Error('Desktop markup does not contain a windows container')
+    }
+
+    windows.addEventListener('mousedown', handleOnMouseDown)
+    windows.addEventListener('mouseup', handleOnMouseUp)
+    windows.addEventListener('mousemove', handleOnMouseMove)
+    windows.addEventListener('click', handleOnMouseClick)
+    windows.addEventListener('touchstart', handleOnMouseDown)
+    windows.addEventListener('touchend', handleOnMouseUp)
+    windows.addEventListener('touchmove', handleOnMouseMove)
+}
 
 
 function handleOnMouseDown(e) {
@@ -133,4 +149,4 @@ function closeAllApplets() {
 }
 
 
-export { windows, openWindow, toggleApplet, closeAllApplets, focusWindow }
+export { windows, desktopBoot, openWindow, toggleApplet, closeAllApplets, focusWindow }

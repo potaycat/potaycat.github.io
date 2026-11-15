@@ -4,51 +4,64 @@ import { ALL_APPLETS } from "./allApplets.js"
 import { toggleApplet, closeAllApplets, focusWindow } from './windows.js'
 
 
-const clockEl = document.querySelector('.dock-clock__content')
-setInterval(() => {
-    const now = new Date()
-    let build = ""
-    build += now.getHours() + ":" + now.getMinutes() + '<br>'
-    build += now.getDate() + "/" + (now.getMonth() + 1)
-    clockEl.innerHTML = build
-}, 1000)
+let dock
+let dockAll
+let initialized = false
 
-
-const dock = document.querySelector('.dock__apps')
-const dockAll = document.querySelector('.dock')
-
-dockAll.addEventListener('click', e => {
-    const icon = document.elementFromPoint(e.clientX, e.clientY)
-    // console.log(icon);
-    if (icon.classList.contains('dock-window-manage')) {
-        const app = ALL_APPLETS.find(a => a.id == icon.id);
-        toggleApplet(app)
-    } else if (icon.classList.contains('docked-file')) {
-        if (icon.id == "funfact.txt") {
-            const win = document.querySelector('#doc-viewer-iframe')
-            if (win) {
-                win.contentWindow.openFile()
-                focusWindow(win.parentElement.parentElement)
-            } else {
-                const app = ALL_APPS.find(a => a.id == "doc-viewer")
-                launchApp({ ...app, content: app.content.replace('home', 'openFile') })
-            }
-        } else if (icon.id == "trash") {
-            const win = document.querySelector('#file-iframe')
-            if (win) {
-                win.contentWindow.toTrash()
-                focusWindow(win.parentElement.parentElement)
-            } else {
-                const app = ALL_APPS.find(a => a.id == "files")
-                launchApp({ ...app, content: app.content.replace('home', 'trash') })
-            }
-        }
-    } else {
-        closeAllApplets()
-        const app = ALL_APPS.find(a => a.id == icon.id)
-        launchApp(app)
+function initializeDock() {
+    if (initialized) {
+        return
     }
-})
+
+    const clockEl = document.querySelector('.dock-clock__content')
+    dock = document.querySelector('.dock__apps')
+    dockAll = document.querySelector('.dock')
+    if (!clockEl || !dock || !dockAll) {
+        throw new Error('Desktop markup does not contain the dock elements')
+    }
+
+    initialized = true
+    setInterval(() => {
+        const now = new Date()
+        let build = ""
+        build += now.getHours() + ":" + now.getMinutes() + '<br>'
+        build += now.getDate() + "/" + (now.getMonth() + 1)
+        clockEl.innerHTML = build
+    }, 1000)
+
+    dockAll.addEventListener('click', e => {
+        const icon = document.elementFromPoint(e.clientX, e.clientY)
+        // console.log(icon);
+        if (icon.classList.contains('dock-window-manage')) {
+            const app = ALL_APPLETS.find(a => a.id == icon.id);
+            toggleApplet(app)
+        } else if (icon.classList.contains('docked-file')) {
+            if (icon.id == "funfact.txt") {
+                const win = document.querySelector('#doc-viewer-iframe')
+                if (win) {
+                    win.contentWindow.openFile()
+                    focusWindow(win.parentElement.parentElement)
+                } else {
+                    const app = ALL_APPS.find(a => a.id == "doc-viewer")
+                    launchApp({ ...app, content: app.content.replace('home', 'openFile') })
+                }
+            } else if (icon.id == "trash") {
+                const win = document.querySelector('#file-iframe')
+                if (win) {
+                    win.contentWindow.toTrash()
+                    focusWindow(win.parentElement.parentElement)
+                } else {
+                    const app = ALL_APPS.find(a => a.id == "files")
+                    launchApp({ ...app, content: app.content.replace('home', 'trash') })
+                }
+            }
+        } else {
+            closeAllApplets()
+            const app = ALL_APPS.find(a => a.id == icon.id)
+            launchApp(app)
+        }
+    })
+}
 
 
 function appendDockIcon(id, title, icon, iconBgCSS) {
@@ -75,4 +88,4 @@ function toggleDockIconIndicator(id) {
     elem.classList.toggle('hidden')
 }
 
-export { dock, appendDockIcon, toggleDockIconIndicator }
+export { dock, initializeDock, appendDockIcon, toggleDockIconIndicator }
