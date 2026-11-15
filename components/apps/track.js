@@ -11,7 +11,6 @@ const KNOWN_REF = {
     i: "Itaku profile",
     x: "nsfw x/twitter profile",
 }
-const ASK_FOR_REDIRECT_PATH = "/components/DE/assets/askforredirect.html"
 
 function calc_canvas_hash() {
     // https://jsfiddle.net/piotrbartnik/dppqhtg3/1/

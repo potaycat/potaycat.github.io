@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#0ba4e0" />
+    <title>Aero Bubble Hub</title>
+    <link rel="stylesheet" href="./mobile.css">
+
+
+    <!-- =========================================================================
+       🎨 PICASSO STUDIO — USER PNG & CONTENT CONFIGURATION
+       Paste your PNG URLs or relative file paths (e.g. "./img/discord.png")
+       into the quotes below. Leave "" to preview with built-in Aero visuals!
+       ========================================================================= -->
+    <script id="USER-CONFIGURATION">
+        window.AERO_CONFIG = {
+            // 1. MAIN WALLPAPER PNG (Also reflected & refracted inside all glass bubbles!)
+            backgroundPng: "./E-ev5KEVIAAfjv7.jpg", // <-- ADD YOUR BACKGROUND PNG LINK HERE (e.g. "./bg.png")
+
+            // 2. YOUR AVATAR PNG (Displayed inside the "About Me" bubble)
+            avatarPng: "../components/apps/about-me/avatar.png", // <-- ADD YOUR AVATAR PNG LINK HERE
+
+            // 3. IDENTITY HEADER DETAILS
+            displayName: "Reeeon",
+            handle: "@umbrecore",
+            // statusText: "Creating liquid dreams ✨",
+            enableWaterSounds: true,
+
+            // 4. BOTTOM DOCK LOGOS & TOP BUBBLE CARDS
+            profiles: [
+                {
+                    id: "about",
+                    title: "About Me",
+                    logoPng: "", // <-- ADD "ABOUT ME" LOGO PNG LINK HERE
+                    accent: "#F02AEE",
+                    cards: [
+                        {
+                            badge: "01 / IDENTITY",
+                            heading: "Welcome to My Biosphere",
+                            type: "about-hero",
+                            body: "universe has no purpose, so I made my own. stupid and gay, and evil. eevee shota <3. YOB: 2000. Favorite music genre: Kawaii Future Bass. Switch friend code: SW-4329-3705-0798.",
+                            tags: ["Digital Art", "2008 Nostalgia", "Pokemon", "Cryptic"],
+                            copyLabel: "Copy my Pronoun",
+                            copyValue: "he/him/they/them",
+                        },
+                        {
+                            badge: "02 / SPECS & VIBE",
+                            heading: "Current Frequencies",
+                            body: "Umbreon isn’t just a pokemon, it’s a cultural reset, it’s the oxygen you breathe, it’s a lifestyle, a reason to live, an escape from this cruel world filled with thieves. it’s art, a hug from a loved one, everything you’ve ever wanted.",
+                            stats: [
+                                { label: "Timezone", value: "GMT+7 • Night Owl" },
+                                { label: "Tools", value: "Clip Studio • Surface Pro" },
+                                { label: "Now Playing", value: "Snail's House • Ra-mu-ne" }
+                            ]
+                        },
+                        {
+                            badge: "03 / FAQ",
+                            heading: "Quick Notes",
+                            body: "Feel free to reach out for collaborations, art trades with mutuals, or commission inquiries!",
+                            stats: [
+                                { label: "Reposts", value: "With credit & link back only" },
+                                { label: "DMs", value: "Always open for work inquiries" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "discord",
+                    title: "Discord",
+                    logoPng: "", // <-- ADD DISCORD LOGO PNG LINK HERE
+                    accent: "#5865F2",
+                    cards: [
+                        {
+                            badge: "01 / DIRECT CONNECT",
+                            heading: "Chat & Hangout",
+                            body: "please donate thigh and armpit pics",
+                            copyLabel: "Copy Discord username",
+                            copyValue: "umbrecore_",
+                            ctaText: "Join Reeeon Cult Server ↗",
+                            ctaUrl: "https://discord.gg/RPH9yeQcZd"
+                        },
+                        {
+                            badge: "02 / SERVER PERKS",
+                            heading: "Inside the Cult",
+                            body: "Art streams, gaming streams, custom furry emojis, memes, WIP drops,...",
+                            stats: [
+                                { label: "Active Hours", value: "uhh" },
+                                { label: "Stream Night", value: "idk" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "twitter",
+                    title: "X / Twitter",
+                    logoPng: "", // <-- ADD TWITTER / X LOGO PNG LINK HERE
+                    accent: "#1DA1F2",
+                    cards: [
+                        {
+                            badge: "01 / MAIN FEED",
+                            heading: "Art & Experiments",
+                            body: "My most finished pieces go here.",
+                            tags: ["#Eevee", "#DigitalArt", "#reeeonsus"],
+                            ctaText: "Follow on X / Twitter ↗",
+                            ctaUrl: "https://x.com/umbrecore"
+                        },
+                        {
+                            badge: "02 / ALT & ARCHIVE",
+                            heading: "My content",
+                            body: "What I like to post outside of art?",
+                            stats: [
+                                { label: "Main Handle", value: "@umbrecore" },
+                                { label: "irl nude account", value: "@potaycat" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "commissions",
+                    title: "Commission Info",
+                    logoPng: "", // <-- ADD COMMISSION INFO LOGO PNG LINK HERE
+                    accent: "#00e699",
+                    cards: [
+                        {
+                            badge: "03 / CLAIM A SLOT",
+                            heading: "Status: CLOSED",
+                            body: "Prepare your character references + moodboard and send a request via my form or Discord DM!",
+                            progressLabel: "Current Queue Capacity",
+                            progressPercent: 99,
+                            ctaText: "Open Commission Form ↗",
+                            ctaUrl: "https://example.com/commissions"
+                        }
+                    ]
+                },
+                {
+                    id: "kofi",
+                    title: "Ko-fi",
+                    logoPng: "", // <-- ADD KO-FI LOGO PNG LINK HERE
+                    accent: "#ff5e8e",
+                    cards: [
+                        {
+                            badge: "01 / TIP JAR",
+                            heading: "Drop a Refreshing Splash",
+                            body: "Every tip fuels late-night painting sessions, brush packs, and Eevee art for everyone!",
+                            progressLabel: "Pay rent",
+                            progressPercent: 99,
+                            ctaText: "Support on Ko-fi ↗",
+                            ctaUrl: "https://ko-fi.com/umbrecore"
+                        },
+                        {
+                            badge: "02 / SUPPORTER REWARDS",
+                            heading: "Aqua Tier Perks",
+                            body: "Monthly supporters unlock layered `.PSD` files, 4K uncompressed art packs, and brush settings.",
+                            stats: [
+                                { label: "Droplet Tier ($3)", value: "4K Wallpaper Vault" },
+                                { label: "Ocean Tier ($8)", value: "PSDs + Timelapse Videos" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "galery",
+                    title: "Galery",
+                    logoPng: "", // <-- ADD "GALERY" LOGO PNG LINK HERE
+                    accent: "#38f2ff",
+                    cards: [
+                        {
+                            badge: "01 / FEATURED WORKS",
+                            heading: "Selected Galery",
+                            body: "Tap any crystal frame below to inspect full bubble preview.",
+                            type: "gallery",
+                            galleryItems: [
+                                { title: "Riolu Persona", imagePng: "./gallery/riolu persona.png" }, // <-- ADD ARTWORK 1 PNG LINK HERE
+                                { title: "Maid", imagePng: "./gallery/gay diego.png" }, // <-- ADD ARTWORK 2 PNG LINK HERE
+                                { title: "Leafeon", imagePng: "./gallery/leafeon mo.png" }, // <-- ADD ARTWORK 3 PNG LINK HERE
+                                { title: "Posing", imagePng: "./gallery/crouch.png" }  // <-- ADD ARTWORK 4 PNG LINK HERE
+                            ]
+                        },
+                        {
+                            badge: "02 / FULL ARCHIVE",
+                            heading: "Beyond the Surface",
+                            body: "Explore high-resolution character sheets, studies, and archival works from 2022–2026.",
+                            tags: ["Illustrations", "Concept Art", "3D Glass"],
+                            ctaText: "View Full Portfolio ↗",
+                            ctaUrl: "https://example.com/gallery"
+                        }
+                    ]
+                }
+                /* ➕ Copy & paste any object block above to add more logos anytime! */
+            ]
+        };
+    </script>
+
+</head>
+
+<body>
+    <!-- Background & Refractive Source -->
+    <div id="wallpaper-layer"></div>
+    <div id="wallpaper-glaze"></div>
+
+    <!-- GPU-Friendly Floating Water Droplets -->
+    <div class="ambient-bubbles" id="ambientBubbles"></div>
+
+    <!-- Foreground macOS Genie Liquid Funnel Canvas -->
+    <canvas id="genie-canvas"></canvas>
+
+    <!-- Main Mobile Interface -->
+    <main id="app-shell">
+        <header class="top-bar">
+            <div class="aero-pill-bar">
+                <span class="live-orb"></span>
+                <span id="active-category-label">About Me</span>
+            </div>
+
+            <div class="droplet-dots" id="droplet-pagination" aria-label="Info bubbles"></div>
+
+            <button class="sound-btn" id="sound-toggle" title="Toggle Water Droplet SFX"
+                aria-label="Toggle Water Sound">
+                💧
+            </button>
+        </header>
+
+        <!-- Upper/Center Swipeable Liquid Cushion Info Bubbles -->
+        <section id="bubble-stage" aria-live="polite"></section>
+
+        <!-- Lifted Bottom Dock with Pronounced Magnification -->
+        <nav id="dock-stage" aria-label="Profile Logos">
+            <div id="dock-focus-pill">About Me</div>
+            <div class="dock-glass-shelf"></div>
+            <div id="dock-track"></div>
+        </nav>
+    </main>
+
+    <!-- Galery Liquid Bubble Lightbox -->
+    <div id="bubble-lightbox" role="dialog" aria-modal="true">
+        <div class="lightbox-card">
+            <div class="lightbox-media" id="lightbox-media"></div>
+            <div class="lightbox-footer">
+                <span class="lightbox-title" id="lightbox-title">Preview</span>
+                <button class="aqua-gel-btn secondary" id="lightbox-close"
+                    style="flex:0 0 auto; padding:8px 18px;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copy / Action Feedback Bubble -->
+    <div id="aero-toast">Copied! ✨</div>
+
+    <script>
+        (() => {
+            "use strict";
+
+            const CFG = window.AERO_CONFIG;
+            const PROFILES = CFG.profiles || [];
+
+            /* =======================================================================
+               1. BUILT-IN FRUTIGER AERO FALLBACK WALLPAPER & VECTOR EMBLEMS
+               ======================================================================= */
+            const DEFAULT_AERO_WALLPAPER_SVG = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0068c8"/>
+              <stop offset="34%" stop-color="#00b4f5"/>
+              <stop offset="64%" stop-color="#8cf4ff"/>
+              <stop offset="100%" stop-color="#d8fff4"/>
+            </linearGradient>
+            <radialGradient id="sun" cx="28%" cy="18%" r="42%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/>
+              <stop offset="30%" stop-color="#d2ffff" stop-opacity="0.72"/>
+              <stop offset="100%" stop-color="#00c8ff" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="aurora" x1="0" y1="0" x2="1" y2="0.4">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+              <stop offset="35%" stop-color="#7affd4" stop-opacity="0.55"/>
+              <stop offset="70%" stop-color="#ffffff" stop-opacity="0.65"/>
+              <stop offset="100%" stop-color="#00e1ff" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="hill1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#76f74c"/>
+              <stop offset="55%" stop-color="#19b84e"/>
+              <stop offset="100%" stop-color="#056e4b"/>
+            </linearGradient>
+            <linearGradient id="hill2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#a8ff68"/>
+              <stop offset="60%" stop-color="#28cc5b"/>
+              <stop offset="100%" stop-color="#077d56"/>
+            </linearGradient>
+            <linearGradient id="ocean" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.88"/>
+              <stop offset="45%" stop-color="#0095e8" stop-opacity="0.94"/>
+              <stop offset="100%" stop-color="#00488a" stop-opacity="1"/>
+            </linearGradient>
+          </defs>
+          <rect width="900" height="1600" fill="url(#sky)"/>
+          <rect width="900" height="1600" fill="url(#sun)"/>
+          <path d="M-100,430 C220,240 520,540 1020,260 L1020,420 C540,680 220,370 -100,560 Z" fill="url(#aurora)"/>
+          <path d="M-120,290 C240,140 610,390 1020,170 L1020,255 C600,470 250,230 -120,380 Z" fill="url(#aurora)" opacity="0.7"/>
+          <circle cx="250" cy="285" r="95" fill="#ffffff" opacity="0.22"/>
+          <circle cx="340" cy="340" r="46" fill="#a8ffff" opacity="0.28"/>
+          <path d="M-80,1030 C190,890 480,930 980,1060 L980,1360 L-80,1360 Z" fill="url(#hill1)"/>
+          <path d="M-80,1120 C260,1040 620,940 980,1020 L980,1380 L-80,1380 Z" fill="url(#hill2)"/>
+          <rect y="1170" width="900" height="430" fill="url(#ocean)"/>
+          <ellipse cx="320" cy="1210" rx="340" ry="14" fill="#ffffff" opacity="0.45"/>
+          <ellipse cx="420" cy="1265" rx="260" ry="9" fill="#b5ffff" opacity="0.35"/>
+          <ellipse cx="460" cy="1340" rx="390" ry="16" fill="#70f8ff" opacity="0.24"/>
+        </svg>`;
+
+            const FALLBACK_ICONS = {
+                about: `<svg viewBox="0 0 64 64" fill="none"><defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#00c8ff"/></linearGradient></defs><circle cx="32" cy="22" r="12" fill="url(#gA)"/><path d="M12 54c0-11 9-18 20-18s20 7 20 18" fill="url(#gA)"/></svg>`,
+                discord: `<svg viewBox="0 0 64 64" fill="none"><path d="M48.6 17.2A41 41 0 0038.4 14l-1.3 2.7a37 37 0 00-10.2 0L25.6 14a41 41 0 00-10.2 3.2C8.9 27 7.1 36.5 8 45.9A41.5 41.5 0 0020.5 52l2.7-3.7a26.7 26.7 0 01-4.2-2l1-.8a29.3 29.3 0 0024 0l1 .8c-1.3.8-2.7 1.5-4.2 2L43.5 52A41.5 41.5 0 0056 45.9c1.1-10.9-1.9-20.3-7.4-28.7zM24.2 40.1c-2.4 0-4.4-2.2-4.4-4.9s1.9-4.9 4.4-4.9c2.5 0 4.5 2.2 4.4 4.9 0 2.7-1.9 4.9-4.4 4.9zm15.6 0c-2.4 0-4.4-2.2-4.4-4.9s1.9-4.9 4.4-4.9c2.5 0 4.5 2.2 4.4 4.9 0 2.7-1.9 4.9-4.4 4.9z" fill="#fff"/></svg>`,
+                twitter: `<svg viewBox="0 0 64 64" fill="none"><path d="M54 18.4c-1.6.7-3.3 1.2-5.1 1.4 1.8-1.1 3.2-2.8 3.9-4.9-1.7 1-3.6 1.8-5.6 2.2a8.9 8.9 0 00-15.2 8.1A25.3 25.3 0 0113.6 16a8.9 8.9 0 002.8 11.9c-1.5 0-2.8-.4-4-1.1v.1c0 4.3 3.1 7.9 7.1 8.7-1.3.4-2.7.4-4 .1 1.1 3.5 4.4 6.1 8.3 6.2A17.9 17.9 0 0110 45.6 25.2 25.2 0 0023.7 49.6c16.4 0 25.4-13.6 25.4-25.4v-1.2c1.8-1.3 3.3-2.8 4.9-4.6z" fill="#fff"/></svg>`,
+                commissions: `<svg viewBox="0 0 64 64" fill="none"><path d="M45 10l9 9-27 27-12 3 3-12L45 10z" fill="#fff"/><path d="M12 53h40" stroke="#9efeff" stroke-width="4" stroke-linecap="round"/></svg>`,
+                kofi: `<svg viewBox="0 0 64 64" fill="none"><path d="M12 20h30v18c0 7.7-6.3 14-14 14H26c-7.7 0-14-6.3-14-14V20z" fill="#fff"/><path d="M42 23h5a7 7 0 010 14h-5" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M27 40c-5-3.8-8-6.6-8-10a4.5 4.5 0 018-2.8A4.5 4.5 0 0135 30c0 3.4-3 6.2-8 10z" fill="#ff5e8e"/></svg>`,
+                galery: `<svg viewBox="0 0 64 64" fill="none"><rect x="10" y="13" width="44" height="38" rx="9" stroke="#fff" stroke-width="4.5" fill="rgba(255,255,255,0.2)"/><circle cx="23" cy="25" r="4.5" fill="#fff"/><path d="M13 45l13-13 9 9 7-7 9 11" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+                default: `<svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="19" fill="#fff" fill-opacity="0.9"/><circle cx="26" cy="25" r="5" fill="#8cf6ff"/></svg>`
+            };
+
+            const FALLBACK_GALLERY_SVGS = [
+                `linear-gradient(135deg, #0077e6 0%, #00e1ff 52%, #7affa6 100%)`,
+                `linear-gradient(135deg, #0058b8 0%, #36d6ff 48%, #e4ffff 100%)`,
+                `linear-gradient(135deg, #0ba360 0%, #3cba92 50%, #7ef9ff 100%)`,
+                `linear-gradient(135deg, #2b86c5 0%, #56ccf2 52%, #ffd89b 100%)`
+            ];
+
+            /* =======================================================================
+               2. APPLY WALLPAPER PNG + SPAWN PURE-CSS FLOATING DROPLETS
+               ======================================================================= */
+            function applyWallpaper() {
+                const root = document.documentElement;
+                if (CFG.backgroundPng && CFG.backgroundPng.trim() !== "") {
+                    const safeUrl = CFG.backgroundPng.trim().replace(/"/g, '\\"');
+                    root.style.setProperty("--bg-image", `url("${safeUrl}")`);
+                } else {
+                    const encoded = encodeURIComponent(DEFAULT_AERO_WALLPAPER_SVG.trim());
+                    root.style.setProperty("--bg-image", `url("data:image/svg+xml;utf8,${encoded}")`);
+                }
+            }
+            applyWallpaper();
+
+            // Lightweight pure-CSS GPU floating droplets
+            const ambientContainer = document.getElementById("ambientBubbles");
+            [
+                { size: 22, left: "8%", dur: "11s", delay: "-2s" },
+                { size: 36, left: "24%", dur: "15s", delay: "-7s" },
+                { size: 28, left: "39%", dur: "13s", delay: "-9s" },
+                { size: 18, left: "52%", dur: "10s", delay: "-4s" },
+                { size: 24, left: "65%", dur: "12s", delay: "-6s" },
+                { size: 44, left: "76%", dur: "17s", delay: "-11s" },
+                { size: 26, left: "90%", dur: "13s", delay: "-1s" }
+            ].forEach(cfg => {
+                const d = document.createElement("div");
+                d.className = "ambient-drop";
+                d.style.width = d.style.height = cfg.size + "px";
+                d.style.left = cfg.left;
+                d.style.animationDuration = cfg.dur;
+                d.style.animationDelay = cfg.delay;
+                ambientContainer.appendChild(d);
+            });
+
+            /* =======================================================================
+               3. PROCEDURAL WATER DROPLET SFX
+               ======================================================================= */
+            let soundEnabled = Boolean(CFG.enableWaterSounds);
+            let audioCtx = null;
+            const soundBtn = document.getElementById("sound-toggle");
+
+            function syncSoundIcon() {
+                soundBtn.textContent = soundEnabled ? "💧" : "🔇";
+                soundBtn.style.opacity = soundEnabled ? "1" : "0.65";
+            }
+            syncSoundIcon();
+
+            function playWaterBloop(fStart = 310, fEnd = 690, duration = 0.095, vol = 0.08) {
+                if (!soundEnabled) return;
+                try {
+                    if (!audioCtx) {
+                        const AC = window.AudioContext || window.webkitAudioContext;
+                        if (!AC) return;
+                        audioCtx = new AC();
+                    }
+                    if (audioCtx.state === "suspended") audioCtx.resume();
+                    const now = audioCtx.currentTime;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(fStart, now);
+                    osc.frequency.exponentialRampToValueAtTime(fEnd, now + duration);
+                    gain.gain.setValueAtTime(0.001, now);
+                    gain.gain.linearRampToValueAtTime(vol, now + duration * 0.22);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + duration + 0.01);
+                } catch (_) { }
+            }
+
+            soundBtn.addEventListener("click", () => {
+                soundEnabled = !soundEnabled;
+                syncSoundIcon();
+                if (soundEnabled) playWaterBloop(360, 780, 0.1, 0.09);
+            });
+
+            /* =======================================================================
+               4. DOM BUILDERS: TOP INFO BUBBLES, PAGINATION & BOTTOM DOCK ORBS
+               ======================================================================= */
+            const stageEl = document.getElementById("bubble-stage");
+            const dockTrackEl = document.getElementById("dock-track");
+            const dockStageEl = document.getElementById("dock-stage");
+            const dockFocusPill = document.getElementById("dock-focus-pill");
+            const categoryLabelEl = document.getElementById("active-category-label");
+            const paginationEl = document.getElementById("droplet-pagination");
+            const toastEl = document.getElementById("aero-toast");
+            const lightboxEl = document.getElementById("bubble-lightbox");
+            const lightboxMediaEl = document.getElementById("lightbox-media");
+            const lightboxTitleEl = document.getElementById("lightbox-title");
+
+            let toastTimer = null;
+            function showToast(msg) {
+                toastEl.textContent = msg;
+                toastEl.classList.add("visible");
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => toastEl.classList.remove("visible"), 1850);
+            }
+
+            function openLightbox(item, idx) {
+                playWaterBloop(340, 740, 0.1, 0.09);
+                lightboxTitleEl.textContent = item.title || `Artwork ${idx + 1}`;
+                lightboxMediaEl.innerHTML = "";
+                if (item.imagePng && item.imagePng.trim() !== "") {
+                    const img = document.createElement("img");
+                    img.src = item.imagePng.trim();
+                    img.alt = item.title || "Gallery Artwork";
+                    img.onerror = () => {
+                        lightboxMediaEl.style.background = FALLBACK_GALLERY_SVGS[idx % FALLBACK_GALLERY_SVGS.length];
+                        img.remove();
+                    };
+                    lightboxMediaEl.appendChild(img);
+                } else {
+                    lightboxMediaEl.style.background = FALLBACK_GALLERY_SVGS[idx % FALLBACK_GALLERY_SVGS.length];
+                    lightboxMediaEl.innerHTML = `<div style="padding:20px;text-align:center;color:#fff;font-weight:800;text-shadow:0 2px 8px rgba(0,40,80,0.45);">Add your PNG link in<br><code>galleryItems[${idx}].imagePng</code></div>`;
+                }
+                lightboxEl.classList.add("open");
+            }
+
+            document.getElementById("lightbox-close").addEventListener("click", () => {
+                playWaterBloop(600, 300, 0.08, 0.07);
+                lightboxEl.classList.remove("open");
+            });
+            lightboxEl.addEventListener("click", (e) => {
+                if (e.target === lightboxEl) {
+                    playWaterBloop(600, 300, 0.08, 0.07);
+                    lightboxEl.classList.remove("open");
+                }
+            });
+
+            function escapeHtml(str) {
+                return String(str || "")
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;");
+            }
+
+            const dockOrbEls = [];
+            const orbSprings = [];
+
+            function buildDock() {
+                dockTrackEl.innerHTML = "";
+                dockOrbEls.length = 0;
+                orbSprings.length = 0;
+
+                PROFILES.forEach((prof) => {
+                    const orb = document.createElement("button");
+                    orb.type = "button";
+                    orb.className = "dock-orb";
+                    orb.setAttribute("aria-label", prof.title);
+                    orb.style.setProperty("--orb-accent", prof.accent || "#00d4ff");
+
+                    const refl = document.createElement("div");
+                    refl.className = "dock-orb-reflection";
+                    orb.appendChild(refl);
+
+                    const logoWrap = document.createElement("div");
+                    logoWrap.className = "dock-logo-wrap";
+                    const fallbackSvg = FALLBACK_ICONS[prof.id] || FALLBACK_ICONS.default;
+
+                    if (prof.logoPng && prof.logoPng.trim() !== "") {
+                        const img = document.createElement("img");
+                        img.src = prof.logoPng.trim();
+                        img.alt = prof.title;
+                        img.decoding = "async";
+                        img.onerror = () => { logoWrap.innerHTML = fallbackSvg; };
+                        logoWrap.appendChild(img);
+                    } else {
+                        logoWrap.innerHTML = fallbackSvg;
+                    }
+
+                    orb.appendChild(logoWrap);
+                    dockTrackEl.appendChild(orb);
+                    dockOrbEls.push(orb);
+                    orbSprings.push({ pos: 0, vel: 0 });
+                });
+            }
+
+            let cardEls = [];
+
+            function buildCardsForProfile(profIdx) {
+                const prof = PROFILES[profIdx];
+                if (!prof) return;
+
+                document.documentElement.style.setProperty("--active-accent", prof.accent || "#00d4ff");
+                categoryLabelEl.textContent = prof.title;
+
+                stageEl.innerHTML = "";
+                cardEls = [];
+                const cards = prof.cards || [];
+
+                cards.forEach((card, cIdx) => {
+                    const bubble = document.createElement("article");
+                    bubble.className = "info-bubble";
+
+                    let html = `
+            <div class="bubble-rim-reflection"></div>
+            <div class="bubble-specular-crown"></div>
+            <div class="bubble-caustic-floor"></div>
+            <div class="bubble-inner">
+              <div class="card-top-row">
+                <span class="card-badge">${escapeHtml(card.badge || `0${cIdx + 1} / INFO`)}</span>
+                ${cards.length > 1 ? `<span class="swipe-hint-pill">🫧 Swipe ${cIdx + 1}/${cards.length}</span>` : ""}
+              </div>
+          `;
+
+                    if (card.type === "about-hero") {
+                        const hasAvatar = CFG.avatarPng && CFG.avatarPng.trim() !== "";
+                        html += `
+              <div class="hero-identity">
+                <div class="avatar-orb">
+                  <div class="avatar-orb-inner" id="hero-avatar-slot-${cIdx}">
+                    ${hasAvatar
+                                ? `<img src="${escapeHtml(CFG.avatarPng.trim())}" alt="Avatar" />`
+                                : FALLBACK_ICONS.about}
+                  </div>
+                </div>
+                <div class="hero-meta">
+                  <h2>${escapeHtml(CFG.displayName || "AERO.SCULPTOR")}</h2>
+                  <div class="hero-handle">${escapeHtml(CFG.handle || "@handle")}</div>
+                  <div class="hero-status">${escapeHtml(CFG.statusText || "")}</div>
+                </div>
+              </div>
+            `;
+                    } else if (card.heading) {
+                        html += `<h2 class="card-heading">${escapeHtml(card.heading)}</h2>`;
+                    }
+
+                    if (card.body) {
+                        html += `<p class="card-body">${escapeHtml(card.body)}</p>`;
+                    }
+
+                    if (Array.isArray(card.tags) && card.tags.length) {
+                        html += `<div class="tag-row">` +
+                            card.tags.map(t => `<span class="aero-tag">${escapeHtml(t)}</span>`).join("") +
+                            `</div>`;
+                    }
+
+                    if (Array.isArray(card.stats) && card.stats.length) {
+                        html += `<div class="stats-stack">` +
+                            card.stats.map(s => `
+                <div class="stat-capsule">
+                  <span class="stat-label">${escapeHtml(s.label)}</span>
+                  <span class="stat-val">${escapeHtml(s.value)}</span>
+                </div>
+              `).join("") +
+                            `</div>`;
+                    }
+
+                    if (typeof card.progressPercent === "number") {
+                        const pct = Math.max(0, Math.min(100, card.progressPercent));
+                        html += `
+              <div class="progress-wrap">
+                <div class="progress-header">
+                  <span>${escapeHtml(card.progressLabel || "Progress")}</span>
+                  <span>${pct}%</span>
+                </div>
+                <div class="aqua-tube">
+                  <div class="aqua-tube-fill" style="width:${pct}%"></div>
+                </div>
+              </div>
+            `;
+                    }
+
+                    if (card.type === "gallery" && Array.isArray(card.galleryItems)) {
+                        html += `<div class="gallery-grid" data-gallery-card="${cIdx}"></div>`;
+                    }
+
+                    if (card.copyValue || card.ctaUrl) {
+                        html += `<div class="cta-group">`;
+                        if (card.copyValue) {
+                            html += `<button type="button" class="aqua-gel-btn secondary" data-copy="${escapeHtml(card.copyValue)}">📋 ${escapeHtml(card.copyLabel || "Copy")}</button>`;
+                        }
+                        if (card.ctaUrl) {
+                            html += `<a class="aqua-gel-btn" href="${escapeHtml(card.ctaUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(card.ctaText || "Open Link ↗")}</a>`;
+                        }
+                        html += `</div>`;
+                    }
+
+                    html += `</div>`;
+                    bubble.innerHTML = html;
+
+                    const avatarSlot = bubble.querySelector(`#hero-avatar-slot-${cIdx} img`);
+                    if (avatarSlot) {
+                        avatarSlot.addEventListener("error", () => {
+                            avatarSlot.parentElement.innerHTML = FALLBACK_ICONS.about;
+                        });
+                    }
+
+                    const galGrid = bubble.querySelector(`[data-gallery-card="${cIdx}"]`);
+                    if (galGrid && Array.isArray(card.galleryItems)) {
+                        card.galleryItems.forEach((gItem, gIdx) => {
+                            const thumb = document.createElement("div");
+                            thumb.className = "gallery-bubble-thumb";
+                            thumb.style.background = FALLBACK_GALLERY_SVGS[gIdx % FALLBACK_GALLERY_SVGS.length];
+
+                            if (gItem.imagePng && gItem.imagePng.trim() !== "") {
+                                const gImg = document.createElement("img");
+                                gImg.src = gItem.imagePng.trim();
+                                gImg.alt = gItem.title || `Work ${gIdx + 1}`;
+                                gImg.decoding = "async";
+                                gImg.onerror = () => gImg.remove();
+                                thumb.appendChild(gImg);
+                            }
+
+                            const cap = document.createElement("div");
+                            cap.className = "gallery-thumb-caption";
+                            cap.textContent = gItem.title || `Piece ${gIdx + 1}`;
+                            thumb.appendChild(cap);
+
+                            thumb.addEventListener("click", () => {
+                                if (!cardGesture.wasDragged) openLightbox(gItem, gIdx);
+                            });
+                            galGrid.appendChild(thumb);
+                        });
+                    }
+
+                    const copyBtn = bubble.querySelector("[data-copy]");
+                    if (copyBtn) {
+                        copyBtn.addEventListener("click", () => {
+                            if (cardGesture.wasDragged) return;
+                            const val = copyBtn.getAttribute("data-copy");
+                            navigator.clipboard?.writeText(val).catch(() => { });
+                            playWaterBloop(420, 880, 0.11, 0.1);
+                            navigator.vibrate?.(10);
+                            showToast(`Copied "${val}"! ✨`);
+                            cardJellyVel += 1.6;
+                            wakePhysics();
+                        });
+                    }
+
+                    stageEl.appendChild(bubble);
+                    cardEls.push(bubble);
+                });
+
+                paginationEl.innerHTML = "";
+                cards.forEach((_, i) => {
+                    const dot = document.createElement("button");
+                    dot.type = "button";
+                    dot.className = "droplet-dot" + (i === 0 ? " active" : "");
+                    dot.setAttribute("aria-label", `Bubble ${i + 1}`);
+                    dot.addEventListener("click", () => goToCard(i));
+                    paginationEl.appendChild(dot);
+                });
+                paginationEl.style.display = cards.length > 1 ? "flex" : "none";
+            }
+
+            function syncPaginationDots() {
+                const dots = paginationEl.children;
+                for (let i = 0; i < dots.length; i++) {
+                    dots[i].classList.toggle("active", i === activeCardIdx);
+                }
+            }
+
+            /* =======================================================================
+               5. INCOMPRESSIBLE JELLY WOBBLE + GENIE ENGINE
+               ======================================================================= */
+            const genieCanvas = document.getElementById("genie-canvas");
+            const gCtx = genieCanvas.getContext("2d", { alpha: true });
+            let gW = 0, gH = 0;
+
+            function resizeGenieCanvas() {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                gW = window.innerWidth;
+                gH = window.innerHeight;
+                genieCanvas.width = Math.round(gW * dpr);
+                genieCanvas.height = Math.round(gH * dpr);
+                gCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+            resizeGenieCanvas();
+
+            let activeProfileIdx = 0;
+            let activeCardIdx = 0;
+
+            // Top Bubble Glide + Incompressible Jelly State
+            let cardPos = 0;
+            let cardVel = 0;
+            let cardJellyStretch = 0;
+            let cardJellyVel = 0;
+
+            // Dock Carousel State
+            let dockPos = 0;
+            let dockTarget = 0;
+            let dockVel = 0;
+
+            const genie = {
+                phase: "idle",
+                t: 0,
+                fromIdx: 0,
+                toIdx: 0,
+                accentFrom: "#00d4ff",
+                accentTo: "#00d4ff",
+                cardBox: { cx: 0, top: 0, bottom: 0, width: 320 },
+                droplets: []
+            };
+
+            let physicsAwake = false;
+            let lastFrameTime = 0;
+
+            function wakePhysics() {
+                if (!physicsAwake) {
+                    physicsAwake = true;
+                    lastFrameTime = performance.now();
+                    requestAnimationFrame(stepPhysics);
+                }
+            }
+
+            function measureStageCardBox() {
+                const rect = stageEl.getBoundingClientRect();
+                const sampleEl = cardEls[activeCardIdx] || stageEl;
+                const cRect = sampleEl.getBoundingClientRect();
+                const w = cRect.width > 60 ? cRect.width : Math.min(window.innerWidth * 0.9, 420);
+                const h = cRect.height > 60 ? cRect.height : rect.height * 0.82;
+                const cx = rect.left + rect.width * 0.5;
+                const cy = rect.top + rect.height * 0.5;
+                return { cx, top: cy - h * 0.5, bottom: cy + h * 0.5, width: w };
+            }
+
+            function getOrbScreenCenter(idx) {
+                const orb = dockOrbEls[idx];
+                if (!orb) return { x: window.innerWidth * 0.5, y: window.innerHeight - 80, r: 35 };
+                const r = orb.getBoundingClientRect();
+                return {
+                    x: r.left + r.width * 0.5,
+                    y: r.top + r.height * 0.5,
+                    r: Math.max(22, r.width * 0.5)
+                };
+            }
+
+            function spawnSplashDroplets(x, y, color, dirY) {
+                for (let i = 0; i < 6; i++) {
+                    const angle = -Math.PI * 0.5 + (Math.random() - 0.5) * 1.5;
+                    const speed = 90 + Math.random() * 140;
+                    genie.droplets.push({
+                        x, y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed * dirY,
+                        r: 3.5 + Math.random() * 5.5,
+                        life: 1,
+                        color
+                    });
+                }
+            }
+
+            function drawGenieFunnel(mode, p, box, orbPt, accentHex) {
+                let yTop, yBot, topHW, botHW, topCX, botCX;
+
+                if (mode === "collapse") {
+                    const tTop = Math.pow(p, 1.85);
+                    const tBot = Math.min(1, p * 1.48);
+                    yTop = box.top + (orbPt.y - orbPt.r * 0.25 - box.top) * tTop;
+                    yBot = box.bottom + (orbPt.y - box.bottom) * tBot;
+                    topHW = (box.width * 0.5) * (1 - Math.pow(p, 1.45)) + orbPt.r * 0.28 * Math.pow(p, 1.45);
+                    botHW = (box.width * 0.5) * (1 - Math.min(1, p * 2.15)) + orbPt.r * 0.22 * Math.min(1, p * 2.15);
+                    topCX = box.cx + (orbPt.x - box.cx) * Math.pow(p, 1.7);
+                    botCX = box.cx + (orbPt.x - box.cx) * Math.min(1, p * 1.55);
+                } else {
+                    const tTop = 1 - Math.pow(1 - p, 2.25);
+                    const tBot = Math.max(0, (p - 0.2) / 0.8);
+                    const easeBot = 1 - Math.pow(1 - tBot, 1.8);
+                    yTop = orbPt.y - orbPt.r * 0.25 + (box.top - (orbPt.y - orbPt.r * 0.25)) * tTop;
+                    yBot = orbPt.y + (box.bottom - orbPt.y) * easeBot;
+                    topHW = orbPt.r * 0.28 + (box.width * 0.5 - orbPt.r * 0.28) * tTop;
+                    botHW = orbPt.r * 0.22 + (box.width * 0.5 - orbPt.r * 0.22) * Math.pow(easeBot, 1.3);
+                    topCX = orbPt.x + (box.cx - orbPt.x) * tTop;
+                    botCX = orbPt.x + (box.cx - orbPt.x) * easeBot;
+                }
+
+                const heightSpan = Math.max(8, yBot - yTop);
+                const capCurve = Math.min(28, topHW * 0.35, heightSpan * 0.28);
+                const midY1 = yTop + heightSpan * 0.56;
+                const midY2 = yTop + heightSpan * 0.44;
+
+                const alpha = mode === "collapse"
+                    ? Math.min(1, p * 3.2) * (1 - Math.pow(p, 5))
+                    : Math.sin(Math.min(1, p) * Math.PI) * 0.95;
+
+                if (alpha <= 0.01) return;
+
+                gCtx.save();
+                gCtx.globalAlpha = Math.max(0, Math.min(1, alpha));
+
+                gCtx.beginPath();
+                gCtx.moveTo(topCX - topHW + capCurve, yTop);
+                gCtx.quadraticCurveTo(topCX, yTop - capCurve * 0.35, topCX + topHW - capCurve, yTop);
+                gCtx.quadraticCurveTo(topCX + topHW, yTop, topCX + topHW, yTop + capCurve);
+                gCtx.bezierCurveTo(topCX + topHW, midY1, botCX + botHW, midY2, botCX + botHW, yBot);
+                gCtx.quadraticCurveTo(botCX, yBot + 10, botCX - botHW, yBot);
+                gCtx.bezierCurveTo(botCX - botHW, midY2, topCX - topHW, midY1, topCX - topHW, yTop + capCurve);
+                gCtx.quadraticCurveTo(topCX - topHW, yTop, topCX - topHW + capCurve, yTop);
+                gCtx.closePath();
+
+                const grad = gCtx.createLinearGradient(topCX, yTop, botCX, yBot);
+                grad.addColorStop(0, "rgba(255, 255, 255, 0.86)");
+                grad.addColorStop(0.38, "rgba(205, 248, 255, 0.68)");
+                grad.addColorStop(0.78, accentHex + "99");
+                grad.addColorStop(1, "rgba(255, 255, 255, 0.92)");
+                gCtx.fillStyle = grad;
+                gCtx.fill();
+
+                gCtx.lineWidth = 2.2;
+                gCtx.strokeStyle = "rgba(255, 255, 255, 0.94)";
+                gCtx.stroke();
+
+                gCtx.beginPath();
+                gCtx.moveTo(topCX - topHW * 0.52, yTop + capCurve * 0.7);
+                gCtx.bezierCurveTo(
+                    topCX - topHW * 0.52, midY1,
+                    botCX - botHW * 0.45, midY2,
+                    botCX - botHW * 0.35, yBot - 4
+                );
+                gCtx.lineWidth = Math.max(2, topHW * 0.14);
+                gCtx.lineCap = "round";
+                gCtx.strokeStyle = "rgba(255, 255, 255, 0.62)";
+                gCtx.stroke();
+
+                gCtx.restore();
+            }
+
+            function selectProfile(targetIdx) {
+                const clamped = Math.max(0, Math.min(PROFILES.length - 1, targetIdx));
+                dockTarget = clamped;
+
+                if (clamped === activeProfileIdx && genie.phase === "idle") {
+                    orbSprings[clamped].vel += 2.6;
+                    cardJellyVel += 1.8;
+                    if (activeCardIdx !== 0) goToCard(0);
+                    else playWaterBloop(380, 680, 0.08, 0.07);
+                    wakePhysics();
+                    return;
+                }
+
+                const prevIdx = genie.phase === "collapse" ? genie.fromIdx : activeProfileIdx;
+                genie.cardBox = measureStageCardBox();
+                genie.fromIdx = prevIdx;
+                genie.toIdx = clamped;
+                genie.accentFrom = PROFILES[prevIdx]?.accent || "#00d4ff";
+                genie.accentTo = PROFILES[clamped]?.accent || "#00d4ff";
+                genie.phase = "collapse";
+                genie.t = 0;
+
+                playWaterBloop(580, 260, 0.11, 0.08);
+                navigator.vibrate?.(8);
+                wakePhysics();
+            }
+
+            function goToCard(idx) {
+                const maxIdx = Math.max(0, cardEls.length - 1);
+                const next = Math.max(0, Math.min(maxIdx, idx));
+                if (next !== activeCardIdx) {
+                    playWaterBloop(340, 640, 0.075, 0.065);
+                }
+                activeCardIdx = next;
+                cardJellyVel += 1.4;
+                syncPaginationDots();
+                wakePhysics();
+            }
+
+            /* Render Top Info Bubbles with Volume-Preserving Jelly Wobble */
+            function renderCardTransforms() {
+                const isFoldableWide = window.innerWidth >= 600 && window.innerHeight >= 560;
+                const spreadPx = isFoldableWide ? Math.min(window.innerWidth * 0.66, 460) : window.innerWidth * 0.88;
+
+                const cSy = Math.max(0.75, Math.min(1.3, 1 + cardJellyStretch));
+                const cSx = 1 / cSy;
+
+                for (let i = 0; i < cardEls.length; i++) {
+                    const el = cardEls[i];
+                    const rel = i - cardPos;
+
+                    if (Math.abs(rel) > 1.35) {
+                        if (el.style.display !== "none") el.style.display = "none";
+                        continue;
+                    }
+                    if (el.style.display === "none") el.style.display = "flex";
+
+                    const x = rel * spreadPx;
+                    const distScale = 1 - Math.min(0.18, Math.abs(rel) * 0.14);
+                    let opacity = 1 - Math.min(1, Math.max(0, (Math.abs(rel) - (isFoldableWide ? 0.55 : 0.25)) * 1.15));
+
+                    let genieTransform = "";
+                    if (genie.phase === "collapse") {
+                        const p = genie.t;
+                        const orbPt = getOrbScreenCenter(genie.fromIdx);
+                        const dx = (orbPt.x - genie.cardBox.cx) * Math.pow(p, 1.45);
+                        const dy = (orbPt.y - (genie.cardBox.top + genie.cardBox.bottom) * 0.5) * Math.pow(p, 1.25);
+                        const gSX = Math.max(0.08, 1 - Math.pow(p, 1.15) * 0.92);
+                        const gSY = Math.max(0.12, 1 - Math.pow(p, 1.65) * 0.88);
+                        const gSkew = Math.max(-28, Math.min(28, (orbPt.x - genie.cardBox.cx) * 0.085 * p));
+                        genieTransform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) rotateX(${(-52 * p).toFixed(1)}deg) skewX(${gSkew.toFixed(1)}deg) scale3d(${gSX.toFixed(3)}, ${gSY.toFixed(3)}, 1) `;
+                        opacity *= Math.max(0, 1 - p * 2.15);
+                    } else if (genie.phase === "expand") {
+                        const p = genie.t;
+                        const inv = Math.pow(1 - p, 2.1);
+                        const orbPt = getOrbScreenCenter(genie.toIdx);
+                        const dx = (orbPt.x - genie.cardBox.cx) * inv;
+                        const dy = (orbPt.y - (genie.cardBox.top + genie.cardBox.bottom) * 0.5) * inv;
+                        const gSX = 1 - inv * 0.88;
+                        const gSY = 1 - Math.pow(1 - p, 1.6) * 0.85;
+                        const gSkew = Math.max(-26, Math.min(26, (orbPt.x - genie.cardBox.cx) * 0.08 * inv));
+                        genieTransform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) rotateX(${(-48 * inv).toFixed(1)}deg) skewX(${gSkew.toFixed(1)}deg) scale3d(${gSX.toFixed(3)}, ${gSY.toFixed(3)}, 1) `;
+                        opacity *= Math.min(1, Math.max(0, (p - 0.22) * 1.65));
+                    }
+
+                    const sx = (distScale * cSx).toFixed(4);
+                    const sy = (distScale * cSy).toFixed(4);
+
+                    el.style.opacity = opacity.toFixed(3);
+                    el.style.zIndex = String(10 - Math.round(Math.abs(rel) * 5));
+                    el.style.transform = `${genieTransform}translate3d(${x.toFixed(1)}px, 0, 0) scale3d(${sx}, ${sy}, 1)`;
+                }
+            }
+
+            /* Render Bottom Dock with Pronounced Magnification & Neighbor Parting */
+            function renderDockTransforms() {
+                const isLandscapeShort = window.innerHeight <= 520 && window.innerWidth > window.innerHeight;
+                const isFoldable = window.innerWidth >= 600 && window.innerHeight >= 560;
+                const spacing = isLandscapeShort ? 54 : (isFoldable ? 82 : 66);
+                const magnifyPush = isLandscapeShort ? 13 : (isFoldable ? 24 : 19);
+
+                const focusedIdx = Math.max(0, Math.min(PROFILES.length - 1, Math.round(dockPos)));
+                if (PROFILES[focusedIdx]) {
+                    dockFocusPill.textContent = PROFILES[focusedIdx].title;
+                }
+
+                const velStretch = Math.min(0.14, Math.abs(dockVel) * 0.03);
+
+                for (let i = 0; i < dockOrbEls.length; i++) {
+                    const orb = dockOrbEls[i];
+                    const d = i - dockPos;
+                    const absD = Math.abs(d);
+
+                    if (absD > 3.8) {
+                        orb.style.opacity = "0";
+                        orb.style.pointerEvents = "none";
+                        continue;
+                    }
+                    orb.style.pointerEvents = "auto";
+
+                    const x = d * spacing + Math.tanh(d * 1.8) * magnifyPush;
+
+                    const arcLift = isLandscapeShort
+                        ? Math.min(absD * absD * 5.5, 14) - 10
+                        : Math.min(absD * absD * 9.5, 24) - 16;
+
+                    const magPeak = isLandscapeShort ? 0.68 : 0.78;
+                    const magBase = isLandscapeShort ? 0.74 : 0.74;
+                    const mag = Math.max(0.64, magBase + magPeak * Math.exp(-(d * d) / 0.42));
+
+                    const s = orbSprings[i].pos * 0.13 - velStretch;
+                    const sy = mag * (1 + s);
+                    const sx = mag * (1 / Math.max(0.75, 1 + s * 0.7));
+                    const opacity = Math.max(0, 1 - Math.max(0, absD - 2.15) * 0.78);
+
+                    orb.style.opacity = opacity.toFixed(3);
+                    orb.style.zIndex = String(25 - Math.round(absD * 5));
+                    orb.classList.toggle("is-selected", i === activeProfileIdx);
+                    orb.style.transform = `translate3d(${x.toFixed(1)}px, ${arcLift.toFixed(1)}px, 0) scale3d(${sx.toFixed(3)}, ${sy.toFixed(3)}, 1)`;
+                }
+            }
+
+            /* Master Physics Loop (Sleeps at 0% CPU when settled) */
+            function stepPhysics(now) {
+                const dt = Math.min(0.032, Math.max(0.001, (now - lastFrameTime) * 0.001));
+                lastFrameTime = now;
+
+                let stillMoving = cardGesture.dragging || dockGesture.dragging;
+
+                // 1. Top Card Slide Spring
+                if (!cardGesture.dragging) {
+                    const cardForce = (activeCardIdx - cardPos) * 210 - cardVel * 22;
+                    cardVel += cardForce * dt;
+                    cardPos += cardVel * dt;
+                    if (Math.abs(activeCardIdx - cardPos) > 0.0015 || Math.abs(cardVel) > 0.0015) {
+                        stillMoving = true;
+                    } else {
+                        cardPos = activeCardIdx;
+                        cardVel = 0;
+                    }
+                }
+
+                // 2. Top Bubble Incompressible Jelly Oscillation
+                if (!cardGesture.dragging) {
+                    cardJellyVel += (-cardJellyStretch * 210) * dt;
+                    cardJellyVel *= Math.exp(-12 * dt);
+                    cardJellyStretch += cardJellyVel * dt;
+
+                    if (Math.abs(cardJellyStretch) > 0.0008 || Math.abs(cardJellyVel) > 0.0008) {
+                        stillMoving = true;
+                    } else {
+                        cardJellyStretch = 0;
+                        cardJellyVel = 0;
+                    }
+                }
+
+                // 3. Bottom Dock Carousel Spring
+                if (!dockGesture.dragging) {
+                    const dockForce = (dockTarget - dockPos) * 195 - dockVel * 21;
+                    dockVel += dockForce * dt;
+                    dockPos += dockVel * dt;
+                    if (Math.abs(dockTarget - dockPos) > 0.0015 || Math.abs(dockVel) > 0.0015) {
+                        stillMoving = true;
+                    } else {
+                        dockPos = dockTarget;
+                        dockVel = 0;
+                    }
+                }
+
+                // 4. Individual Dock Orb Viscous Squish Springs
+                for (let i = 0; i < orbSprings.length; i++) {
+                    const s = orbSprings[i];
+                    s.vel += (-s.pos * 240) * dt;
+                    s.vel *= Math.exp(-11 * dt);
+                    s.pos += s.vel * dt;
+                    if (Math.abs(s.pos) > 0.001 || Math.abs(s.vel) > 0.001) {
+                        stillMoving = true;
+                    } else {
+                        s.pos = 0;
+                        s.vel = 0;
+                    }
+                }
+
+                // 5. macOS Genie S-Curve Funnel Choreography
+                gCtx.clearRect(0, 0, gW, gH);
+
+                if (genie.phase === "collapse") {
+                    stillMoving = true;
+                    genie.t += dt / 0.22;
+                    const orbFrom = getOrbScreenCenter(genie.fromIdx);
+
+                    if (genie.t >= 1) {
+                        orbSprings[genie.fromIdx].vel += 2.8;
+                        spawnSplashDroplets(orbFrom.x, orbFrom.y - orbFrom.r * 0.45, genie.accentFrom, 1);
+
+                        activeProfileIdx = genie.toIdx;
+                        activeCardIdx = 0;
+                        cardPos = 0;
+                        cardVel = 0;
+                        buildCardsForProfile(activeProfileIdx);
+                        genie.cardBox = measureStageCardBox();
+
+                        const orbTo = getOrbScreenCenter(genie.toIdx);
+                        orbSprings[genie.toIdx].vel -= 3.4;
+                        spawnSplashDroplets(orbTo.x, orbTo.y - orbTo.r * 0.55, genie.accentTo, 1);
+                        playWaterBloop(270, 760, 0.13, 0.1);
+
+                        cardJellyVel = -2.2;
+
+                        genie.phase = "expand";
+                        genie.t = 0;
+                    } else {
+                        drawGenieFunnel("collapse", genie.t, genie.cardBox, orbFrom, genie.accentFrom);
+                    }
+                } else if (genie.phase === "expand") {
+                    stillMoving = true;
+                    genie.t += dt / 0.32;
+                    const orbTo = getOrbScreenCenter(genie.toIdx);
+
+                    if (genie.t >= 1) {
+                        genie.phase = "idle";
+                        genie.t = 0;
+                        cardJellyVel -= 1.5;
+                    } else {
+                        drawGenieFunnel("expand", genie.t, genie.cardBox, orbTo, genie.accentTo);
+                    }
+                }
+
+                // Render Genie Splash Micro-Droplets
+                for (let i = genie.droplets.length - 1; i >= 0; i--) {
+                    stillMoving = true;
+                    const d = genie.droplets[i];
+                    d.vy += 420 * dt;
+                    d.x += d.vx * dt;
+                    d.y += d.vy * dt;
+                    d.life -= dt * 2.6;
+                    if (d.life <= 0) {
+                        genie.droplets.splice(i, 1);
+                        continue;
+                    }
+                    gCtx.save();
+                    gCtx.globalAlpha = d.life;
+                    gCtx.beginPath();
+                    gCtx.arc(d.x, d.y, d.r * d.life, 0, Math.PI * 2);
+                    gCtx.fillStyle = "#ffffff";
+                    gCtx.fill();
+                    gCtx.restore();
+                }
+
+                renderCardTransforms();
+                renderDockTransforms();
+
+                if (stillMoving) {
+                    requestAnimationFrame(stepPhysics);
+                } else {
+                    physicsAwake = false;
+                }
+            }
+
+            /* =======================================================================
+               6. GESTURES: TOP BUBBLE SWIPE, BOTTOM DOCK & OVERSCROLL GUARD
+               ======================================================================= */
+            const cardGesture = {
+                active: false,
+                dragging: false,
+                pointerId: null,
+                startX: 0,
+                startY: 0,
+                startPos: 0,
+                lastX: 0,
+                lastT: 0,
+                vx: 0,
+                wasDragged: false
+            };
+
+            stageEl.addEventListener("pointerdown", (e) => {
+                if (genie.phase !== "idle") return;
+                cardGesture.active = true;
+                cardGesture.dragging = false;
+                cardGesture.wasDragged = false;
+                cardGesture.pointerId = e.pointerId;
+                cardGesture.startX = e.clientX;
+                cardGesture.startY = e.clientY;
+                cardGesture.startPos = cardPos;
+                cardGesture.lastX = e.clientX;
+                cardGesture.lastT = performance.now();
+                cardGesture.vx = 0;
+            });
+
+            stageEl.addEventListener("pointermove", (e) => {
+                if (!cardGesture.active || e.pointerId !== cardGesture.pointerId) return;
+                const dx = e.clientX - cardGesture.startX;
+                const dy = e.clientY - cardGesture.startY;
+
+                if (!cardGesture.dragging) {
+                    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 9) {
+                        cardGesture.active = false;
+                        return;
+                    }
+                    if (Math.abs(dx) > 8) {
+                        cardGesture.dragging = true;
+                        cardGesture.wasDragged = true;
+                        try { stageEl.setPointerCapture(e.pointerId); } catch (_) { }
+                    } else {
+                        return;
+                    }
+                }
+
+                const now = performance.now();
+                const dt = Math.max(4, now - cardGesture.lastT);
+                cardGesture.vx = ((e.clientX - cardGesture.lastX) / dt) * 16;
+                cardGesture.lastX = e.clientX;
+                cardGesture.lastT = now;
+
+                const widthRef = Math.max(240, Math.min(window.innerWidth * 0.85, 420));
+                let rawTarget = cardGesture.startPos - dx / widthRef;
+
+                const maxIdx = Math.max(0, cardEls.length - 1);
+                if (rawTarget < 0) rawTarget *= 0.3;
+                else if (rawTarget > maxIdx) rawTarget = maxIdx + (rawTarget - maxIdx) * 0.3;
+
+                cardPos = rawTarget;
+                cardJellyStretch = Math.max(-0.08, Math.min(0.08, -Math.abs(dx) * 0.00035));
+                wakePhysics();
+            });
+
+            function finishCardGesture(e) {
+                if (!cardGesture.active || (e && e.pointerId !== cardGesture.pointerId)) return;
+                if (cardGesture.dragging) {
+                    const maxIdx = Math.max(0, cardEls.length - 1);
+                    const projected = cardPos - cardGesture.vx * 0.045;
+                    const nextIdx = Math.max(0, Math.min(maxIdx, Math.round(projected)));
+                    cardVel = -cardGesture.vx * 0.04;
+                    goToCard(nextIdx);
+                    setTimeout(() => { cardGesture.wasDragged = false; }, 60);
+                }
+                cardGesture.active = false;
+                cardGesture.dragging = false;
+                cardGesture.vx = 0;
+                wakePhysics();
+            }
+            stageEl.addEventListener("pointerup", finishCardGesture);
+            stageEl.addEventListener("pointercancel", finishCardGesture);
+
+            // Bottom Dock Gesture: Click OR Swipe through magnified bubbles
+            const dockGesture = {
+                active: false,
+                dragging: false,
+                pointerId: null,
+                startX: 0,
+                startPos: 0,
+                lastX: 0,
+                lastT: 0,
+                vx: 0,
+                lastTickIdx: 0,
+                tappedOrbIdx: -1
+            };
+
+            dockStageEl.addEventListener("pointerdown", (e) => {
+                dockGesture.active = true;
+                dockGesture.dragging = false;
+                dockGesture.pointerId = e.pointerId;
+                dockGesture.startX = e.clientX;
+                dockGesture.startPos = dockPos;
+                dockGesture.lastX = e.clientX;
+                dockGesture.lastT = performance.now();
+                dockGesture.vx = 0;
+                dockGesture.lastTickIdx = Math.round(dockPos);
+
+                const clickedOrb = e.target.closest(".dock-orb");
+                dockGesture.tappedOrbIdx = clickedOrb ? dockOrbEls.indexOf(clickedOrb) : -1;
+                try { dockStageEl.setPointerCapture(e.pointerId); } catch (_) { }
+            });
+
+            dockStageEl.addEventListener("pointermove", (e) => {
+                if (!dockGesture.active || e.pointerId !== dockGesture.pointerId) return;
+                const dx = e.clientX - dockGesture.startX;
+
+                if (!dockGesture.dragging && Math.abs(dx) > 7) {
+                    dockGesture.dragging = true;
+                }
+                if (!dockGesture.dragging) return;
+
+                const now = performance.now();
+                const dt = Math.max(4, now - dockGesture.lastT);
+                dockGesture.vx = ((e.clientX - dockGesture.lastX) / dt) * 16;
+                dockGesture.lastX = e.clientX;
+                dockGesture.lastT = now;
+
+                const spacing = window.innerHeight <= 520 ? 58 : 72;
+                let nextPos = dockGesture.startPos - dx / spacing;
+                const maxIdx = Math.max(0, PROFILES.length - 1);
+
+                if (nextPos < 0) nextPos *= 0.28;
+                else if (nextPos > maxIdx) nextPos = maxIdx + (nextPos - maxIdx) * 0.28;
+
+                dockPos = nextPos;
+                dockVel = -dockGesture.vx * 0.14;
+
+                const rounded = Math.max(0, Math.min(maxIdx, Math.round(dockPos)));
+                if (rounded !== dockGesture.lastTickIdx) {
+                    dockGesture.lastTickIdx = rounded;
+                    orbSprings[rounded].vel -= 1.6;
+                    playWaterBloop(450, 680, 0.055, 0.045);
+                    navigator.vibrate?.(5);
+                }
+                wakePhysics();
+            });
+
+            function finishDockGesture(e) {
+                if (!dockGesture.active || (e && e.pointerId !== dockGesture.pointerId)) return;
+                const maxIdx = Math.max(0, PROFILES.length - 1);
+
+                if (dockGesture.dragging) {
+                    const projected = dockPos - dockGesture.vx * 0.09;
+                    const snapIdx = Math.max(0, Math.min(maxIdx, Math.round(projected)));
+                    selectProfile(snapIdx);
+                } else if (dockGesture.tappedOrbIdx >= 0) {
+                    selectProfile(dockGesture.tappedOrbIdx);
+                }
+
+                dockGesture.active = false;
+                dockGesture.dragging = false;
+                wakePhysics();
+            }
+            dockStageEl.addEventListener("pointerup", finishDockGesture);
+            dockStageEl.addEventListener("pointercancel", finishDockGesture);
+
+            // iOS Safari / Mobile Overscroll Boundary Guard:
+            // Keeps inner vertical scrolling smooth while blocking whole-viewport rubber-band pulls.
+            let touchGuardStartX = 0;
+            let touchGuardStartY = 0;
+
+            function findVerticalScroller(target) {
+                let node = target instanceof Element ? target : null;
+                while (node && node !== document.body && node !== document.documentElement) {
+                    if (node.scrollHeight > node.clientHeight + 1) {
+                        const oy = window.getComputedStyle(node).overflowY;
+                        if (oy === "auto" || oy === "scroll") return node;
+                    }
+                    node = node.parentElement;
+                }
+                return null;
+            }
+
+            document.addEventListener("touchstart", (e) => {
+                if (e.touches.length !== 1) return;
+                touchGuardStartX = e.touches[0].clientX;
+                touchGuardStartY = e.touches[0].clientY;
+            }, { passive: true });
+
+            document.addEventListener("touchmove", (e) => {
+                if (e.touches.length !== 1) return;
+                const dx = e.touches[0].clientX - touchGuardStartX;
+                const dy = e.touches[0].clientY - touchGuardStartY;
+
+                // Only guard vertical pulls; horizontal swipes are handled by pointer gestures
+                if (Math.abs(dy) <= Math.abs(dx)) return;
+
+                const scroller = findVerticalScroller(e.target);
+                if (!scroller) {
+                    if (e.cancelable) e.preventDefault();
+                    return;
+                }
+
+                const atTop = scroller.scrollTop <= 0 && dy > 0;
+                const atBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 1 && dy < 0;
+                if ((atTop || atBottom) && e.cancelable) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            /* =======================================================================
+               7. SMOOTH SPECULAR & REFRACTION PARALLAX (NO TOUCH-OVERSCROLL SNAP)
+               ======================================================================= */
+            const tiltState = {
+                curX: 0,
+                curY: 0,
+                targetX: 0,
+                targetY: 0,
+                awake: false,
+                lastT: 0
+            };
+
+            function stepTilt(now) {
+                const dt = Math.min(0.05, Math.max(0.001, (now - tiltState.lastT) * 0.001));
+                tiltState.lastT = now;
+
+                // Smooth exponential damping prevents single-frame snaps on both wallpapers
+                const ease = 1 - Math.exp(-10 * dt);
+                tiltState.curX += (tiltState.targetX - tiltState.curX) * ease;
+                tiltState.curY += (tiltState.targetY - tiltState.curY) * ease;
+
+                const root = document.documentElement;
+                root.style.setProperty("--tilt-x", tiltState.curX.toFixed(4));
+                root.style.setProperty("--tilt-y", tiltState.curY.toFixed(4));
+
+                if (
+                    Math.abs(tiltState.targetX - tiltState.curX) > 0.0006 ||
+                    Math.abs(tiltState.targetY - tiltState.curY) > 0.0006
+                ) {
+                    requestAnimationFrame(stepTilt);
+                } else {
+                    tiltState.curX = tiltState.targetX;
+                    tiltState.curY = tiltState.targetY;
+                    root.style.setProperty("--tilt-x", tiltState.curX.toFixed(4));
+                    root.style.setProperty("--tilt-y", tiltState.curY.toFixed(4));
+                    tiltState.awake = false;
+                }
+            }
+
+            function setTiltTarget(nx, ny) {
+                tiltState.targetX = Math.max(-1, Math.min(1, nx));
+                tiltState.targetY = Math.max(-1, Math.min(1, ny));
+                if (!tiltState.awake) {
+                    tiltState.awake = true;
+                    tiltState.lastT = performance.now();
+                    requestAnimationFrame(stepTilt);
+                }
+            }
+
+            // Mouse/pen hover parallax only — ignore touch drags so scrolling/overscroll never freezes & snaps wallpaper
+            window.addEventListener("pointermove", (e) => {
+                if (e.pointerType && e.pointerType !== "mouse" && e.pointerType !== "pen") return;
+                const nx = (e.clientX / Math.max(1, window.innerWidth) - 0.5) * 2;
+                const ny = (e.clientY / Math.max(1, window.innerHeight) - 0.5) * 2;
+                setTiltTarget(nx, ny);
+            }, { passive: true });
+
+            document.addEventListener("pointerleave", (e) => {
+                if (e.pointerType && e.pointerType !== "mouse" && e.pointerType !== "pen") return;
+                setTiltTarget(0, 0);
+            }, { passive: true });
+
+            window.addEventListener("deviceorientation", (e) => {
+                if (e.gamma == null || e.beta == null) return;
+                const nx = Math.max(-1, Math.min(1, e.gamma / 28));
+                const ny = Math.max(-1, Math.min(1, (e.beta - 45) / 28));
+                setTiltTarget(nx, ny);
+            }, { passive: true });
+
+            let resizeRaf = null;
+            window.addEventListener("resize", () => {
+                cancelAnimationFrame(resizeRaf);
+                resizeRaf = requestAnimationFrame(() => {
+                    resizeGenieCanvas();
+                    genie.cardBox = measureStageCardBox();
+                    wakePhysics();
+                });
+            });
+
+            /* =======================================================================
+               8. BOOT
+               ======================================================================= */
+            buildDock();
+            buildCardsForProfile(0);
+            cardJellyVel = -1.8;
+            wakePhysics();
+        })();
+    </script>
+</body>
+
+</html>
