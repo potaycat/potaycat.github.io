@@ -1085,8 +1085,9 @@
                     const dy = (orbPt.y - boxCy) * Math.pow(p, 1.25);
                     const gSX = Math.max(0.08, 1 - Math.pow(p, 1.15) * 0.92);
                     const gSY = Math.max(0.12, 1 - Math.pow(p, 1.65) * 0.88);
-                    const gSkew = Math.max(-28, Math.min(28, (orbPt.x - genie.cardBox.cx) * 0.085 * p));
-                    geniePrefix = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) rotateX(${(-52 * p).toFixed(1)}deg) skewX(${gSkew.toFixed(1)}deg) scale3d(${gSX.toFixed(3)}, ${gSY.toFixed(3)}, 1) `;
+                    const gSkew = Math.max(-24, Math.min(24, (orbPt.x - genie.cardBox.cx) * 0.075 * p));
+                    // Removed rotateX() — 2D affine skew + scale keeps Vulkan backdrop-filter glitch-free
+                    geniePrefix = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) skewX(${gSkew.toFixed(1)}deg) scale3d(${gSX.toFixed(3)}, ${gSY.toFixed(3)}, 1) `;
                     genieAlphaMul = Math.max(0, 1 - p * 2.15);
                 } else if (genie.phase === "expand") {
                     const p = genie.t;
@@ -1097,8 +1098,9 @@
                     const dy = (orbPt.y - boxCy) * inv;
                     const gSX = 1 - inv * 0.88;
                     const gSY = 1 - Math.pow(1 - p, 1.6) * 0.85;
-                    const gSkew = Math.max(-26, Math.min(26, (orbPt.x - genie.cardBox.cx) * 0.08 * inv));
-                    geniePrefix = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) rotateX(${(-48 * inv).toFixed(1)}deg) skewX(${gSkew.toFixed(1)}deg) scale3d(${gSX.toFixed(3)}, ${gSY.toFixed(3)}, 1) `;
+                    const gSkew = Math.max(-22, Math.min(22, (orbPt.x - genie.cardBox.cx) * 0.07 * inv));
+                    // Removed rotateX()
+                    geniePrefix = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) skewX(${gSkew.toFixed(1)}deg) scale3d(${gSX.toFixed(3)}, ${gSY.toFixed(3)}, 1) `;
                     genieAlphaMul = Math.min(1, Math.max(0, (p - 0.22) * 1.65));
                 }
 
@@ -1242,9 +1244,14 @@
 
                 // 6. macOS Genie S-Curve Funnel Choreography (only clears canvas when active/dirty)
                 const hasGenieWork = genie.phase !== "idle" || genie.droplets.length > 0;
-                if (hasGenieWork || canvasDirty) {
+                if (hasGenieWork) {
+                    if (!canvasDirty) genieCanvas.style.visibility = "visible";
                     gCtx.clearRect(0, 0, vpW, vpH);
-                    canvasDirty = hasGenieWork;
+                    canvasDirty = true;
+                } else if (canvasDirty) {
+                    gCtx.clearRect(0, 0, vpW, vpH);
+                    genieCanvas.style.visibility = "hidden";
+                    canvasDirty = false;
                 }
 
                 if (genie.phase === "collapse") {

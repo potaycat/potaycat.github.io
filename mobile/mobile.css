@@ -1,5 +1,5 @@
 /* =========================================================================
-   FRUTIGER AERO LIQUID GLASS DESIGN SYSTEM (FPS-OPTIMIZED)
+   FRUTIGER AERO LIQUID GLASS — ADRENO / VULKAN / WIDE-GAMUT SAFE CSS
    ========================================================================= */
 :root {
     --bg-image: none;
@@ -47,10 +47,8 @@ body {
     background-size: cover;
     background-position: center center;
     transform: translate3d(calc(var(--tilt-x) * -8px), calc(var(--tilt-y) * -8px), 0) scale(1.04);
-    will-change: transform;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    contain: strict;
     z-index: 0;
 }
 
@@ -62,8 +60,6 @@ body {
         radial-gradient(circle at 82% 80%, rgba(0, 255, 190, 0.22) 0%, transparent 52%),
         linear-gradient(180deg, rgba(0, 85, 150, 0.08) 0%, rgba(0, 45, 90, 0.22) 100%);
     pointer-events: none;
-    transform: translateZ(0);
-    contain: strict;
     z-index: 1;
 }
 
@@ -76,7 +72,6 @@ body {
     z-index: 2;
     pointer-events: none;
     overflow: hidden;
-    contain: strict;
 }
 
 .ambient-drop {
@@ -93,13 +88,12 @@ body {
     will-change: transform, opacity;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    contain: layout style paint;
     animation: floatUp linear infinite;
 }
 
 @keyframes floatUp {
     0% {
-        transform: translate3d(0, 110dvh, 0) scale(0.85);
+        transform: translate3d(0, 110vh, 0) scale(0.85);
         opacity: 0;
     }
 
@@ -112,19 +106,19 @@ body {
     }
 
     100% {
-        transform: translate3d(24px, -18dvh, 0) scale(1.1);
+        transform: translate3d(24px, -18vh, 0) scale(1.1);
         opacity: 0;
     }
 }
 
-/* Foreground macOS Genie Liquid Funnel Canvas */
+/* Hidden when idle so Samsung SurfaceFlinger never flips hardware overlay gamma */
 #genie-canvas {
     position: fixed;
     inset: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
-    contain: strict;
+    visibility: hidden;
     z-index: 35;
 }
 
@@ -155,7 +149,6 @@ body {
     max-width: 560px;
     width: 100%;
     flex-shrink: 0;
-    contain: layout style;
     z-index: 20;
 }
 
@@ -166,16 +159,16 @@ body {
     gap: 8px;
     padding: 7px 15px;
     border-radius: 999px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(210, 245, 255, 0.48) 52%, rgba(165, 232, 255, 0.58) 100%);
-    backdrop-filter: blur(10px) saturate(155%);
-    -webkit-backdrop-filter: blur(10px) saturate(155%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(200, 244, 255, 0.62) 52%, rgba(150, 228, 255, 0.72) 100%);
+    /* Single-pass blur only: prevents Display-P3 float overflow on S25 Ultra */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-shadow:
         0 6px 18px rgba(0, 60, 110, 0.22),
         inset 0 1.5px 2px rgba(255, 255, 255, 0.95),
         inset 0 -3px 8px rgba(0, 195, 255, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.78);
     overflow: hidden;
-    transform: translateZ(0);
 }
 
 .aero-pill-bar::after {
@@ -214,7 +207,7 @@ body {
     gap: 7px;
     padding: 7px 12px;
     border-radius: 999px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(195, 240, 255, 0.42));
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(195, 240, 255, 0.5));
     box-shadow:
         0 4px 14px rgba(0, 55, 100, 0.18),
         inset 0 1px 2px rgba(255, 255, 255, 0.9),
@@ -264,6 +257,7 @@ body {
 
 /* =========================================================================
    UPPER / CENTER STAGE: SWIPEABLE LIQUID CUSHION BUBBLES
+   (Removed 3D perspective on backdrop-filter parent to prevent Vulkan clip glitch)
    ========================================================================= */
 #bubble-stage {
     position: relative;
@@ -273,7 +267,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    perspective: 750px;
     margin: 6px 0 10px;
     z-index: 15;
     touch-action: pan-y;
@@ -286,69 +279,70 @@ body {
     max-height: 100%;
     display: flex;
     flex-direction: column;
-    border-radius: 44px 46px 48px 42px / 40px 44px 42px 46px;
+    /* Uniform circular radius uses Skia's native analytical RRect fast-path */
+    border-radius: 44px;
     background:
-        radial-gradient(ellipse at 50% 48%, rgba(242, 252, 255, 0.74) 0%, rgba(220, 246, 255, 0.58) 62%, rgba(155, 230, 255, 0.36) 88%, rgba(255, 255, 255, 0.6) 100%);
-    backdrop-filter: blur(12px) saturate(160%);
-    -webkit-backdrop-filter: blur(12px) saturate(160%);
-    border: 1.5px solid rgba(255, 255, 255, 0.84);
+        radial-gradient(ellipse at 50% 48%, rgba(242, 253, 255, 0.8) 0%, rgba(212, 246, 255, 0.66) 62%, rgba(145, 228, 255, 0.48) 88%, rgba(255, 255, 255, 0.68) 100%);
+    /* Pure single-pass blur without saturate()/brightness() float overflow */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.86);
     box-shadow:
-        0 22px 44px -12px rgba(0, 48, 92, 0.36),
-        0 4px 18px rgba(0, 205, 255, 0.22),
+        0 22px 44px -12px rgba(0, 48, 92, 0.34),
+        0 4px 18px rgba(0, 205, 255, 0.2),
         inset 0 2.5px 4px rgba(255, 255, 255, 0.98),
-        inset 0 -14px 24px rgba(0, 200, 255, 0.34),
+        inset 0 -14px 24px rgba(0, 200, 255, 0.32),
         inset 0 -3px 6px rgba(255, 255, 255, 0.88),
-        inset 4px 0 12px rgba(150, 255, 225, 0.28),
-        inset -4px 0 12px rgba(130, 205, 255, 0.28);
+        inset 4px 0 12px rgba(150, 255, 225, 0.25),
+        inset -4px 0 12px rgba(130, 205, 255, 0.25);
     overflow: hidden;
     overscroll-behavior: none;
-    contain: layout style;
     will-change: transform, opacity;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
 
-/* Stationary rim mask + GPU-translated inner reflection (zero background-position repaints) */
+/* Pure SRC_OVER alpha reflection — NO mix-blend-mode & NO -webkit-mask-image subpass hazards */
 .bubble-rim-reflection {
     position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    overflow: hidden;
-    -webkit-mask-image: radial-gradient(closest-side, transparent 74%, rgba(0, 0, 0, 0.75) 92%, #000 100%);
-    mask-image: radial-gradient(closest-side, transparent 74%, rgba(0, 0, 0, 0.75) 92%, #000 100%);
-    opacity: 0.48;
-    mix-blend-mode: overlay;
-    pointer-events: none;
-    contain: paint;
-    z-index: 1;
-}
-
-.bubble-rim-reflection::before {
-    content: "";
-    position: absolute;
-    inset: -24%;
+    inset: -16%;
     background-image: var(--bg-image);
     background-size: cover;
     background-position: center;
-    transform: translate3d(calc(var(--tilt-x) * -18px), calc(var(--tilt-y) * -18px), 0) scaleY(-1);
-    will-change: transform;
+    transform: translate3d(calc(var(--tilt-x) * -14px), calc(var(--tilt-y) * -14px), 0) scaleY(-1);
+    opacity: 0.03;
+    pointer-events: none;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    z-index: 1;
+}
+
+/* Soft inner frost center so wallpaper refraction stays strongest around the rim */
+.info-bubble::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    /* background: radial-gradient(closest-side,
+            rgba(240, 252, 255, 0.55) 0%,
+            rgba(230, 250, 255, 0.35) 68%,
+            rgba(160, 235, 255, 0.0) 100%); */
+    pointer-events: none;
+    z-index: 1;
 }
 
 .bubble-specular-crown {
     position: absolute;
     top: 4px;
-    left: 7%;
-    right: 7%;
+    left: 4%;
+    right: 4%;
     height: 38%;
-    border-radius: 999px 999px 58% 58% / 86% 86% 34% 34%;
+    border-radius: 999px 999px 58% 58% / 100% 100% 50% 50%;
     background: linear-gradient(180deg,
-            rgba(255, 255, 255, 0.86) 0%,
-            rgba(255, 255, 255, 0.36) 46%,
+            rgba(255, 255, 255, 0.6) 0%,
+            rgba(255, 255, 255, 0.1) 46%,
             rgba(255, 255, 255, 0.0) 100%);
     transform: translate3d(calc(var(--tilt-x) * 8px), 0, 0);
-    will-change: transform;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     pointer-events: none;
@@ -380,8 +374,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 13px;
-    transform: translateZ(0);
-    contain: content;
 }
 
 .bubble-inner::-webkit-scrollbar {
@@ -533,8 +525,8 @@ body {
     gap: 10px;
     padding: 9px 14px;
     border-radius: 20px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(215, 246, 255, 0.48));
-    border: 1px solid rgba(255, 255, 255, 0.82);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(215, 246, 255, 0.54));
+    border: 1px solid rgba(255, 255, 255, 0.84);
     box-shadow: 0 3px 10px rgba(0, 65, 110, 0.08), inset 0 1px 2px #fff;
 }
 
@@ -609,7 +601,6 @@ body {
     background: linear-gradient(135deg, #6be5ff, #0088dd 55%, #37ebb0);
     box-shadow: 0 8px 16px rgba(0, 55, 100, 0.22), inset 0 2px 3px rgba(255, 255, 255, 0.9);
     cursor: pointer;
-    contain: layout paint;
     transition: transform 0.2s cubic-bezier(0.22, 1.4, 0.36, 1);
 }
 
@@ -636,13 +627,12 @@ body {
     pointer-events: none;
 }
 
-/* Removed nested backdrop-filter inside .info-bubble to prevent 4x extra framebuffer readbacks */
 .gallery-thumb-caption {
     position: absolute;
     inset: auto 6px 6px 6px;
     padding: 4px 8px;
     border-radius: 999px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(220, 248, 255, 0.84));
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(220, 248, 255, 0.86));
     border: 1px solid rgba(255, 255, 255, 0.85);
     font-size: 0.68rem;
     font-weight: 800;
@@ -723,7 +713,6 @@ body {
     justify-content: flex-end;
     z-index: 25;
     touch-action: none;
-    contain: layout style;
 }
 
 #dock-focus-pill {
@@ -742,27 +731,26 @@ body {
 }
 
 .dock-glass-shelf {
-    opacity: 0.9;
+    opacity: 0.92;
     position: absolute;
     bottom: 8px;
     width: min(85vw, 470px);
     height: 78px;
     border-radius: 42px;
     background: linear-gradient(180deg,
-            rgba(255, 255, 255, 0.44) 0%,
-            rgba(185, 238, 255, 0.24) 55%,
-            rgba(115, 218, 255, 0.38) 100%);
-    backdrop-filter: blur(11px) saturate(160%);
-    -webkit-backdrop-filter: blur(11px) saturate(160%);
-    border: 1.5px solid rgba(255, 255, 255, 0.74);
+            rgba(255, 255, 255, 0.52) 0%,
+            rgba(180, 238, 255, 0.34) 55%,
+            rgba(105, 215, 255, 0.48) 100%);
+    /* Pure single-pass blur without saturate() float overflow */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.78);
     box-shadow:
-        0 18px 36px rgba(0, 42, 85, 0.36),
+        0 18px 36px rgba(0, 42, 85, 0.34),
         inset 0 2px 3px rgba(255, 255, 255, 0.92),
         inset 0 -8px 18px rgba(0, 200, 255, 0.34);
     pointer-events: none;
     overflow: hidden;
-    transform: translateZ(0);
-    contain: strict;
 }
 
 .dock-glass-shelf::after {
@@ -786,15 +774,15 @@ body {
     pointer-events: auto;
 }
 
-/* Isolated stacking context so mix-blend-mode never reads back outside the orb */
 .dock-orb {
     position: absolute;
     width: 60px;
     height: 60px;
-    border-radius: 48% 52% 50% 50% / 52% 47% 53% 48%;
+    /* Clean 50% circle avoids elliptical path-mask thrashing at 120Hz scale */
+    border-radius: 50%;
     border: 1.5px solid rgba(255, 255, 255, 0.88);
     background:
-        radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.74) 0%, rgba(195, 244, 255, 0.34) 55%, rgba(75, 205, 255, 0.48) 100%);
+        radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.8) 0%, rgba(185, 242, 255, 0.48) 55%, rgba(65, 200, 255, 0.62) 100%);
     box-shadow:
         0 12px 24px rgba(0, 50, 95, 0.32),
         inset 0 2.5px 4px rgba(255, 255, 255, 0.98),
@@ -804,28 +792,22 @@ body {
     place-items: center;
     cursor: pointer;
     overflow: hidden;
-    isolation: isolate;
-    contain: layout paint;
     will-change: transform, opacity;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
 
+/* Pure alpha reflection — NO mix-blend-mode & NO -webkit-mask-image */
 .dock-orb-reflection {
     position: absolute;
     inset: 0;
-    border-radius: inherit;
+    border-radius: 50%;
     background-image: var(--bg-image);
-    background-size: 220% 220%;
+    background-size: 180% 180%;
     background-position: center;
     transform: scaleY(-1);
-    -webkit-mask-image: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.88) 92%, #000 100%);
-    mask-image: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.88) 92%, #000 100%);
-    opacity: 0.52;
-    mix-blend-mode: overlay;
+    opacity: 0.1;
     pointer-events: none;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
 }
 
 .dock-orb::before {
@@ -841,7 +823,6 @@ body {
     z-index: 3;
 }
 
-/* Bottom-right caustic glint */
 .dock-orb::after {
     content: "";
     position: absolute;
@@ -865,6 +846,7 @@ body {
         inset 0 -10px 18px var(--orb-accent, #00d4ff);
 }
 
+/* Removed filter: drop-shadow() so scaling orbs don't allocate 6 offscreen filter textures per frame */
 .dock-logo-wrap {
     position: relative;
     z-index: 2;
@@ -872,7 +854,6 @@ body {
     height: 58%;
     display: grid;
     place-items: center;
-    filter: drop-shadow(0 2px 4px rgba(0, 50, 95, 0.3));
 }
 
 .dock-logo-wrap img,
@@ -885,13 +866,13 @@ body {
 }
 
 /* =========================================================================
-   LIGHTBOX & TOAST (VISIBILITY-GATED SO BLUR IS ZERO-COST WHEN CLOSED)
+   LIGHTBOX & TOAST
    ========================================================================= */
 #bubble-lightbox {
     position: fixed;
     inset: 0;
     z-index: 60;
-    background: rgba(2, 36, 68, 0.55);
+    background: rgba(2, 36, 68, 0.62);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     display: grid;
@@ -901,7 +882,6 @@ body {
     visibility: hidden;
     pointer-events: none;
     overscroll-behavior: none;
-    contain: strict;
     transition: opacity 0.24s ease, visibility 0s linear 0.24s;
 }
 
@@ -917,15 +897,15 @@ body {
     width: min(92vw, 440px);
     border-radius: 38px;
     padding: 14px;
-    background: linear-gradient(165deg, rgba(255, 255, 255, 0.85), rgba(185, 240, 255, 0.68));
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.88), rgba(185, 240, 255, 0.74));
     border: 2px solid #ffffff;
     box-shadow: 0 24px 50px rgba(0, 25, 55, 0.5), inset 0 2px 4px #fff;
-    transform: scale(0.84) translateZ(0);
+    transform: scale(0.84);
     transition: transform 0.32s cubic-bezier(0.22, 1.45, 0.36, 1);
 }
 
 #bubble-lightbox.open .lightbox-card {
-    transform: scale(1) translateZ(0);
+    transform: scale(1);
 }
 
 .lightbox-media {
@@ -1023,7 +1003,7 @@ body {
 
     .info-bubble {
         width: min(82vw, 620px);
-        border-radius: 32px 34px 34px 30px / 30px 32px 32px 34px;
+        border-radius: 32px;
     }
 
     .bubble-inner {
@@ -1101,7 +1081,7 @@ body {
 
     .info-bubble {
         width: min(78vw, 540px);
-        border-radius: 50px 52px 54px 48px / 46px 50px 48px 52px;
+        border-radius: 50px;
     }
 
     .bubble-inner {
