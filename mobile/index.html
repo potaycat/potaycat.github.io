@@ -9,6 +9,26 @@
     <title>Aero Bubble Hub</title>
     <link rel="stylesheet" href="./mobile.css">
 
+    <!-- Compositor & Layout Isolation Hints -->
+    <style>
+        #genie-canvas,
+        #ambientBubbles {
+            contain: strict;
+            pointer-events: none;
+        }
+
+        .ambient-drop,
+        .dock-orb,
+        .info-bubble {
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .info-bubble {
+            contain: layout style;
+        }
+    </style>
 
     <!-- =========================================================================
        🎨 PICASSO STUDIO — USER PNG & CONTENT CONFIGURATION
@@ -255,6 +275,7 @@
 
             const CFG = window.AERO_CONFIG;
             const PROFILES = CFG.profiles || [];
+            const rootEl = document.documentElement;
 
             /* =======================================================================
                1. BUILT-IN FRUTIGER AERO FALLBACK WALLPAPER & VECTOR EMBLEMS
@@ -330,19 +351,18 @@
                2. APPLY WALLPAPER PNG + SPAWN PURE-CSS FLOATING DROPLETS
                ======================================================================= */
             function applyWallpaper() {
-                const root = document.documentElement;
                 if (CFG.backgroundPng && CFG.backgroundPng.trim() !== "") {
                     const safeUrl = CFG.backgroundPng.trim().replace(/"/g, '\\"');
-                    root.style.setProperty("--bg-image", `url("${safeUrl}")`);
+                    rootEl.style.setProperty("--bg-image", `url("${safeUrl}")`);
                 } else {
                     const encoded = encodeURIComponent(DEFAULT_AERO_WALLPAPER_SVG.trim());
-                    root.style.setProperty("--bg-image", `url("data:image/svg+xml;utf8,${encoded}")`);
+                    rootEl.style.setProperty("--bg-image", `url("data:image/svg+xml;utf8,${encoded}")`);
                 }
             }
             applyWallpaper();
 
-            // Lightweight pure-CSS GPU floating droplets
             const ambientContainer = document.getElementById("ambientBubbles");
+            const ambientFrag = document.createDocumentFragment();
             [
                 { size: 22, left: "8%", dur: "11s", delay: "-2s" },
                 { size: 36, left: "24%", dur: "15s", delay: "-7s" },
@@ -358,8 +378,9 @@
                 d.style.left = cfg.left;
                 d.style.animationDuration = cfg.dur;
                 d.style.animationDelay = cfg.delay;
-                ambientContainer.appendChild(d);
+                ambientFrag.appendChild(d);
             });
+            ambientContainer.appendChild(ambientFrag);
 
             /* =======================================================================
                3. PROCEDURAL WATER DROPLET SFX
@@ -406,7 +427,7 @@
             });
 
             /* =======================================================================
-               4. DOM BUILDERS: TOP INFO BUBBLES, PAGINATION & BOTTOM DOCK ORBS
+               4. DOM BUILDERS & PROFILE CACHE (ZERO MID-ANIMATION HTML PARSING)
                ======================================================================= */
             const stageEl = document.getElementById("bubble-stage");
             const dockTrackEl = document.getElementById("dock-track");
@@ -435,6 +456,7 @@
                     const img = document.createElement("img");
                     img.src = item.imagePng.trim();
                     img.alt = item.title || "Gallery Artwork";
+                    img.decoding = "async";
                     img.onerror = () => {
                         lightboxMediaEl.style.background = FALLBACK_GALLERY_SVGS[idx % FALLBACK_GALLERY_SVGS.length];
                         img.remove();
@@ -468,16 +490,20 @@
 
             const dockOrbEls = [];
             const orbSprings = [];
+            const orbMetrics = []; // Cached { x, y, r } screen positions (avoids getBoundingClientRect)
+            const orbRenderCache = []; // Dirty-checking state per orb
 
             function buildDock() {
-                dockTrackEl.innerHTML = "";
+                const frag = document.createDocumentFragment();
                 dockOrbEls.length = 0;
                 orbSprings.length = 0;
+                orbMetrics.length = 0;
+                orbRenderCache.length = 0;
 
-                PROFILES.forEach((prof) => {
+                PROFILES.forEach((prof, idx) => {
                     const orb = document.createElement("button");
                     orb.type = "button";
-                    orb.className = "dock-orb";
+                    orb.className = "dock-orb" + (idx === 0 ? " is-selected" : "");
                     orb.setAttribute("aria-label", prof.title);
                     orb.style.setProperty("--orb-accent", prof.accent || "#00d4ff");
 
@@ -501,24 +527,29 @@
                     }
 
                     orb.appendChild(logoWrap);
-                    dockTrackEl.appendChild(orb);
+                    frag.appendChild(orb);
                     dockOrbEls.push(orb);
                     orbSprings.push({ pos: 0, vel: 0 });
+                    orbMetrics.push({ x: 0, y: 0, r: 32 });
+                    orbRenderCache.push({ visible: true, z: -1, selected: idx === 0 });
                 });
+
+                dockTrackEl.replaceChildren(frag);
             }
 
+            // Cached DOM nodes per profile so Genie tab switches don't re-parse HTML
+            const profileDomCache = new Array(PROFILES.length).fill(null);
             let cardEls = [];
+            let cardRenderCache = [];
 
-            function buildCardsForProfile(profIdx) {
+            function createProfileDom(profIdx) {
+                if (profileDomCache[profIdx]) return profileDomCache[profIdx];
                 const prof = PROFILES[profIdx];
-                if (!prof) return;
+                if (!prof) return null;
 
-                document.documentElement.style.setProperty("--active-accent", prof.accent || "#00d4ff");
-                categoryLabelEl.textContent = prof.title;
-
-                stageEl.innerHTML = "";
-                cardEls = [];
                 const cards = prof.cards || [];
+                const builtCards = [];
+                const builtDots = [];
 
                 cards.forEach((card, cIdx) => {
                     const bubble = document.createElement("article");
@@ -540,9 +571,9 @@
                         html += `
               <div class="hero-identity">
                 <div class="avatar-orb">
-                  <div class="avatar-orb-inner" id="hero-avatar-slot-${cIdx}">
+                  <div class="avatar-orb-inner" data-avatar-slot>
                     ${hasAvatar
-                                ? `<img src="${escapeHtml(CFG.avatarPng.trim())}" alt="Avatar" />`
+                                ? `<img src="${escapeHtml(CFG.avatarPng.trim())}" alt="Avatar" decoding="async" />`
                                 : FALLBACK_ICONS.about}
                   </div>
                 </div>
@@ -594,7 +625,7 @@
                     }
 
                     if (card.type === "gallery" && Array.isArray(card.galleryItems)) {
-                        html += `<div class="gallery-grid" data-gallery-card="${cIdx}"></div>`;
+                        html += `<div class="gallery-grid" data-gallery-grid></div>`;
                     }
 
                     if (card.copyValue || card.ctaUrl) {
@@ -611,15 +642,16 @@
                     html += `</div>`;
                     bubble.innerHTML = html;
 
-                    const avatarSlot = bubble.querySelector(`#hero-avatar-slot-${cIdx} img`);
-                    if (avatarSlot) {
-                        avatarSlot.addEventListener("error", () => {
-                            avatarSlot.parentElement.innerHTML = FALLBACK_ICONS.about;
-                        });
+                    const avatarImg = bubble.querySelector("[data-avatar-slot] img");
+                    if (avatarImg) {
+                        avatarImg.addEventListener("error", () => {
+                            if (avatarImg.parentElement) avatarImg.parentElement.innerHTML = FALLBACK_ICONS.about;
+                        }, { once: true });
                     }
 
-                    const galGrid = bubble.querySelector(`[data-gallery-card="${cIdx}"]`);
+                    const galGrid = bubble.querySelector("[data-gallery-grid]");
                     if (galGrid && Array.isArray(card.galleryItems)) {
+                        const galFrag = document.createDocumentFragment();
                         card.galleryItems.forEach((gItem, gIdx) => {
                             const thumb = document.createElement("div");
                             thumb.className = "gallery-bubble-thumb";
@@ -630,6 +662,7 @@
                                 gImg.src = gItem.imagePng.trim();
                                 gImg.alt = gItem.title || `Work ${gIdx + 1}`;
                                 gImg.decoding = "async";
+                                gImg.loading = "lazy";
                                 gImg.onerror = () => gImg.remove();
                                 thumb.appendChild(gImg);
                             }
@@ -642,8 +675,9 @@
                             thumb.addEventListener("click", () => {
                                 if (!cardGesture.wasDragged) openLightbox(gItem, gIdx);
                             });
-                            galGrid.appendChild(thumb);
+                            galFrag.appendChild(thumb);
                         });
+                        galGrid.appendChild(galFrag);
                     }
 
                     const copyBtn = bubble.querySelector("[data-copy]");
@@ -660,20 +694,42 @@
                         });
                     }
 
-                    stageEl.appendChild(bubble);
-                    cardEls.push(bubble);
-                });
+                    builtCards.push(bubble);
 
-                paginationEl.innerHTML = "";
-                cards.forEach((_, i) => {
                     const dot = document.createElement("button");
                     dot.type = "button";
-                    dot.className = "droplet-dot" + (i === 0 ? " active" : "");
-                    dot.setAttribute("aria-label", `Bubble ${i + 1}`);
-                    dot.addEventListener("click", () => goToCard(i));
-                    paginationEl.appendChild(dot);
+                    dot.className = "droplet-dot" + (cIdx === 0 ? " active" : "");
+                    dot.setAttribute("aria-label", `Bubble ${cIdx + 1}`);
+                    dot.addEventListener("click", () => goToCard(cIdx));
+                    builtDots.push(dot);
                 });
-                paginationEl.style.display = cards.length > 1 ? "flex" : "none";
+
+                const entry = { cards: builtCards, dots: builtDots };
+                profileDomCache[profIdx] = entry;
+                return entry;
+            }
+
+            function mountProfileCards(profIdx) {
+                const prof = PROFILES[profIdx];
+                if (!prof) return;
+
+                rootEl.style.setProperty("--active-accent", prof.accent || "#00d4ff");
+                categoryLabelEl.textContent = prof.title;
+
+                const entry = createProfileDom(profIdx);
+                cardEls = entry.cards;
+                cardRenderCache = cardEls.map(() => ({ hidden: false, z: -1 }));
+
+                for (let i = 0; i < cardEls.length; i++) {
+                    const el = cardEls[i];
+                    el.style.visibility = "visible";
+                    el.style.pointerEvents = "auto";
+                }
+
+                stageEl.replaceChildren(...cardEls);
+                paginationEl.replaceChildren(...entry.dots);
+                paginationEl.style.display = entry.dots.length > 1 ? "flex" : "none";
+                syncPaginationDots();
             }
 
             function syncPaginationDots() {
@@ -684,23 +740,59 @@
             }
 
             /* =======================================================================
-               5. INCOMPRESSIBLE JELLY WOBBLE + GENIE ENGINE
+               5. CACHED LAYOUT GEOMETRY + JELLY WOBBLE + GENIE ENGINE
                ======================================================================= */
             const genieCanvas = document.getElementById("genie-canvas");
             const gCtx = genieCanvas.getContext("2d", { alpha: true });
-            let gW = 0, gH = 0;
 
-            function resizeGenieCanvas() {
+            let vpW = window.innerWidth;
+            let vpH = window.innerHeight;
+            let dockOriginX = vpW * 0.5;
+            let dockOriginY = vpH - 72;
+            let dockBaseOrbRadius = 28;
+            let cachedStageBox = { cx: vpW * 0.5, top: 90, bottom: vpH - 160, width: Math.min(vpW * 0.9, 420) };
+            let canvasDirty = false;
+
+            function updateLayoutCache() {
+                vpW = window.innerWidth;
+                vpH = window.innerHeight;
+
                 const dpr = Math.min(window.devicePixelRatio || 1, 2);
-                gW = window.innerWidth;
-                gH = window.innerHeight;
-                genieCanvas.width = Math.round(gW * dpr);
-                genieCanvas.height = Math.round(gH * dpr);
+                genieCanvas.width = Math.round(vpW * dpr);
+                genieCanvas.height = Math.round(vpH * dpr);
                 gCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                canvasDirty = true;
+
+                // Measure dock center without triggering reflow during animations
+                const trackRect = dockTrackEl.getBoundingClientRect();
+                dockOriginX = trackRect.left + trackRect.width * 0.5;
+                dockOriginY = trackRect.top + trackRect.height * 0.5;
+                if (dockOrbEls[0] && dockOrbEls[0].offsetWidth > 0) {
+                    dockBaseOrbRadius = dockOrbEls[0].offsetWidth * 0.5;
+                }
+
+                // Measure stage card box once cleanly on resize
+                const sRect = stageEl.getBoundingClientRect();
+                const sampleCard = cardEls[activeCardIdx];
+                const sampleW = sampleCard && sampleCard.offsetWidth > 60
+                    ? sampleCard.offsetWidth
+                    : Math.min(vpW * 0.9, 420);
+                const sampleH = sampleCard && sampleCard.offsetHeight > 60
+                    ? sampleCard.offsetHeight
+                    : sRect.height * 0.82;
+                const cx = sRect.left + sRect.width * 0.5;
+                const cy = sRect.top + sRect.height * 0.5;
+                cachedStageBox = {
+                    cx,
+                    top: cy - sampleH * 0.5,
+                    bottom: cy + sampleH * 0.5,
+                    width: sampleW
+                };
             }
-            resizeGenieCanvas();
 
             let activeProfileIdx = 0;
+            let lastSelectedOrbIdx = 0;
+            let lastFocusedPillIdx = -1;
             let activeCardIdx = 0;
 
             // Top Bubble Glide + Incompressible Jelly State
@@ -714,6 +806,16 @@
             let dockTarget = 0;
             let dockVel = 0;
 
+            // Smooth Tilt State (unified into main RAF loop)
+            const tiltState = {
+                curX: 0,
+                curY: 0,
+                targetX: 0,
+                targetY: 0,
+                lastCssX: "0.000",
+                lastCssY: "0.000"
+            };
+
             const genie = {
                 phase: "idle",
                 t: 0,
@@ -721,7 +823,7 @@
                 toIdx: 0,
                 accentFrom: "#00d4ff",
                 accentTo: "#00d4ff",
-                cardBox: { cx: 0, top: 0, bottom: 0, width: 320 },
+                cardBox: cachedStageBox,
                 droplets: []
             };
 
@@ -736,26 +838,9 @@
                 }
             }
 
-            function measureStageCardBox() {
-                const rect = stageEl.getBoundingClientRect();
-                const sampleEl = cardEls[activeCardIdx] || stageEl;
-                const cRect = sampleEl.getBoundingClientRect();
-                const w = cRect.width > 60 ? cRect.width : Math.min(window.innerWidth * 0.9, 420);
-                const h = cRect.height > 60 ? cRect.height : rect.height * 0.82;
-                const cx = rect.left + rect.width * 0.5;
-                const cy = rect.top + rect.height * 0.5;
-                return { cx, top: cy - h * 0.5, bottom: cy + h * 0.5, width: w };
-            }
-
+            // O(1) math lookup — zero DOM reflows!
             function getOrbScreenCenter(idx) {
-                const orb = dockOrbEls[idx];
-                if (!orb) return { x: window.innerWidth * 0.5, y: window.innerHeight - 80, r: 35 };
-                const r = orb.getBoundingClientRect();
-                return {
-                    x: r.left + r.width * 0.5,
-                    y: r.top + r.height * 0.5,
-                    r: Math.max(22, r.width * 0.5)
-                };
+                return orbMetrics[idx] || { x: dockOriginX, y: dockOriginY, r: 32 };
             }
 
             function spawnSplashDroplets(x, y, color, dirY) {
@@ -777,17 +862,20 @@
                 let yTop, yBot, topHW, botHW, topCX, botCX;
 
                 if (mode === "collapse") {
+                    const p145 = Math.pow(p, 1.45);
                     const tTop = Math.pow(p, 1.85);
                     const tBot = Math.min(1, p * 1.48);
+                    const p215 = Math.min(1, p * 2.15);
                     yTop = box.top + (orbPt.y - orbPt.r * 0.25 - box.top) * tTop;
                     yBot = box.bottom + (orbPt.y - box.bottom) * tBot;
-                    topHW = (box.width * 0.5) * (1 - Math.pow(p, 1.45)) + orbPt.r * 0.28 * Math.pow(p, 1.45);
-                    botHW = (box.width * 0.5) * (1 - Math.min(1, p * 2.15)) + orbPt.r * 0.22 * Math.min(1, p * 2.15);
+                    topHW = (box.width * 0.5) * (1 - p145) + orbPt.r * 0.28 * p145;
+                    botHW = (box.width * 0.5) * (1 - p215) + orbPt.r * 0.22 * p215;
                     topCX = box.cx + (orbPt.x - box.cx) * Math.pow(p, 1.7);
                     botCX = box.cx + (orbPt.x - box.cx) * Math.min(1, p * 1.55);
                 } else {
-                    const tTop = 1 - Math.pow(1 - p, 2.25);
-                    const tBot = Math.max(0, (p - 0.2) / 0.8);
+                    const invP = 1 - p;
+                    const tTop = 1 - Math.pow(invP, 2.25);
+                    const tBot = Math.max(0, (p - 0.2) * 1.25);
                     const easeBot = 1 - Math.pow(1 - tBot, 1.8);
                     yTop = orbPt.y - orbPt.r * 0.25 + (box.top - (orbPt.y - orbPt.r * 0.25)) * tTop;
                     yBot = orbPt.y + (box.bottom - orbPt.y) * easeBot;
@@ -803,7 +891,7 @@
                 const midY2 = yTop + heightSpan * 0.44;
 
                 const alpha = mode === "collapse"
-                    ? Math.min(1, p * 3.2) * (1 - Math.pow(p, 5))
+                    ? Math.min(1, p * 3.2) * (1 - p * p * p * p * p)
                     : Math.sin(Math.min(1, p) * Math.PI) * 0.95;
 
                 if (alpha <= 0.01) return;
@@ -848,6 +936,22 @@
                 gCtx.restore();
             }
 
+            function refreshActiveCardBoxFromOffsets() {
+                const sampleCard = cardEls[activeCardIdx];
+                if (!sampleCard) return;
+                const w = sampleCard.offsetWidth;
+                const h = sampleCard.offsetHeight;
+                if (w > 60 && h > 60) {
+                    const cy = (cachedStageBox.top + cachedStageBox.bottom) * 0.5;
+                    cachedStageBox = {
+                        cx: cachedStageBox.cx,
+                        top: cy - h * 0.5,
+                        bottom: cy + h * 0.5,
+                        width: w
+                    };
+                }
+            }
+
             function selectProfile(targetIdx) {
                 const clamped = Math.max(0, Math.min(PROFILES.length - 1, targetIdx));
                 dockTarget = clamped;
@@ -862,13 +966,17 @@
                 }
 
                 const prevIdx = genie.phase === "collapse" ? genie.fromIdx : activeProfileIdx;
-                genie.cardBox = measureStageCardBox();
+                refreshActiveCardBoxFromOffsets();
+                genie.cardBox = cachedStageBox;
                 genie.fromIdx = prevIdx;
                 genie.toIdx = clamped;
                 genie.accentFrom = PROFILES[prevIdx]?.accent || "#00d4ff";
                 genie.accentTo = PROFILES[clamped]?.accent || "#00d4ff";
                 genie.phase = "collapse";
                 genie.t = 0;
+
+                // Ensure target profile DOM is ready ahead of the expand phase
+                createProfileDom(clamped);
 
                 playWaterBloop(580, 260, 0.11, 0.08);
                 navigator.vibrate?.(8);
@@ -887,110 +995,152 @@
                 wakePhysics();
             }
 
-            /* Render Top Info Bubbles with Volume-Preserving Jelly Wobble */
-            function renderCardTransforms() {
-                const isFoldableWide = window.innerWidth >= 600 && window.innerHeight >= 560;
-                const spreadPx = isFoldableWide ? Math.min(window.innerWidth * 0.66, 460) : window.innerWidth * 0.88;
-
-                const cSy = Math.max(0.75, Math.min(1.3, 1 + cardJellyStretch));
-                const cSx = 1 / cSy;
-
-                for (let i = 0; i < cardEls.length; i++) {
-                    const el = cardEls[i];
-                    const rel = i - cardPos;
-
-                    if (Math.abs(rel) > 1.35) {
-                        if (el.style.display !== "none") el.style.display = "none";
-                        continue;
-                    }
-                    if (el.style.display === "none") el.style.display = "flex";
-
-                    const x = rel * spreadPx;
-                    const distScale = 1 - Math.min(0.18, Math.abs(rel) * 0.14);
-                    let opacity = 1 - Math.min(1, Math.max(0, (Math.abs(rel) - (isFoldableWide ? 0.55 : 0.25)) * 1.15));
-
-                    let genieTransform = "";
-                    if (genie.phase === "collapse") {
-                        const p = genie.t;
-                        const orbPt = getOrbScreenCenter(genie.fromIdx);
-                        const dx = (orbPt.x - genie.cardBox.cx) * Math.pow(p, 1.45);
-                        const dy = (orbPt.y - (genie.cardBox.top + genie.cardBox.bottom) * 0.5) * Math.pow(p, 1.25);
-                        const gSX = Math.max(0.08, 1 - Math.pow(p, 1.15) * 0.92);
-                        const gSY = Math.max(0.12, 1 - Math.pow(p, 1.65) * 0.88);
-                        const gSkew = Math.max(-28, Math.min(28, (orbPt.x - genie.cardBox.cx) * 0.085 * p));
-                        genieTransform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) rotateX(${(-52 * p).toFixed(1)}deg) skewX(${gSkew.toFixed(1)}deg) scale3d(${gSX.toFixed(3)}, ${gSY.toFixed(3)}, 1) `;
-                        opacity *= Math.max(0, 1 - p * 2.15);
-                    } else if (genie.phase === "expand") {
-                        const p = genie.t;
-                        const inv = Math.pow(1 - p, 2.1);
-                        const orbPt = getOrbScreenCenter(genie.toIdx);
-                        const dx = (orbPt.x - genie.cardBox.cx) * inv;
-                        const dy = (orbPt.y - (genie.cardBox.top + genie.cardBox.bottom) * 0.5) * inv;
-                        const gSX = 1 - inv * 0.88;
-                        const gSY = 1 - Math.pow(1 - p, 1.6) * 0.85;
-                        const gSkew = Math.max(-26, Math.min(26, (orbPt.x - genie.cardBox.cx) * 0.08 * inv));
-                        genieTransform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) rotateX(${(-48 * inv).toFixed(1)}deg) skewX(${gSkew.toFixed(1)}deg) scale3d(${gSX.toFixed(3)}, ${gSY.toFixed(3)}, 1) `;
-                        opacity *= Math.min(1, Math.max(0, (p - 0.22) * 1.65));
-                    }
-
-                    const sx = (distScale * cSx).toFixed(4);
-                    const sy = (distScale * cSy).toFixed(4);
-
-                    el.style.opacity = opacity.toFixed(3);
-                    el.style.zIndex = String(10 - Math.round(Math.abs(rel) * 5));
-                    el.style.transform = `${genieTransform}translate3d(${x.toFixed(1)}px, 0, 0) scale3d(${sx}, ${sy}, 1)`;
-                }
-            }
-
-            /* Render Bottom Dock with Pronounced Magnification & Neighbor Parting */
+            /* Render Bottom Dock (runs before Card transforms so orbMetrics are fresh) */
             function renderDockTransforms() {
-                const isLandscapeShort = window.innerHeight <= 520 && window.innerWidth > window.innerHeight;
-                const isFoldable = window.innerWidth >= 600 && window.innerHeight >= 560;
+                const isLandscapeShort = vpH <= 520 && vpW > vpH;
+                const isFoldable = vpW >= 600 && vpH >= 560;
                 const spacing = isLandscapeShort ? 54 : (isFoldable ? 82 : 66);
                 const magnifyPush = isLandscapeShort ? 13 : (isFoldable ? 24 : 19);
 
                 const focusedIdx = Math.max(0, Math.min(PROFILES.length - 1, Math.round(dockPos)));
-                if (PROFILES[focusedIdx]) {
+                if (focusedIdx !== lastFocusedPillIdx && PROFILES[focusedIdx]) {
+                    lastFocusedPillIdx = focusedIdx;
                     dockFocusPill.textContent = PROFILES[focusedIdx].title;
                 }
 
+                if (lastSelectedOrbIdx !== activeProfileIdx) {
+                    if (dockOrbEls[lastSelectedOrbIdx]) dockOrbEls[lastSelectedOrbIdx].classList.remove("is-selected");
+                    if (dockOrbEls[activeProfileIdx]) dockOrbEls[activeProfileIdx].classList.add("is-selected");
+                    lastSelectedOrbIdx = activeProfileIdx;
+                }
+
                 const velStretch = Math.min(0.14, Math.abs(dockVel) * 0.03);
+                const magPeak = isLandscapeShort ? 0.68 : 0.78;
+                const magBase = 0.74;
 
                 for (let i = 0; i < dockOrbEls.length; i++) {
                     const orb = dockOrbEls[i];
+                    const cache = orbRenderCache[i];
                     const d = i - dockPos;
                     const absD = Math.abs(d);
 
-                    if (absD > 3.8) {
-                        orb.style.opacity = "0";
-                        orb.style.pointerEvents = "none";
-                        continue;
-                    }
-                    orb.style.pointerEvents = "auto";
-
                     const x = d * spacing + Math.tanh(d * 1.8) * magnifyPush;
-
                     const arcLift = isLandscapeShort
                         ? Math.min(absD * absD * 5.5, 14) - 10
                         : Math.min(absD * absD * 9.5, 24) - 16;
-
-                    const magPeak = isLandscapeShort ? 0.68 : 0.78;
-                    const magBase = isLandscapeShort ? 0.74 : 0.74;
                     const mag = Math.max(0.64, magBase + magPeak * Math.exp(-(d * d) / 0.42));
+
+                    // Keep mathematical screen position updated for Genie
+                    const m = orbMetrics[i];
+                    m.x = dockOriginX + x;
+                    m.y = dockOriginY + arcLift;
+                    m.r = Math.max(22, dockBaseOrbRadius * mag);
+
+                    if (absD > 3.8) {
+                        if (cache.visible) {
+                            cache.visible = false;
+                            orb.style.opacity = "0";
+                            orb.style.pointerEvents = "none";
+                        }
+                        continue;
+                    }
+
+                    if (!cache.visible) {
+                        cache.visible = true;
+                        orb.style.pointerEvents = "auto";
+                    }
 
                     const s = orbSprings[i].pos * 0.13 - velStretch;
                     const sy = mag * (1 + s);
                     const sx = mag * (1 / Math.max(0.75, 1 + s * 0.7));
                     const opacity = Math.max(0, 1 - Math.max(0, absD - 2.15) * 0.78);
+                    const z = 25 - Math.round(absD * 5);
 
+                    if (cache.z !== z) {
+                        cache.z = z;
+                        orb.style.zIndex = String(z);
+                    }
                     orb.style.opacity = opacity.toFixed(3);
-                    orb.style.zIndex = String(25 - Math.round(absD * 5));
-                    orb.classList.toggle("is-selected", i === activeProfileIdx);
                     orb.style.transform = `translate3d(${x.toFixed(1)}px, ${arcLift.toFixed(1)}px, 0) scale3d(${sx.toFixed(3)}, ${sy.toFixed(3)}, 1)`;
                 }
             }
 
-            /* Master Physics Loop (Sleeps at 0% CPU when settled) */
+            /* Render Top Info Bubbles (visibility instead of display:none to avoid flexbox reflow) */
+            function renderCardTransforms() {
+                const isFoldableWide = vpW >= 600 && vpH >= 560;
+                const spreadPx = isFoldableWide ? Math.min(vpW * 0.66, 460) : vpW * 0.88;
+                const fadeThreshold = isFoldableWide ? 0.55 : 0.25;
+
+                const cSy = Math.max(0.75, Math.min(1.3, 1 + cardJellyStretch));
+                const cSx = 1 / cSy;
+
+                let geniePrefix = "";
+                let genieAlphaMul = 1;
+
+                if (genie.phase === "collapse") {
+                    const p = genie.t;
+                    const orbPt = getOrbScreenCenter(genie.fromIdx);
+                    const boxCy = (genie.cardBox.top + genie.cardBox.bottom) * 0.5;
+                    const dx = (orbPt.x - genie.cardBox.cx) * Math.pow(p, 1.45);
+                    const dy = (orbPt.y - boxCy) * Math.pow(p, 1.25);
+                    const gSX = Math.max(0.08, 1 - Math.pow(p, 1.15) * 0.92);
+                    const gSY = Math.max(0.12, 1 - Math.pow(p, 1.65) * 0.88);
+                    const gSkew = Math.max(-28, Math.min(28, (orbPt.x - genie.cardBox.cx) * 0.085 * p));
+                    geniePrefix = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) rotateX(${(-52 * p).toFixed(1)}deg) skewX(${gSkew.toFixed(1)}deg) scale3d(${gSX.toFixed(3)}, ${gSY.toFixed(3)}, 1) `;
+                    genieAlphaMul = Math.max(0, 1 - p * 2.15);
+                } else if (genie.phase === "expand") {
+                    const p = genie.t;
+                    const inv = Math.pow(1 - p, 2.1);
+                    const orbPt = getOrbScreenCenter(genie.toIdx);
+                    const boxCy = (genie.cardBox.top + genie.cardBox.bottom) * 0.5;
+                    const dx = (orbPt.x - genie.cardBox.cx) * inv;
+                    const dy = (orbPt.y - boxCy) * inv;
+                    const gSX = 1 - inv * 0.88;
+                    const gSY = 1 - Math.pow(1 - p, 1.6) * 0.85;
+                    const gSkew = Math.max(-26, Math.min(26, (orbPt.x - genie.cardBox.cx) * 0.08 * inv));
+                    geniePrefix = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) rotateX(${(-48 * inv).toFixed(1)}deg) skewX(${gSkew.toFixed(1)}deg) scale3d(${gSX.toFixed(3)}, ${gSY.toFixed(3)}, 1) `;
+                    genieAlphaMul = Math.min(1, Math.max(0, (p - 0.22) * 1.65));
+                }
+
+                for (let i = 0; i < cardEls.length; i++) {
+                    const el = cardEls[i];
+                    const cache = cardRenderCache[i];
+                    const rel = i - cardPos;
+                    const absRel = Math.abs(rel);
+
+                    if (absRel > 1.35) {
+                        if (!cache.hidden) {
+                            cache.hidden = true;
+                            el.style.visibility = "hidden";
+                            el.style.pointerEvents = "none";
+                        }
+                        continue;
+                    }
+
+                    if (cache.hidden) {
+                        cache.hidden = false;
+                        el.style.visibility = "visible";
+                        el.style.pointerEvents = "auto";
+                    }
+
+                    const x = rel * spreadPx;
+                    const distScale = 1 - Math.min(0.18, absRel * 0.14);
+                    const opacity = (1 - Math.min(1, Math.max(0, (absRel - fadeThreshold) * 1.15))) * genieAlphaMul;
+
+                    const sx = (distScale * cSx).toFixed(4);
+                    const sy = (distScale * cSy).toFixed(4);
+                    const z = 10 - Math.round(absRel * 5);
+
+                    if (cache.z !== z) {
+                        cache.z = z;
+                        el.style.zIndex = String(z);
+                    }
+                    el.style.opacity = opacity.toFixed(3);
+                    el.style.transform = `${geniePrefix}translate3d(${x.toFixed(1)}px, 0, 0) scale3d(${sx}, ${sy}, 1)`;
+                }
+            }
+
+            /* Unified Master Physics + Tilt Loop (0% CPU & 0 Canvas Clears when settled) */
             function stepPhysics(now) {
                 const dt = Math.min(0.032, Math.max(0.001, (now - lastFrameTime) * 0.001));
                 lastFrameTime = now;
@@ -1038,10 +1188,12 @@
                 }
 
                 // 4. Individual Dock Orb Viscous Squish Springs
+                const springDecay = Math.exp(-11 * dt);
                 for (let i = 0; i < orbSprings.length; i++) {
                     const s = orbSprings[i];
+                    if (s.pos === 0 && s.vel === 0) continue;
                     s.vel += (-s.pos * 240) * dt;
-                    s.vel *= Math.exp(-11 * dt);
+                    s.vel *= springDecay;
                     s.pos += s.vel * dt;
                     if (Math.abs(s.pos) > 0.001 || Math.abs(s.vel) > 0.001) {
                         stillMoving = true;
@@ -1051,8 +1203,49 @@
                     }
                 }
 
-                // 5. macOS Genie S-Curve Funnel Choreography
-                gCtx.clearRect(0, 0, gW, gH);
+                // 5. Smooth Specular Parallax (deduplicated root CSS updates)
+                const dxTilt = tiltState.targetX - tiltState.curX;
+                const dyTilt = tiltState.targetY - tiltState.curY;
+                if (Math.abs(dxTilt) > 0.001 || Math.abs(dyTilt) > 0.001) {
+                    stillMoving = true;
+                    const ease = 1 - Math.exp(-10 * dt);
+                    tiltState.curX += dxTilt * ease;
+                    tiltState.curY += dyTilt * ease;
+
+                    const sx = tiltState.curX.toFixed(3);
+                    const sy = tiltState.curY.toFixed(3);
+                    if (sx !== tiltState.lastCssX) {
+                        tiltState.lastCssX = sx;
+                        rootEl.style.setProperty("--tilt-x", sx);
+                    }
+                    if (sy !== tiltState.lastCssY) {
+                        tiltState.lastCssY = sy;
+                        rootEl.style.setProperty("--tilt-y", sy);
+                    }
+                } else if (tiltState.curX !== tiltState.targetX || tiltState.curY !== tiltState.targetY) {
+                    tiltState.curX = tiltState.targetX;
+                    tiltState.curY = tiltState.targetY;
+                    const sx = tiltState.curX.toFixed(3);
+                    const sy = tiltState.curY.toFixed(3);
+                    if (sx !== tiltState.lastCssX) {
+                        tiltState.lastCssX = sx;
+                        rootEl.style.setProperty("--tilt-x", sx);
+                    }
+                    if (sy !== tiltState.lastCssY) {
+                        tiltState.lastCssY = sy;
+                        rootEl.style.setProperty("--tilt-y", sy);
+                    }
+                }
+
+                // Update Dock first so orbMetrics are fresh for Genie & Cards
+                renderDockTransforms();
+
+                // 6. macOS Genie S-Curve Funnel Choreography (only clears canvas when active/dirty)
+                const hasGenieWork = genie.phase !== "idle" || genie.droplets.length > 0;
+                if (hasGenieWork || canvasDirty) {
+                    gCtx.clearRect(0, 0, vpW, vpH);
+                    canvasDirty = hasGenieWork;
+                }
 
                 if (genie.phase === "collapse") {
                     stillMoving = true;
@@ -1067,8 +1260,9 @@
                         activeCardIdx = 0;
                         cardPos = 0;
                         cardVel = 0;
-                        buildCardsForProfile(activeProfileIdx);
-                        genie.cardBox = measureStageCardBox();
+                        mountProfileCards(activeProfileIdx);
+                        refreshActiveCardBoxFromOffsets();
+                        genie.cardBox = cachedStageBox;
 
                         const orbTo = getOrbScreenCenter(genie.toIdx);
                         orbSprings[genie.toIdx].vel -= 3.4;
@@ -1076,7 +1270,6 @@
                         playWaterBloop(270, 760, 0.13, 0.1);
 
                         cardJellyVel = -2.2;
-
                         genie.phase = "expand";
                         genie.t = 0;
                     } else {
@@ -1096,29 +1289,30 @@
                     }
                 }
 
-                // Render Genie Splash Micro-Droplets
-                for (let i = genie.droplets.length - 1; i >= 0; i--) {
+                // Render Genie Splash Micro-Droplets (batched fillStyle)
+                if (genie.droplets.length > 0) {
                     stillMoving = true;
-                    const d = genie.droplets[i];
-                    d.vy += 420 * dt;
-                    d.x += d.vx * dt;
-                    d.y += d.vy * dt;
-                    d.life -= dt * 2.6;
-                    if (d.life <= 0) {
-                        genie.droplets.splice(i, 1);
-                        continue;
-                    }
                     gCtx.save();
-                    gCtx.globalAlpha = d.life;
-                    gCtx.beginPath();
-                    gCtx.arc(d.x, d.y, d.r * d.life, 0, Math.PI * 2);
                     gCtx.fillStyle = "#ffffff";
-                    gCtx.fill();
+                    for (let i = genie.droplets.length - 1; i >= 0; i--) {
+                        const d = genie.droplets[i];
+                        d.vy += 420 * dt;
+                        d.x += d.vx * dt;
+                        d.y += d.vy * dt;
+                        d.life -= dt * 2.6;
+                        if (d.life <= 0) {
+                            genie.droplets.splice(i, 1);
+                            continue;
+                        }
+                        gCtx.globalAlpha = d.life;
+                        gCtx.beginPath();
+                        gCtx.arc(d.x, d.y, d.r * d.life, 0, Math.PI * 2);
+                        gCtx.fill();
+                    }
                     gCtx.restore();
                 }
 
                 renderCardTransforms();
-                renderDockTransforms();
 
                 if (stillMoving) {
                     requestAnimationFrame(stepPhysics);
@@ -1128,7 +1322,7 @@
             }
 
             /* =======================================================================
-               6. GESTURES: TOP BUBBLE SWIPE, BOTTOM DOCK & OVERSCROLL GUARD
+               6. GESTURES: TOP BUBBLE SWIPE, BOTTOM DOCK & ZERO-COST OVERSCROLL GUARD
                ======================================================================= */
             const cardGesture = {
                 active: false,
@@ -1182,7 +1376,7 @@
                 cardGesture.lastX = e.clientX;
                 cardGesture.lastT = now;
 
-                const widthRef = Math.max(240, Math.min(window.innerWidth * 0.85, 420));
+                const widthRef = Math.max(240, Math.min(vpW * 0.85, 420));
                 let rawTarget = cardGesture.startPos - dx / widthRef;
 
                 const maxIdx = Math.max(0, cardEls.length - 1);
@@ -1212,7 +1406,7 @@
             stageEl.addEventListener("pointerup", finishCardGesture);
             stageEl.addEventListener("pointercancel", finishCardGesture);
 
-            // Bottom Dock Gesture: Click OR Swipe through magnified bubbles
+            // Bottom Dock Gesture
             const dockGesture = {
                 active: false,
                 dragging: false,
@@ -1257,7 +1451,7 @@
                 dockGesture.lastX = e.clientX;
                 dockGesture.lastT = now;
 
-                const spacing = window.innerHeight <= 520 ? 58 : 72;
+                const spacing = vpH <= 520 ? 58 : 72;
                 let nextPos = dockGesture.startPos - dx / spacing;
                 const maxIdx = Math.max(0, PROFILES.length - 1);
 
@@ -1296,14 +1490,14 @@
             dockStageEl.addEventListener("pointerup", finishDockGesture);
             dockStageEl.addEventListener("pointercancel", finishDockGesture);
 
-            // iOS Safari / Mobile Overscroll Boundary Guard:
-            // Keeps inner vertical scrolling smooth while blocking whole-viewport rubber-band pulls.
+            // Overscroll Boundary Guard: resolves scroller ONCE on touchstart (zero getComputedStyle in touchmove)
             let touchGuardStartX = 0;
             let touchGuardStartY = 0;
+            let activeTouchScroller = null;
 
             function findVerticalScroller(target) {
                 let node = target instanceof Element ? target : null;
-                while (node && node !== document.body && node !== document.documentElement) {
+                while (node && node !== document.body && node !== rootEl) {
                     if (node.scrollHeight > node.clientHeight + 1) {
                         const oy = window.getComputedStyle(node).overflowY;
                         if (oy === "auto" || oy === "scroll") return node;
@@ -1317,6 +1511,7 @@
                 if (e.touches.length !== 1) return;
                 touchGuardStartX = e.touches[0].clientX;
                 touchGuardStartY = e.touches[0].clientY;
+                activeTouchScroller = findVerticalScroller(e.target);
             }, { passive: true });
 
             document.addEventListener("touchmove", (e) => {
@@ -1324,76 +1519,33 @@
                 const dx = e.touches[0].clientX - touchGuardStartX;
                 const dy = e.touches[0].clientY - touchGuardStartY;
 
-                // Only guard vertical pulls; horizontal swipes are handled by pointer gestures
                 if (Math.abs(dy) <= Math.abs(dx)) return;
 
-                const scroller = findVerticalScroller(e.target);
-                if (!scroller) {
+                if (!activeTouchScroller) {
                     if (e.cancelable) e.preventDefault();
                     return;
                 }
 
-                const atTop = scroller.scrollTop <= 0 && dy > 0;
-                const atBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 1 && dy < 0;
+                const atTop = activeTouchScroller.scrollTop <= 0 && dy > 0;
+                const atBottom = activeTouchScroller.scrollTop + activeTouchScroller.clientHeight >= activeTouchScroller.scrollHeight - 1 && dy < 0;
                 if ((atTop || atBottom) && e.cancelable) {
                     e.preventDefault();
                 }
             }, { passive: false });
 
             /* =======================================================================
-               7. SMOOTH SPECULAR & REFRACTION PARALLAX (NO TOUCH-OVERSCROLL SNAP)
+               7. SPECULAR PARALLAX INPUTS & RESIZE HANDLER
                ======================================================================= */
-            const tiltState = {
-                curX: 0,
-                curY: 0,
-                targetX: 0,
-                targetY: 0,
-                awake: false,
-                lastT: 0
-            };
-
-            function stepTilt(now) {
-                const dt = Math.min(0.05, Math.max(0.001, (now - tiltState.lastT) * 0.001));
-                tiltState.lastT = now;
-
-                // Smooth exponential damping prevents single-frame snaps on both wallpapers
-                const ease = 1 - Math.exp(-10 * dt);
-                tiltState.curX += (tiltState.targetX - tiltState.curX) * ease;
-                tiltState.curY += (tiltState.targetY - tiltState.curY) * ease;
-
-                const root = document.documentElement;
-                root.style.setProperty("--tilt-x", tiltState.curX.toFixed(4));
-                root.style.setProperty("--tilt-y", tiltState.curY.toFixed(4));
-
-                if (
-                    Math.abs(tiltState.targetX - tiltState.curX) > 0.0006 ||
-                    Math.abs(tiltState.targetY - tiltState.curY) > 0.0006
-                ) {
-                    requestAnimationFrame(stepTilt);
-                } else {
-                    tiltState.curX = tiltState.targetX;
-                    tiltState.curY = tiltState.targetY;
-                    root.style.setProperty("--tilt-x", tiltState.curX.toFixed(4));
-                    root.style.setProperty("--tilt-y", tiltState.curY.toFixed(4));
-                    tiltState.awake = false;
-                }
-            }
-
             function setTiltTarget(nx, ny) {
                 tiltState.targetX = Math.max(-1, Math.min(1, nx));
                 tiltState.targetY = Math.max(-1, Math.min(1, ny));
-                if (!tiltState.awake) {
-                    tiltState.awake = true;
-                    tiltState.lastT = performance.now();
-                    requestAnimationFrame(stepTilt);
-                }
+                wakePhysics();
             }
 
-            // Mouse/pen hover parallax only — ignore touch drags so scrolling/overscroll never freezes & snaps wallpaper
             window.addEventListener("pointermove", (e) => {
                 if (e.pointerType && e.pointerType !== "mouse" && e.pointerType !== "pen") return;
-                const nx = (e.clientX / Math.max(1, window.innerWidth) - 0.5) * 2;
-                const ny = (e.clientY / Math.max(1, window.innerHeight) - 0.5) * 2;
+                const nx = (e.clientX / Math.max(1, vpW) - 0.5) * 2;
+                const ny = (e.clientY / Math.max(1, vpH) - 0.5) * 2;
                 setTiltTarget(nx, ny);
             }, { passive: true });
 
@@ -1413,19 +1565,30 @@
             window.addEventListener("resize", () => {
                 cancelAnimationFrame(resizeRaf);
                 resizeRaf = requestAnimationFrame(() => {
-                    resizeGenieCanvas();
-                    genie.cardBox = measureStageCardBox();
+                    updateLayoutCache();
+                    genie.cardBox = cachedStageBox;
                     wakePhysics();
                 });
-            });
+            }, { passive: true });
 
             /* =======================================================================
-               8. BOOT
+               8. BOOT & IDLE PRE-WARMING
                ======================================================================= */
             buildDock();
-            buildCardsForProfile(0);
+            mountProfileCards(0);
+            updateLayoutCache();
             cardJellyVel = -1.8;
             wakePhysics();
+
+            // Pre-build remaining profile DOMs during idle frames so first-time tab clicks are instant
+            const scheduleIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 120));
+            let warmIdx = 1;
+            function prewarmNextProfile() {
+                if (warmIdx >= PROFILES.length) return;
+                createProfileDom(warmIdx++);
+                scheduleIdle(prewarmNextProfile);
+            }
+            scheduleIdle(prewarmNextProfile);
         })();
     </script>
 </body>

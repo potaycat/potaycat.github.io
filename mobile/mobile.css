@@ -1,6 +1,6 @@
 /* =========================================================================
-       FRUTIGER AERO LIQUID GLASS DESIGN SYSTEM
-       ========================================================================= */
+   FRUTIGER AERO LIQUID GLASS DESIGN SYSTEM (FPS-OPTIMIZED)
+   ========================================================================= */
 :root {
     --bg-image: none;
     --active-accent: #00d4ff;
@@ -26,6 +26,8 @@
 
 html,
 body {
+    position: fixed;
+    inset: 0;
     width: 100%;
     height: 100%;
     height: 100dvh;
@@ -46,6 +48,9 @@ body {
     background-position: center center;
     transform: translate3d(calc(var(--tilt-x) * -8px), calc(var(--tilt-y) * -8px), 0) scale(1.04);
     will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    contain: strict;
     z-index: 0;
 }
 
@@ -57,18 +62,21 @@ body {
         radial-gradient(circle at 82% 80%, rgba(0, 255, 190, 0.22) 0%, transparent 52%),
         linear-gradient(180deg, rgba(0, 85, 150, 0.08) 0%, rgba(0, 45, 90, 0.22) 100%);
     pointer-events: none;
+    transform: translateZ(0);
+    contain: strict;
     z-index: 1;
 }
 
 /* =========================================================================
-       PURE-CSS GPU FLOATING WATER DROPLETS (FROM PASTED CODE)
-       ========================================================================= */
+   PURE-CSS GPU FLOATING WATER DROPLETS
+   ========================================================================= */
 .ambient-bubbles {
     position: fixed;
     inset: 0;
     z-index: 2;
     pointer-events: none;
     overflow: hidden;
+    contain: strict;
 }
 
 .ambient-drop {
@@ -82,7 +90,10 @@ body {
     box-shadow:
         inset 0 2px 4px rgba(255, 255, 255, 0.9),
         inset 0 -3px 6px rgba(0, 180, 255, 0.35);
-    will-change: transform;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    contain: layout style paint;
     animation: floatUp linear infinite;
 }
 
@@ -113,6 +124,7 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
+    contain: strict;
     z-index: 35;
 }
 
@@ -126,23 +138,24 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overscroll-behavior: none;
     padding:
         calc(var(--safe-top) + 10px) calc(var(--safe-right) + 12px) calc(var(--safe-bottom) + 10px) calc(var(--safe-left) + 12px);
 }
 
 /* =========================================================================
-       TOP STATUS & CATEGORY DROPLET BAR
-       ========================================================================= */
+   TOP STATUS & CATEGORY DROPLET BAR
+   ========================================================================= */
 .top-bar {
-    margin-top: clamp(11px, 2.3dvh, 22px) !important;
+    margin: clamp(11px, 2.3dvh, 22px) auto 0 !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
     max-width: 560px;
     width: 100%;
-    margin: 0 auto;
     flex-shrink: 0;
+    contain: layout style;
     z-index: 20;
 }
 
@@ -154,14 +167,15 @@ body {
     padding: 7px 15px;
     border-radius: 999px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(210, 245, 255, 0.48) 52%, rgba(165, 232, 255, 0.58) 100%);
-    backdrop-filter: blur(12px) saturate(160%);
-    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    backdrop-filter: blur(10px) saturate(155%);
+    -webkit-backdrop-filter: blur(10px) saturate(155%);
     box-shadow:
         0 6px 18px rgba(0, 60, 110, 0.22),
         inset 0 1.5px 2px rgba(255, 255, 255, 0.95),
         inset 0 -3px 8px rgba(0, 195, 255, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.72);
     overflow: hidden;
+    transform: translateZ(0);
 }
 
 .aero-pill-bar::after {
@@ -249,8 +263,8 @@ body {
 }
 
 /* =========================================================================
-       UPPER / CENTER STAGE: SWIPEABLE LIQUID CUSHION BUBBLES
-       ========================================================================= */
+   UPPER / CENTER STAGE: SWIPEABLE LIQUID CUSHION BUBBLES
+   ========================================================================= */
 #bubble-stage {
     position: relative;
     flex: 1 1 auto;
@@ -263,6 +277,7 @@ body {
     margin: 6px 0 10px;
     z-index: 15;
     touch-action: pan-y;
+    overscroll-behavior: none;
 }
 
 .info-bubble {
@@ -271,40 +286,54 @@ body {
     max-height: 100%;
     display: flex;
     flex-direction: column;
-    /* Organic liquid cushion geometry from pasted code */
     border-radius: 44px 46px 48px 42px / 40px 44px 42px 46px;
     background:
-        radial-gradient(ellipse at 50% 48%, rgba(242, 252, 255, 0.72) 0%, rgba(220, 246, 255, 0.56) 62%, rgba(155, 230, 255, 0.34) 88%, rgba(255, 255, 255, 0.58) 100%);
-    backdrop-filter: blur(15px) saturate(175%) brightness(1.05);
-    -webkit-backdrop-filter: blur(15px) saturate(175%) brightness(1.05);
+        radial-gradient(ellipse at 50% 48%, rgba(242, 252, 255, 0.74) 0%, rgba(220, 246, 255, 0.58) 62%, rgba(155, 230, 255, 0.36) 88%, rgba(255, 255, 255, 0.6) 100%);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
     border: 1.5px solid rgba(255, 255, 255, 0.84);
     box-shadow:
-        0 24px 48px -12px rgba(0, 48, 92, 0.38),
-        0 4px 20px rgba(0, 205, 255, 0.24),
+        0 22px 44px -12px rgba(0, 48, 92, 0.36),
+        0 4px 18px rgba(0, 205, 255, 0.22),
         inset 0 2.5px 4px rgba(255, 255, 255, 0.98),
-        inset 0 -14px 26px rgba(0, 200, 255, 0.34),
+        inset 0 -14px 24px rgba(0, 200, 255, 0.34),
         inset 0 -3px 6px rgba(255, 255, 255, 0.88),
         inset 4px 0 12px rgba(150, 255, 225, 0.28),
         inset -4px 0 12px rgba(130, 205, 255, 0.28);
     overflow: hidden;
+    overscroll-behavior: none;
+    contain: layout style;
     will-change: transform, opacity;
-    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
+/* Stationary rim mask + GPU-translated inner reflection (zero background-position repaints) */
 .bubble-rim-reflection {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background-image: var(--bg-image);
-    background-size: 165% 165%;
-    background-position: calc(50% + var(--tilt-x) * 28%) calc(50% - var(--tilt-y) * 28%);
-    transform: scaleY(-1);
+    overflow: hidden;
     -webkit-mask-image: radial-gradient(closest-side, transparent 74%, rgba(0, 0, 0, 0.75) 92%, #000 100%);
     mask-image: radial-gradient(closest-side, transparent 74%, rgba(0, 0, 0, 0.75) 92%, #000 100%);
     opacity: 0.48;
     mix-blend-mode: overlay;
     pointer-events: none;
+    contain: paint;
     z-index: 1;
+}
+
+.bubble-rim-reflection::before {
+    content: "";
+    position: absolute;
+    inset: -24%;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    transform: translate3d(calc(var(--tilt-x) * -18px), calc(var(--tilt-y) * -18px), 0) scaleY(-1);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .bubble-specular-crown {
@@ -319,6 +348,9 @@ body {
             rgba(255, 255, 255, 0.36) 46%,
             rgba(255, 255, 255, 0.0) 100%);
     transform: translate3d(calc(var(--tilt-x) * 8px), 0, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     pointer-events: none;
     z-index: 2;
 }
@@ -341,12 +373,15 @@ body {
     padding: 24px 22px 22px;
     overflow-y: auto;
     overflow-x: hidden;
-    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
     touch-action: pan-y;
     scrollbar-width: none;
     display: flex;
     flex-direction: column;
     gap: 13px;
+    transform: translateZ(0);
+    contain: content;
 }
 
 .bubble-inner::-webkit-scrollbar {
@@ -574,6 +609,7 @@ body {
     background: linear-gradient(135deg, #6be5ff, #0088dd 55%, #37ebb0);
     box-shadow: 0 8px 16px rgba(0, 55, 100, 0.22), inset 0 2px 3px rgba(255, 255, 255, 0.9);
     cursor: pointer;
+    contain: layout paint;
     transition: transform 0.2s cubic-bezier(0.22, 1.4, 0.36, 1);
 }
 
@@ -600,14 +636,14 @@ body {
     pointer-events: none;
 }
 
+/* Removed nested backdrop-filter inside .info-bubble to prevent 4x extra framebuffer readbacks */
 .gallery-thumb-caption {
     position: absolute;
     inset: auto 6px 6px 6px;
     padding: 4px 8px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.78);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(220, 248, 255, 0.84));
+    border: 1px solid rgba(255, 255, 255, 0.85);
     font-size: 0.68rem;
     font-weight: 800;
     color: var(--ink-strong);
@@ -647,7 +683,7 @@ body {
         inset 0 -3px 7px rgba(120, 250, 255, 0.75);
     cursor: pointer;
     overflow: hidden;
-    transition: transform 0.18s cubic-bezier(0.22, 1.5, 0.36, 1), filter 0.18s ease;
+    transition: transform 0.18s cubic-bezier(0.22, 1.5, 0.36, 1);
 }
 
 .aqua-gel-btn::after {
@@ -670,18 +706,16 @@ body {
 
 .aqua-gel-btn:active {
     transform: scale(0.95);
-    filter: brightness(1.07);
 }
 
 /* =========================================================================
-       BOTTOM STAGE: LIFTED DOCK + PRONOUNCED MAGNIFYING BUBBLES
-       ========================================================================= */
+   BOTTOM STAGE: LIFTED DOCK + PRONOUNCED MAGNIFYING BUBBLES
+   ========================================================================= */
 #dock-stage {
     position: relative;
     flex-shrink: 0;
     width: 100%;
     height: 144px;
-    /* Lifted higher off the bottom edge for comfortable thumb reach & float */
     margin-bottom: clamp(11px, 2.3dvh, 22px);
     display: flex;
     flex-direction: column;
@@ -689,6 +723,7 @@ body {
     justify-content: flex-end;
     z-index: 25;
     touch-action: none;
+    contain: layout style;
 }
 
 #dock-focus-pill {
@@ -717,8 +752,8 @@ body {
             rgba(255, 255, 255, 0.44) 0%,
             rgba(185, 238, 255, 0.24) 55%,
             rgba(115, 218, 255, 0.38) 100%);
-    backdrop-filter: blur(12px) saturate(165%);
-    -webkit-backdrop-filter: blur(12px) saturate(165%);
+    backdrop-filter: blur(11px) saturate(160%);
+    -webkit-backdrop-filter: blur(11px) saturate(160%);
     border: 1.5px solid rgba(255, 255, 255, 0.74);
     box-shadow:
         0 18px 36px rgba(0, 42, 85, 0.36),
@@ -726,6 +761,8 @@ body {
         inset 0 -8px 18px rgba(0, 200, 255, 0.34);
     pointer-events: none;
     overflow: hidden;
+    transform: translateZ(0);
+    contain: strict;
 }
 
 .dock-glass-shelf::after {
@@ -749,11 +786,11 @@ body {
     pointer-events: auto;
 }
 
+/* Isolated stacking context so mix-blend-mode never reads back outside the orb */
 .dock-orb {
     position: absolute;
     width: 60px;
     height: 60px;
-    /* Organic liquid water-drop shape */
     border-radius: 48% 52% 50% 50% / 52% 47% 53% 48%;
     border: 1.5px solid rgba(255, 255, 255, 0.88);
     background:
@@ -766,8 +803,12 @@ body {
     display: grid;
     place-items: center;
     cursor: pointer;
-    will-change: transform, opacity;
     overflow: hidden;
+    isolation: isolate;
+    contain: layout paint;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .dock-orb-reflection {
@@ -783,6 +824,8 @@ body {
     opacity: 0.52;
     mix-blend-mode: overlay;
     pointer-events: none;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .dock-orb::before {
@@ -829,7 +872,7 @@ body {
     height: 58%;
     display: grid;
     place-items: center;
-    filter: drop-shadow(0 3px 5px rgba(0, 50, 95, 0.32));
+    filter: drop-shadow(0 2px 4px rgba(0, 50, 95, 0.3));
 }
 
 .dock-logo-wrap img,
@@ -842,8 +885,8 @@ body {
 }
 
 /* =========================================================================
-       LIGHTBOX & TOAST
-       ========================================================================= */
+   LIGHTBOX & TOAST (VISIBILITY-GATED SO BLUR IS ZERO-COST WHEN CLOSED)
+   ========================================================================= */
 #bubble-lightbox {
     position: fixed;
     inset: 0;
@@ -855,13 +898,18 @@ body {
     place-items: center;
     padding: 20px;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.24s ease;
+    overscroll-behavior: none;
+    contain: strict;
+    transition: opacity 0.24s ease, visibility 0s linear 0.24s;
 }
 
 #bubble-lightbox.open {
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
+    transition: opacity 0.24s ease, visibility 0s linear 0s;
 }
 
 .lightbox-card {
@@ -872,17 +920,16 @@ body {
     background: linear-gradient(165deg, rgba(255, 255, 255, 0.85), rgba(185, 240, 255, 0.68));
     border: 2px solid #ffffff;
     box-shadow: 0 24px 50px rgba(0, 25, 55, 0.5), inset 0 2px 4px #fff;
-    transform: scale(0.84);
+    transform: scale(0.84) translateZ(0);
     transition: transform 0.32s cubic-bezier(0.22, 1.45, 0.36, 1);
 }
 
 #bubble-lightbox.open .lightbox-card {
-    transform: scale(1);
+    transform: scale(1) translateZ(0);
 }
 
 .lightbox-media {
     width: 100%;
-    /* aspect-ratio: 4 / 3; */
     border-radius: 26px;
     overflow: hidden;
     background: linear-gradient(135deg, #7ef0ff, #0082d8, #36f1b8);
@@ -924,19 +971,28 @@ body {
     font-weight: 800;
     color: var(--ink-strong);
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     z-index: 70;
-    transition: opacity 0.22s ease, transform 0.28s cubic-bezier(0.22, 1.5, 0.36, 1);
+    transition:
+        opacity 0.22s ease,
+        transform 0.28s cubic-bezier(0.22, 1.5, 0.36, 1),
+        visibility 0s linear 0.28s;
 }
 
 #aero-toast.visible {
     opacity: 1;
+    visibility: visible;
     transform: translate3d(-50%, 0, 0) scale(1);
+    transition:
+        opacity 0.22s ease,
+        transform 0.28s cubic-bezier(0.22, 1.5, 0.36, 1),
+        visibility 0s linear 0s;
 }
 
 /* =========================================================================
-       RESPONSIVE BREAKPOINTS: LANDSCAPE PHONES & FOLDABLE PHONES
-       ========================================================================= */
+   RESPONSIVE BREAKPOINTS: LANDSCAPE PHONES & FOLDABLE PHONES
+   ========================================================================= */
 @media (max-height: 520px) and (orientation: landscape) {
     #app-shell {
         padding:
@@ -1080,31 +1136,4 @@ body {
         width: 66px;
         height: 66px;
     }
-}
-
-
-
-html,
-body {
-    overscroll-behavior: none;
-    overflow: hidden;
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-}
-
-#app-shell,
-#bubble-stage,
-.info-bubble,
-.bubble-inner,
-#bubble-lightbox {
-    overscroll-behavior: none;
-}
-
-#wallpaper-layer,
-.bubble-rim-reflection,
-.dock-orb-reflection {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
 }
