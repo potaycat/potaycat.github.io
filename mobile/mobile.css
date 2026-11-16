@@ -1117,3 +1117,21 @@ body {
         height: 66px;
     }
 }
+
+#genie-canvas,
+#ambientBubbles {
+    contain: strict;
+    pointer-events: none;
+}
+
+.ambient-drop,
+.dock-orb,
+.info-bubble {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.info-bubble {
+    contain: layout style;
+}
