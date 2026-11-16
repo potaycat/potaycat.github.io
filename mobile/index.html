@@ -1318,6 +1318,7 @@
                 startX: 0,
                 startY: 0,
                 startPos: 0,
+                startIdx: 0,
                 lastX: 0,
                 lastT: 0,
                 vx: 0,
@@ -1333,6 +1334,7 @@
                 cardGesture.startX = e.clientX;
                 cardGesture.startY = e.clientY;
                 cardGesture.startPos = cardPos;
+                cardGesture.startIdx = activeCardIdx;
                 cardGesture.lastX = e.clientX;
                 cardGesture.lastT = performance.now();
                 cardGesture.vx = 0;
@@ -1367,8 +1369,17 @@
                 let rawTarget = cardGesture.startPos - dx / widthRef;
 
                 const maxIdx = Math.max(0, cardEls.length - 1);
-                if (rawTarget < 0) rawTarget *= 0.3;
-                else if (rawTarget > maxIdx) rawTarget = maxIdx + (rawTarget - maxIdx) * 0.3;
+                const minGestureIdx = Math.max(0, cardGesture.startIdx - 1);
+                const maxGestureIdx = Math.min(maxIdx, cardGesture.startIdx + 1);
+                if (rawTarget < minGestureIdx) {
+                    rawTarget = minGestureIdx === 0
+                        ? minGestureIdx + (rawTarget - minGestureIdx) * 0.3
+                        : minGestureIdx;
+                } else if (rawTarget > maxGestureIdx) {
+                    rawTarget = maxGestureIdx === maxIdx
+                        ? maxGestureIdx + (rawTarget - maxGestureIdx) * 0.3
+                        : maxGestureIdx;
+                }
 
                 cardPos = rawTarget;
                 cardJellyStretch = Math.max(-0.08, Math.min(0.08, -Math.abs(dx) * 0.00035));
@@ -1380,7 +1391,12 @@
                 if (cardGesture.dragging) {
                     const maxIdx = Math.max(0, cardEls.length - 1);
                     const projected = cardPos - cardGesture.vx * 0.045;
-                    const nextIdx = Math.max(0, Math.min(maxIdx, Math.round(projected)));
+                    const minGestureIdx = Math.max(0, cardGesture.startIdx - 1);
+                    const maxGestureIdx = Math.min(maxIdx, cardGesture.startIdx + 1);
+                    const nextIdx = Math.max(
+                        minGestureIdx,
+                        Math.min(maxGestureIdx, Math.round(projected))
+                    );
                     cardVel = -cardGesture.vx * 0.04;
                     goToCard(nextIdx);
                     setTimeout(() => { cardGesture.wasDragged = false; }, 60);
